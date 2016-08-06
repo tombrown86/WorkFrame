@@ -16,7 +16,7 @@
 <p>This is a first attempt at a super lightweight PHP7 compatible framework that exists to achieve the very basic standard requirements of a framework with (hopefully) a couple of useful unexpected extras.</p>
 
 <h2>Motivation <span id="motivation"></span><a href="#motivation" class="hashlink">&para;</a></h2>
-<p>In my experience, frameworks are great for handling the bread and butter basics. However can become tiresom to work with when they have overbearing complexity.</p>
+<p>In my experience, frameworks are great for handling the bread and butter basics. However, they can become tiresom to work with when they have overbearing complexity.</p>
 <p>Then they get upgraded, rewritten, changed beyond recognition which then causes everyone pain!</p>
 <p>My advice is to avoid relying on the framework for detailed application logic.</p>
 <p>Anything more complex is likely to have bespoke requirements that the framework does not attempt to provide.</p>
