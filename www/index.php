@@ -7,10 +7,10 @@ define('WORKFRAME_ENVIRONMENT', 'DEV'); // DEV or LIVE
 define('WWW_ROOT_PATH', ''); // No trailing forward slash
 define('WWW_PUBLIC_PATH', '/public');
 
-define('APP_PATH', __DIR__.'/../App');
-define('APP_NAME', 'Test app');
-define('APP_CODENAME', 'test_app'); // Must be valid part of filename (for log)
-define('APP_NAMESPACE', 'App'); // Must match app dirname
+define('APP_PATH', __DIR__.'/../ExampleApp');
+define('APP_NAME', 'Example app');
+define('APP_CODENAME', 'example_app'); // Must be valid part of filename (for log)
+define('APP_NAMESPACE', 'ExampleApp'); // Must match app dirname
 define('APP_PUBLIC_PATH', __DIR__.'/public/');
 
 define('APP_BUILD', '1.0'); 
@@ -27,10 +27,10 @@ include(WORKFRAME_PATH . '/init.php');
 //define('WWW_ROOT_PATH', '/');
 //define('WWW_PUBLIC_PATH', '/public');
 //
-//define('APP_PATH', __DIR__.'/../../App');
-//define('APP_NAME', 'Test app');
-//define('APP_CODENAME', 'test_app'); // Must be valid part of filename (for log)
-//define('APP_NAMESPACE', 'App'); // Must match app dirname
+//define('APP_PATH', __DIR__.'/../../ExampleApp');
+//define('APP_NAME', 'Example app');
+//define('APP_CODENAME', 'example_app'); // Must be valid part of filename (for log)
+//define('APP_NAMESPACE', 'ExampleApp'); // Must match app dirname
 //define('APP_PUBLIC_PATH', __DIR__.'/public/');
 //
 //define('APP_BUILD', '1.0'); 
