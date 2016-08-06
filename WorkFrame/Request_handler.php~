@@ -1,0 +1,37 @@
+<?php
+namespace Workframe;
+
+class Request_handler {
+	use Renderer_trait;
+
+	protected $routes;
+	protected $action;
+	
+	function __construct() {}
+	
+	function pre_action_hook() {
+		// Would usually only get utilised if template rendered
+        $workframe_scripts_dir = WORKFRAME_PATH . '/js';
+		$this->add_scripts([$workframe_scripts_dir.'/jquery-3.0.0.js', $workframe_scripts_dir.'/_workframe_functions.js', $workframe_scripts_dir.'/_workframe_processors.js'], TRUE, '_workframe_standard');
+	}
+	function post_action_hook() {
+
+	}
+
+	function set_routes($routes) {
+		$this->routes = $routes;
+	}
+	function set_action($action){
+		$this->action = $action;
+	}
+	function render_partial_for_action($template=null) {
+		$partial = '';
+		foreach ($this->routes as $route) {
+			$partial .= $route.'/';
+		}
+		$partial .= $this->action . '.php';
+		$partial = strtolower($partial);
+
+		return $this->render($partial, $template);
+	}
+}

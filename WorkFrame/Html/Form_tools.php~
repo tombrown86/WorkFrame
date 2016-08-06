@@ -1,0 +1,164 @@
+<?php
+
+namespace Workframe\Html;
+
+class Form_tools {
+
+	private $processable; # \Workframe\Processable_trait
+	private $form_id;
+	private $custom_field_error_class = 'has-error'/* boostrap 3 */;
+	private $custom_field_success_class = 'has-success'/* boostrap 3 */;
+	private $custom_field_warning_class = 'has-warning'/* boostrap 3 */;
+	private $custom_field_group_class = 'form-group'/* boostrap 3 */;
+	private $custom_label_class = 'control-label'/* boostrap 3 */;
+
+	function __construct($form_id, $processable = null) {
+		$this->form_id = $form_id;
+		$this->processable = $processable;
+	}
+
+	function set_processable($processable) {
+		$this->processable = $processable;
+	}
+
+	function set_form_id($form_id) {
+		$this->form_id = $form_id;
+	}
+
+	function set_custom_field_error_class($custom_field_error_class) {
+		$this->custom_field_error_class = $custom_field_error_class;
+	}
+	function set_custom_field_warning_class($custom_field_warning_class) {
+		$this->custom_field_warning_class = $custom_field_warning_class;
+	}
+	function set_custom_field_success_class($custom_field_success_class) {
+		$this->custom_field_success_class = $custom_field_success_class;
+	}
+
+	function set_custom_field_group_class($custom_field_group_class) {
+		$this->custom_field_group_class = $custom_field_group_class;
+	}
+
+	function set_custom_label_class($custom_label_class) {
+		$this->custom_label_class = $custom_label_class;
+	}
+
+	function errors() {
+		$this->_check_processable_set(__METHOD__);
+		$html = '';
+		$errors_by_field = $processable->get_errors_by_field();
+		if (count($errors_by_field)) {
+			$html = '<ul class"' . htmlspecialchars($this->form_id) . '__wf_errors" class="wf_errors">';
+			foreach ($processable->get_errors_by_field() as $field_name => $errors) {
+				$html .= '<li>';
+				$html .= '<span class="wf_error_field_name">' . htmlspecialchars($errors['field_label']) . '</span>';
+				$html .= '<ul class="wf_field_errors">';
+				foreach ($errors['errors'] as $error) {
+					$html .= '<li>';
+					$html .= htmlspecialchars($error['error_message']);
+					if (!empty($error['error_details'])) {
+						$field_errors_html .= ' <span class="wf_error_details">' . htmlspecialchars($error['error_details']) . '</span>';
+					}
+					$html .= '</li>';
+				}
+				$html .= '</ul>';
+				$html .= '<li>';
+			}
+			$html .= '</ul>';
+		}
+		return $html;
+	}
+
+	function form_open($extra_classes = '', $extra_attributes = '') {
+		$extra_attributes = static::attributes_string($extra_attributes);
+		return '<function  class="wf_form ' . trim($extra_classes) . '" id="' . htmlspecialchars($this->form_id) . '" ' . $extra_attributes . '>';
+	}
+
+	function form_close() {
+		return '</form>';
+	}
+
+	function label($field_name, $label, $extra_classes = '', $extra_attributes = '') {
+		return '<label class="' $this->custom_label_class . ' ' . trim($extra_classes) . '" for="' . htmlspecialchars(static::field_id($this->form_id, $field_name)) . '" ' . $extra_attributes . '>' . htmlspecialchars($label) . '</label>';
+	}
+
+	function field_error_container($field_name) {
+		$this->_check_processable_set(__METHOD__);
+		$errors = $this->processable->get_errors_by_field();
+		$field_errors_html = '';
+		if ($this->processable->field_has_error($field_name)) {
+			$field_errors_html .= '<ul class="wf_field_errors_inline">';
+			foreach ($errors[$field_name] as $error) {
+				$field_errors_html .= '<li>';
+				$field_errors_html .= htmlspecialchars($error['error_message']);
+				if (!empty($error['error_details'])) {
+					$field_errors_html .= ' <span class="wf_error_details">' . htmlspecialchars($error['error_details']) . '</span>';
+				}
+				$field_errors_html .= '</li>';
+			}
+			$field_errors_html .= '</ul>';
+		}
+		return '<div id="' . htmlspecialchars(static::field_id($this->form_id, $field_name)) . '__wf_field_error_container" class="wf_error_container">' . $field_errors_html . '</div>';
+	}
+
+	function field_group_open($main_field_name, $extra_classes = '', $extra_attributes = '') {
+		$extra_attributes = static::attributes_string($extra_attributes);
+		$this->_check_processable_set(__METHOD__);
+		if ($this->processable->field_has_error($main_field_name)) {
+			$extra_classes .= ' ' . $this->get_custom_field_error_class() . ' wf_error_field';
+		} else if ($this->processable->field_has_warning($main_field_name)) {
+			$extra_classes .= ' ' . $this->get_custom_field_warning_class() . ' wf_warning_field';
+		} else {
+			$extra_classes .= ' ' . $this->get_custom_field_success_class() . ' wf_success_field';
+		}
+		return '<div id="' . htmlspecialchars(static::field_id($this->form_id, $main_field_name)) . '__field_group" class="' . static::get_custom_field_group_class() . ' ' . trim($extra_classes) . '" ' . $extra_attributes . '></div>';
+	}
+
+	function field_group_close() {
+		return '</div>';
+	}
+
+	private function _check_processable_set($function_name) {
+		if (!in_array('\\WorkFrame\\Processable_trait', class_uses($this->processable))) {
+			throw new \Workframe\Exceptions\Unset_processable_exception('This function ' . $function_name . ' of ' . __CLASS__ . ' requires an processable');
+		}
+	}
+
+	function get_custom_field_error_class() {
+		return $this->custom_field_error_class;
+	}
+	function get_custom_field_success_class() {
+		return $this->custom_field_success_class;
+	}
+	function get_custom_field_warning_class() {
+		return $this->custom_field_warning_class;
+	}
+
+	function get_custom_field_group_class() {
+		return $this->custom_field_group_class;
+	}
+
+	function js_process_form_function_name() {
+		return '_workframe_process__'.$this->form_id;
+	}
+	function js_process_field_function_name($field_name) {
+		return '_workframe_process__'.(static::field_id($this->form_id, $field_name));
+	}
+
+	static function field_id($form_id, $field_name) {
+		return $form_id . '__' . $field_name;
+	}
+
+	static function attributes_string($data) {
+		if (is_string($data)) {
+			return trim($data);
+		} else {
+			$attributes = '';
+			foreach ($data as $k => $v) {
+				$attributes.= ' ' . $h . '="' . htmlspecialchars($v) . '"';
+			}
+			return trim($attributes);
+		}
+	}
+
+}

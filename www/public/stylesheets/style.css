@@ -1,0 +1,146 @@
+html,
+body {
+    height: 100%;
+}
+
+.clearfix:after {
+     visibility: hidden;
+     display: block;
+     font-size: 0;
+     content: " ";
+     clear: both;
+     height: 0;
+     }
+.clearfix { display: inline-block; }
+/* start commented backslash hack \*/
+* html .clearfix { height: 1%; }
+.clearfix { display: block; }
+/* close commented backslash hack */
+
+.wrap {
+    min-height: 100%;
+    height: auto;
+    width: auto;
+    margin: 60px 30px 0 30px;
+    padding: 0;
+}
+
+#main_content {padding-bottom: 70px;}
+
+#navigation {
+    margin-top: 20px;
+}
+
+.footer {
+    height: 60px;
+    clear:both;
+    width: 100%;
+    background-color: #f5f5f5;
+    border-top: 1px solid #ddd;
+    padding: 20px 30px;
+    position:fixed;
+    bottom:0;
+}
+
+.submenu a {
+    background: #f5f5f5;
+    border-radius: 0;
+}
+
+.submenu a:hover, .submenu a:active,
+.submenu a.active, .submenu a.active:hover, .submenu a.active:active {
+    background: #44b5f6;
+    border-color: #44b5f6;
+    border-radius: 0;
+    color: #fff;
+}
+
+.detail-header {
+    margin-top: 30px;
+}
+
+.doc-description {
+    border-left: solid 1px #ddd;
+    border-right: solid 1px #ddd;
+    padding: 10px 8px;
+    margin: 0;
+}
+
+.event-doc .doc-description {
+    border-bottom: solid 1px #ddd;
+}
+
+.doc-description p:last-child {
+    margin-bottom: 0;
+}
+
+.signature-defs {
+    color: #936;
+}
+
+.signature-type, .signature-type a {
+    color: #693;
+}
+
+.tool-link {
+    float: right;
+    color: #ddd;
+    margin: 0 8px;
+}
+
+.icon-hash:before {
+    content: '#';
+    font-size: 32px;
+    font-weight: bold;
+    /*top: -10px;*/
+    line-height: 0.5;
+}
+
+.tool-link:hover {
+    color: #bbb;
+    text-decoration: none;
+}
+
+.hashlink {
+    display: none;
+}
+
+h1:hover .hashlink, h2:hover .hashlink, h3:hover .hashlink, h4:hover .hashlink, h5:hover .hashlink {
+    display: inline;
+}
+
+.toplink {
+    position: fixed;
+    bottom: 50px;
+    right: 50px;
+
+    padding: 5px 8px 0 5px;
+
+    border: solid 1px #ddd;
+    border-radius: 5px;
+    background: #fff;
+}
+
+.toplink a {
+    color: #bbb;
+    text-decoration: none;
+}
+
+.toplink a:hover {
+    color: #999;
+    text-decoration: none;
+}
+
+.navbar-form {
+    width: 50%;
+    max-width: 350px;
+}
+
+.navbar-form div, .navbar-form .form-control {
+    width: 100%;
+}
+
+
+
+
+dl { border: 3px double #ccc; padding: 0.5em; } dt { float: left; clear: left; width: 130px; text-align: right; font-weight: bold;  } dt:after { content: ":"; } dd { display:block; margin: 0 0 0 140px; padding: 0 0 0.5em 0; }
