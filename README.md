@@ -20,7 +20,7 @@
 <p>Then they get upgraded, rewritten, changed beyond recognition which then causes everyone pain!</p>
 <p>My advice is to avoid relying on the framework for detailed application logic.</p>
 <p>Anything more complex is likely to have bespoke requirements that the framework does not attempt to provide.</p>
-<p>This is a small, flexible framework that will be basic enough to upgrade to future versions of PHP with little pain, yet powerful enough to provide the primary features we always required.</p>
+<p>I decided I wanted to write a small flexible framework that will be basic enough to upgrade to future versions of PHP with little pain, yet powerful enough to provide the primary features we always required.</p>
 
 <hr/>
 <h2>Quick start <span id="quick-start"></span><a href="#quick-start" class="hashlink">&para;</a></h2>
@@ -28,12 +28,12 @@
 <ol>
 	<li><a title="Download this" href="http://tombrown.xyz/downloads/workframe.zip">Download this</a> or <a href="#">pull it from github</a></li>
 	<li>Understand what is included (3 directories)
-		<ol>The <em>App</em> directory - This will contain your custom application code (which is this site by default)</ol>
+		<ol>The <em>ExampleApp</em> directory - This contains the custom application code (which is this site by default)</ol>
 		<ol>The <em>WorkFrame</em> directory - This is the framework</ol>
 		<ol>The <em>www</em> directory - This is your web root (often called htdocs, public_html, etc)</ol>
 	</li>
 	<br/>
-	<p>You most likely want to keep your <em>App</em> and <em>WorkFrame</em> outside the web root - but it's your server so do as you please.</p>
+	<p>You most likely want to keep your <em>ExampleApp</em> and <em>WorkFrame</em> outside the web root - but it's your server so do as you please.</p>
 	<li>(Assuming you run apache and have a vhost ready,) add the following to your vhost config (to route all requests to the framework entry script.)
 		<br/>
 		<pre>
