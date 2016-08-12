@@ -119,7 +119,7 @@
 </p>
 <p>View data can be passed to the templates and partials with the add_view_var/add_view_vars() method.</p>
 <p>By default, each Request handler and action will have a corresponding partial file path (<em><strong>$YOUR_APP</strong>/html/partials/request_handler_dir_path/request_handler_name/action_name</em> (lowercased))</p>
-<p>There is also a directory for templates: <em><strong>$YOUR_APP</strong>/html/tempaltes/</em>. You can automatically render your partials into templates by passing the template sub path into <strong>$this->render(...)</strong> </p>
+<p>There is also a directory for templates: <em><strong>$YOUR_APP</strong>/html/templates/</em>. You can automatically render your partials into templates by passing the template sub path into <strong>$this->render(...)</strong> </p>
 
 
 <h3>The Processor_trait</h3>
