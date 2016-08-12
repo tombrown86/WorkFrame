@@ -60,6 +60,7 @@
 	<dd>If not provided, index is taken as the default values for both method names and Request_handler names</dd>
 	<dd>Note, feel free to override pre_action_hook and post_action_hook, you can probably guess when they get called</dd>
 	<dd>You can perform Exception based rerouting by throwing a <em>\WorkFrame\Exceptions\Request_handler_rewrite_exception</em></dd>
+
 	<br/>
 	<dt>Model layer</dt>
 	<dd>Handles "business logic" including data manipulation and data storage</dd>
@@ -84,7 +85,7 @@
 	<dd>They can optionally exhibit <strong>scenarios</strong>, which you define as the programmer to describe the different roles &amp;/or rules of the object</dd>
 	<dd>Attribute lists can be defined for each scenario to dictate which attributes can be "mass assigned" (E.g. from a _POST or data mapper)</dd>
 	<dd>There are some convenience methods like <strong>from_assoc</strong> and <strong>to_assoc</strong> which you can use to help work with the objects data</dd>
-	<dd>YOu can use the \WorkFrame\Magic_get_set_trait to automatically implement get/set behaviour for calls to nonexisting <em>$this->get_privatevarname()</em> methods or referencing private attributes externally with <em>$this->$varname</em> (Use this sesnsibly!)</dd>
+	<dd>You can use the \WorkFrame\Magic_get_set_trait to automatically implement get/set behaviour for calls to nonexisting <em>$this->get_privatevarname()</em> methods AS WELL AS referencing private attributes externally with <em>$this->$varname</em> (Use this sesnsibly!)</dd>
 	<br/>
 	<dt>Data_mapper</dt>
 	<dd>You write your own by extending <em>\WorkFrame\Data_mapper</em></dd>
@@ -95,7 +96,10 @@
 	<dd>These should not contain (hardly any!) logic.. keep them simple. Their most complex feature may be to apply a condition to a data select</dd>
 	<dd>You may want to implement this instead with an ORM library, or perhaps have it just implement a DB access helper library (ActiveRecord, data table gateway etc)</dd>
 </dl>
-<h4>Instance sharing</h4>
+
+
+
+<h3>Loader / instance sharing</h3>
 <p>Anything which extends or implements any of the core components of WorkFrame (which are most things,) can easily label and share instances. </p>
 <p><strong>For example:</strong></p>
 <ul>
@@ -104,20 +108,18 @@
 <li>You can also do this with domain objects and data mappers with <strong>$this->DOMAIN_OBJECT(...)</strong> and  <strong>$this->DATA_MAPPER(...)</strong> respectively</li>
 </ul>
 
-<h3>Loader</h3>
-<p>You can load variable components (libraries, services, data_mappers and domain objects) by calling:<br><em>$this->SERVICE($component_classname), $this->DATA_MAPPER($component_classname), etc</em></p>
-<p>You can pass an identifer as a second parameter if you want it to be available as if it were a local variable.</p>
 <p>To unload an existing instance call:<br/><em>$this->UNLOAD($component_type, $component_name)</em></p>
 
 
 <h3>The Renderer_trait</h3>
-
-<p>Whilst it isn't written in stone, you will most likely invoke templates and partials from classes which have this trait (of which Request_handlers are all examples)</p>
+<p>All your Request_handlers will exhibit this trait automatically.</p>
+<p>Whilst it isn't written in stone, you will most likely invoke templates and partials from classes which have this trait</p>
 <p>Things using this trait can make use of it's add_script<i>s</i>() and add_stylesheet<i>s</i>() methods to conveniently append JS/stylesheet tags to a template
-	<br/><small>(Note: There is a built in tool to minify such client side code)</small>
+	<br/><small>(Note: There is a built in tool to minify such client side code by passing true as the 2nd parameter to <em>add_script(...)</em> based methods)</small>
 </p>
-<p>View data can be passed to the templates and partials with the add_view_vars() method.</p>
-
+<p>View data can be passed to the templates and partials with the add_view_var/add_view_vars() method.</p>
+<p>By default, each Request handler and action will have a corresponding partial file path (<em><strong>$YOUR_APP</strong>/html/partials/request_handler_dir_path/request_handler_name/action_name</em> (lowercased))</p>
+<p>There is also a directory for templates: <em><strong>$YOUR_APP</strong>/html/tempaltes/</em>. You can automatically render your partials into templates by passing the template sub path into <strong>$this->render(...)</strong> </p>
 
 
 <h3>The Processor_trait</h3>
