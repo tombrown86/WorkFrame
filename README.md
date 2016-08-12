@@ -59,6 +59,7 @@
 	<dd>Requests are mapped to these handlers based on URL segments, with the last being the action name (method name) (E.g. /directoryname/request_handler_name/method_name?get_vars_here</dd>
 	<dd>If not provided, index is taken as the default values for both method names and Request_handler names</dd>
 	<dd>Note, feel free to override pre_action_hook and post_action_hook, you can probably guess when they get called</dd>
+	<dd>You can perform Exception based rerouting by throwing a <em>\WorkFrame\Exceptions\Request_handler_rewrite_exception</em></dd>
 	<br/>
 	<dt>Model layer</dt>
 	<dd>Handles "business logic" including data manipulation and data storage</dd>
@@ -82,6 +83,8 @@
 	<dd>They can represent any kind of entity you like, including web forms &amp;/or data for persistance (sometimes 1:1 with DB tables)</dd>
 	<dd>They can optionally exhibit <strong>scenarios</strong>, which you define as the programmer to describe the different roles &amp;/or rules of the object</dd>
 	<dd>Attribute lists can be defined for each scenario to dictate which attributes can be "mass assigned" (E.g. from a _POST or data mapper)</dd>
+	<dd>There are some convenience methods like <strong>from_assoc</strong> and <strong>to_assoc</strong> which you can use to help work with the objects data</dd>
+	<dd>YOu can use the \WorkFrame\Magic_get_set_trait to automatically implement get/set behaviour for calls to nonexisting <em>$this->get_privatevarname()</em> methods or referencing private attributes externally with <em>$this->$varname</em> (Use this sesnsibly!)</dd>
 	<br/>
 	<dt>Data_mapper</dt>
 	<dd>You write your own by extending <em>\WorkFrame\Data_mapper</em></dd>
@@ -92,7 +95,14 @@
 	<dd>These should not contain (hardly any!) logic.. keep them simple. Their most complex feature may be to apply a condition to a data select</dd>
 	<dd>You may want to implement this instead with an ORM library, or perhaps have it just implement a DB access helper library (ActiveRecord, data table gateway etc)</dd>
 </dl>
-
+<h4>Instance sharing</h4>
+<p>Anything which extends or implements any of the core components of WorkFrame (which are most things,) can easily label and share instances. </p>
+<p><strong>For example:</strong></p>
+<ul>
+<li>Use <strong>$this->SERVICE('Service_name', 'service_label')</strong> to instantiate a service, and then reference it anywhere with <strong>$this->service_label</strong></li>
+<br>(or just omit the 2nd param to get an individual instance)
+<li>You can also do this with domain objects and data mappers with <strong>$this->DOMAIN_OBJECT(...)</strong> and  <strong>$this->DATA_MAPPER(...)</strong> respectively</li>
+</ul>
 
 <h3>Loader</h3>
 <p>You can load variable components (libraries, services, data_mappers and domain objects) by calling:<br><em>$this->SERVICE($component_classname), $this->DATA_MAPPER($component_classname), etc</em></p>
@@ -114,6 +124,7 @@
 
 <p>Processors can be attached to fields and can manipulate and/or validate data. The framework comes with some but you can add your own. There is a mechanism for them to work client side (with JavaScript), if the processor has been coded as such</p>
 <p>Processors (/validation rules) can be attached to a subset to fields as well as a subset of scenarios on the entity (if the trait is used on a Domain_object (or infact anything with a scenario attribute)).</p>
+<p>These can be used to validate/correct form fields inline - on the fly (using client, serverside or both.)</p>
 
 <h3>\WorkFrame\Html\Form_tools</h3>
 <p>To help you write your HTML. These can be instantiated and entities. They return HTML for common things (like form fields and validation errors.)</p>
@@ -136,7 +147,6 @@
 <p>There are some standard hooks (like pre router, pre action etc) which can be defined in this class. You can also use this class to do anything application wide (like store current user, etc.)</p>
 <p></p>
 
-<br/>
 
 <h3>Logging</h3>
 <p>There is a very simple logging mechanism which is basically a single function: <em>log_message($level, $message)</em>. It writes to a logs directory in your App.</p>
