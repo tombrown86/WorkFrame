@@ -17,7 +17,25 @@ class Request_handler {
 	function pre_action_hook() {
 		// Would usually only get utilised if template rendered
 		$workframe_scripts_dir = WORKFRAME_PATH . '/js';
-		$this->add_scripts([$workframe_scripts_dir . '/jquery-3.0.0.js', $workframe_scripts_dir . '/_workframe_functions.js', $workframe_scripts_dir . '/_workframe_processors.js'], TRUE, '_workframe_standard');
+		
+		$scripts = [];
+		
+		$use_jquery = conf('javascript')['use_jquery'];
+		$use_workframe_functions = conf('javascript')['use_workframe_functions'];
+		$use_workframe_processors = conf('javascript')['use_workframe_processors'];
+		
+		if($use_workframe_functions) {
+			$scripts[] = $workframe_scripts_dir . '/_workframe_functions.js';
+		}
+		if($use_workframe_processors) {
+			$scripts[] = $workframe_scripts_dir . '/_workframe_processors.js';
+		}
+		if($use_jquery) {
+			array_unshift($scripts, $workframe_scripts_dir . '/jquery-'.conf('javascript')['jquery_version'].'.js');
+		}
+		if($scripts) {
+			$this->add_scripts($scripts, TRUE, '_workframe_standard');
+		}
 	}
 
 	function post_action_hook() {
