@@ -442,8 +442,15 @@ class Form_tools {
 	}
 
 	private function _get_value($field_name) {
-		$get_func = 'get_'.$field_name;
-		return method_exists($this->processable, $get_func) ? $this->processable->$get_func() : '';
+		$get_method = 'get_'.$field_name;
+		$value = '';
+		if (is_callable([$this->processable, $get_method])) { 
+			try {
+				$value = $this->processable->$get_method();
+			} catch (\WorkFrame\Exceptions\No_property_to_get_or_set_exception $e) {
+			}
+		}
+		return $value;
 	}
 	
 	function checkbox_field_group($field_name, $args = []) {

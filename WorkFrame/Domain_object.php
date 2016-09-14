@@ -53,8 +53,11 @@ class Domain_object {
 		foreach ($fields as $k) {
 			if (!$respect_current_scenario || !isset($this->scenario) || in_array($k, $this->scenarios[$this->scenario])) {
 				$get_method = 'get_' . $k;
-				if (is_callable($this, $get_method)) {
-					$data[$k] = $this->$get_method();
+				if (is_callable([$this, $get_method])) {
+					try {
+						$data[$k] = $this->$get_method();
+					} catch (\WorkFrame\Exceptions\No_property_to_get_or_set_exception $e) {                                                                                 
+                    }    
 				}
 			}
 		}
