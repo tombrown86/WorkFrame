@@ -16,7 +16,7 @@
 <p>This is a first attempt at a super lightweight PHP7 compatible framework that exists to achieve the very basic standard requirements of a framework with (hopefully) a couple of useful unexpected extras.</p>
 
 <h2>Motivation <span id="motivation"></span><a href="#motivation" class="hashlink">&para;</a></h2>
-<p>In my experience, frameworks are great for handling the bread and butter basics. However can become tiresom to work with when they have overbearing complexity.</p>
+<p>In my experience, frameworks are great for handling the bread and butter basics. However, they can become tiresom to work with when they have overbearing complexity.</p>
 <p>Then they get upgraded, rewritten, changed beyond recognition which then causes everyone pain!</p>
 <p>My advice is to avoid relying on the framework for detailed application logic.</p>
 <p>Anything more complex is likely to have bespoke requirements that the framework does not attempt to provide.</p>
@@ -59,6 +59,8 @@
 	<dd>Requests are mapped to these handlers based on URL segments, with the last being the action name (method name) (E.g. /directoryname/request_handler_name/method_name?get_vars_here</dd>
 	<dd>If not provided, index is taken as the default values for both method names and Request_handler names</dd>
 	<dd>Note, feel free to override pre_action_hook and post_action_hook, you can probably guess when they get called</dd>
+	<dd>You can perform Exception based rerouting by throwing a <em>\WorkFrame\Exceptions\Request_handler_rewrite_exception</em></dd>
+
 	<br/>
 	<dt>Model layer</dt>
 	<dd>Handles "business logic" including data manipulation and data storage</dd>
@@ -82,6 +84,8 @@
 	<dd>They can represent any kind of entity you like, including web forms &amp;/or data for persistance (sometimes 1:1 with DB tables)</dd>
 	<dd>They can optionally exhibit <strong>scenarios</strong>, which you define as the programmer to describe the different roles &amp;/or rules of the object</dd>
 	<dd>Attribute lists can be defined for each scenario to dictate which attributes can be "mass assigned" (E.g. from a _POST or data mapper)</dd>
+	<dd>There are some convenience methods like <strong>from_assoc</strong> and <strong>to_assoc</strong> which you can use to help work with the objects data</dd>
+	<dd>You can use the \WorkFrame\Magic_get_set_trait to automatically implement get/set behaviour for calls to nonexisting <em>$this->get_privatevarname()</em> methods AS WELL AS referencing private attributes externally with <em>$this->$varname</em> (Use this sesnsibly!)</dd>
 	<br/>
 	<dt>Data_mapper</dt>
 	<dd>You write your own by extending <em>\WorkFrame\Data_mapper</em></dd>
@@ -94,26 +98,35 @@
 </dl>
 
 
-<h3>Loader</h3>
-<p>You can load variable components (libraries, services, data_mappers and domain objects) by calling:<br><em>$this->SERVICE($component_classname), $this->DATA_MAPPER($component_classname), etc</em></p>
-<p>You can pass an identifer as a second parameter if you want it to be available as if it were a local variable.</p>
+
+<h3>Loader / instance sharing</h3>
+<p>Anything which extends or implements any of the core components of WorkFrame (which are most things,) can easily label and share instances. </p>
+<p><strong>For example:</strong></p>
+<ul>
+<li>Use <strong>$this->SERVICE('Service_name', 'service_label')</strong> to instantiate a service, and then reference it anywhere with <strong>$this->service_label</strong></li>
+<br>(or just omit the 2nd param to get an individual instance)
+<li>You can also do this with domain objects and data mappers with <strong>$this->DOMAIN_OBJECT(...)</strong> and  <strong>$this->DATA_MAPPER(...)</strong> respectively</li>
+</ul>
+
 <p>To unload an existing instance call:<br/><em>$this->UNLOAD($component_type, $component_name)</em></p>
 
 
 <h3>The Renderer_trait</h3>
-
-<p>Whilst it isn't written in stone, you will most likely invoke templates and partials from classes which have this trait (of which Request_handlers are all examples)</p>
+<p>All your Request_handlers will exhibit this trait automatically.</p>
+<p>Whilst it isn't written in stone, you will most likely invoke templates and partials from classes which have this trait</p>
 <p>Things using this trait can make use of it's add_script<i>s</i>() and add_stylesheet<i>s</i>() methods to conveniently append JS/stylesheet tags to a template
-	<br/><small>(Note: There is a built in tool to minify such client side code)</small>
+	<br/><small>(Note: There is a built in tool to minify such client side code by passing true as the 2nd parameter to <em>add_script(...)</em> based methods)</small>
 </p>
-<p>View data can be passed to the templates and partials with the add_view_vars() method.</p>
-
+<p>View data can be passed to the templates and partials with the add_view_var/add_view_vars() method.</p>
+<p>By default, each Request handler and action will have a corresponding partial file path (<em><strong>$YOUR_APP</strong>/html/partials/request_handler_dir_path/request_handler_name/action_name</em> (lowercased))</p>
+<p>There is also a directory for templates: <em><strong>$YOUR_APP</strong>/html/templates/</em>. You can automatically render your partials into templates by passing the template sub path into <strong>$this->render(...)</strong> </p>
 
 
 <h3>The Processor_trait</h3>
 
 <p>Processors can be attached to fields and can manipulate and/or validate data. The framework comes with some but you can add your own. There is a mechanism for them to work client side (with JavaScript), if the processor has been coded as such</p>
 <p>Processors (/validation rules) can be attached to a subset to fields as well as a subset of scenarios on the entity (if the trait is used on a Domain_object (or infact anything with a scenario attribute)).</p>
+<p>These can be used to validate/correct form fields inline - on the fly (using client, serverside or both.)</p>
 
 <h3>\WorkFrame\Html\Form_tools</h3>
 <p>To help you write your HTML. These can be instantiated and entities. They return HTML for common things (like form fields and validation errors.)</p>
@@ -136,7 +149,6 @@
 <p>There are some standard hooks (like pre router, pre action etc) which can be defined in this class. You can also use this class to do anything application wide (like store current user, etc.)</p>
 <p></p>
 
-<br/>
 
 <h3>Logging</h3>
 <p>There is a very simple logging mechanism which is basically a single function: <em>log_message($level, $message)</em>. It writes to a logs directory in your App.</p>
