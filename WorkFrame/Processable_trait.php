@@ -12,17 +12,17 @@ trait Processable_trait {
 	protected $errors = [];
 	protected $warnings = [];
 	protected $processors = [];
-	private $prepared_processors = FALSE;
-	private $is_processed = FALSE;
-	private $bootstrap_form_tools;
-	private $form_tools;
+	private $_prepared_processors = FALSE;
+	private $_is_processed = FALSE;
+	private $_bootstrap_form_tools;
+	private $_form_tools;
 
 	function __construct() {
 		
 	}
 
 	private function _prepare_processors() {
-		if (!$this->prepared_processors) {
+		if (!$this->_prepared_processors) {
 			$this->prepare_processors();
 			// If a lazy programmer declared validator as a string, create it here
 			foreach ($this->processors as $k => $processor) {
@@ -40,7 +40,7 @@ trait Processable_trait {
 					}
 				}
 			}
-			$this->prepared_processors = TRUE;
+			$this->_prepared_processors = TRUE;
 		}
 	}
 
@@ -96,16 +96,16 @@ trait Processable_trait {
 				}
 			}
 		}
-		$this->is_processed = TRUE;
+		$this->_is_processed = TRUE;
 		return count($this->errors) === 0;
 	}
 
 	function is_processed() {
-		return $this->is_processed;
+		return $this->_is_processed;
 	}
 
 	function set_is_processed($is_processed) {
-		$this->is_processed = $is_processed;
+		$this->_is_processed = $is_processed;
 	}
 
 	function get_client_side_processor_code($form_id) {
@@ -279,21 +279,21 @@ trait Processable_trait {
 	}
 
 	function get_form_tools($form_id) {
-		if (!isset($this->form_tools) || $this->form_tools->get_form_id() != $form_id) {
-			$this->form_tools = new \WorkFrame\Html\Form_tools($form_id, $this);
+		if (!isset($this->_form_tools) || $this->_form_tools->get_form_id() != $form_id) {
+			$this->_form_tools = new \WorkFrame\Html\Form_tools($form_id, $this);
 		}
-		return $this->form_tools;
+		return $this->_form_tools;
 	}
 
 	function get_bootstrap_form_tools($form_id) {
-		if (!isset($this->bootstrap_form_tools) || $this->bootstrap_form_tools->get_form_id() != $form_id) {
-			$this->bootstrap_form_tools = new \WorkFrame\Html\Bootstrap_form_tools($form_id, $this);
+		if (!isset($this->_bootstrap_form_tools) || $this->_bootstrap_form_tools->get_form_id() != $form_id) {
+			$this->_bootstrap_form_tools = new \WorkFrame\Html\Bootstrap_form_tools($form_id, $this);
 		}
-		return $this->bootstrap_form_tools;
+		return $this->_bootstrap_form_tools;
 	}
 
 	function all_fields() {
-		return get_object_vars($this);
+		return array_keys(get_object_vars($this));
 	}
 
 }

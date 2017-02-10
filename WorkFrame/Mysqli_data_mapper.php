@@ -26,7 +26,7 @@ class Mysqli_data_mapper {
 				$msg = "Error: Unable to connect to MySQL. "
 					. " Debugging errno: " . mysqli_connect_errno()
 					. " Debugging error: " . mysqli_connect_error();
-				log_error('ERROR', $msg);
+				log_message(WF_LOG_LEVEL_ERROR, $msg);
 				throw new \WorkFrame\Exceptions\Database_connection_exception($msg);
 			}
 
@@ -90,7 +90,7 @@ class Mysqli_data_mapper {
 		return $row ? array_pop($row) : FALSE;
 	}
 	protected function comma_separated_ints($id_array) {
-		$id_array = array_walk('intval', $id_array);
+		array_walk($id_array, 'intval');
 		return implode($id_array, ',');
 	}
 	protected function last_id($connection_identifier=null) {

@@ -57,6 +57,7 @@ if(isset($routes[0]) && $routes[0] === '_async_processor') {
 		$request_handler = new $class();
 		$action = 'error_404';
 		$routes = ['error'];
+		header("HTTP/1.0 404 Not Found");
 	}
 
 
@@ -70,6 +71,9 @@ handle_route:
 // The request may be rewritten at this point(E.g. for 403)
 try {
 	// Prepare request handler for execution
+	if(!$request_handler instanceof WorkFrame\Request_handler) {
+		throw new WorkFrame\Exceptions\Class_is_not_a_request_handler_exception;
+	}
 	$request_handler->set_routes($routes);
 	$request_handler->set_action($action);
 	$_workframe->set_request_handler($request_handler);

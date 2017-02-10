@@ -38,9 +38,9 @@ function _wf_show_errors(form_id, errors) {
 
 	for (i in errors[field_name]) {
 	    error = errors[field_name][i];
-	    html += '<li>' + _wf_h(error['error_message']);
+	    html += '<li>' + wf_h(error['error_message']);
 	    if (error["error_details"]) {
-		html += " <span class'wf_error_details'>" + (_wf_h(error['error_details'])) + "</span>";
+		html += " <span class'wf_error_details'>" + (wf_h(error['error_details'])) + "</span>";
 	    }
 	    html += '</li>';
 	}
@@ -62,9 +62,9 @@ function _wf_show_warnings(form_id, warnings) {
 	for (i in warnings[field_name]) {
 	    warning = warnings[field_name][i];
 
-	    html += '<li>' + _wf_h(warning['warning_message']);
+	    html += '<li>' + wf_h(warning['warning_message']);
 	    if (warning["warning_details"]) {
-		html += " <span class'wf_warning_details'>" + (_wf_h(warning['warning_details'])) + "</span>";
+		html += " <span class'wf_warning_details'>" + (wf_h(warning['warning_details'])) + "</span>";
 	    }
 	    html += '</li>';
 	}

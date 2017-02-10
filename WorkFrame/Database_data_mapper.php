@@ -29,7 +29,7 @@ class Database_data_mapper {
 				$msg = "Error: Unable to connect to MySQL. "
 						. " Debugging errno: " . mysqli_connect_errno()
 						. " Debugging error: " . mysqli_connect_error();
-				log_error('ERROR', $msg);
+				log_message(WF_LOG_LEVEL_ERROR, $msg);
 				throw new \WorkFrame\Exceptions\Database_connection_exception($msg);
 			}
 

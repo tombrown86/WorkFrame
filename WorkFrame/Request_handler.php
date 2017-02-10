@@ -68,4 +68,15 @@ class Request_handler {
 
 		return $this->render($partial, $template);
 	}
+	
+	function route_render_action($action, $template = null) {
+		$partial = '';
+		foreach ($this->routes as $route) {
+			$partial .= $route . '/';
+		}
+		$partial .= $action . '.php';
+		$partial = strtolower($partial);
+
+		return $this->render($partial, $template);
+	}
 }

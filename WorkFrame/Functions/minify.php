@@ -36,7 +36,7 @@ function minify($files, $output_name = null, $filetype = 'js', $print_tags = tru
 		$path = (strpos($file, '/') === 0) ? $file : $full_public_path . preg_replace('/\?.*/', '', $file);
 
 		if (!is_readable($path)) {
-			log_message('WARNING', 'JS file not found or not readable: ' . $path);
+			log_message(WF_LOG_LEVEL_WARNING, 'JS file not found or not readable: ' . $path);
 			unset($files[$k]);
 		} else {
 			$files[$k] = $path;
@@ -81,9 +81,9 @@ function minify($files, $output_name = null, $filetype = 'js', $print_tags = tru
 		if (($f = fopen($full_public_path . $min_file, 'w')) && fwrite($f, trim($code, "\n")) > 0) {
 			//  die($full_public_path . $min_file);
 			fclose($f);
-			log_message('info', "Written minified $filetype code to: $full_public_path$min_file");
+			log_message(WF_LOG_LEVEL_INFO, "Written minified $filetype code to: $full_public_path$min_file");
 		} else {
-			log_message('error', "Couldn't write minified $filetype code to: $full_public_path$min_file.. Check perms?");
+			log_message(WF_LOG_LEVEL_ERROR, "Couldn't write minified $filetype code to: $full_public_path$min_file.. Check perms?");
 			throw new \WorkFrame\Exceptions\Cant_write_minify_file_exception();
 		}
 

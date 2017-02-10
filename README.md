@@ -34,7 +34,7 @@
 	</li>
 	<br/>
 	<p>You most likely want to keep your <em>ExampleApp</em> and <em>WorkFrame</em> outside the web root - but it's your server so do as you please.</p>
-	<li>(Assuming you run apache and have a vhost ready,) add the following to your vhost config (to route all requests to the framework entry script.)
+	<li>(Assuming you run apache and have a vhost ready,) add the following to your vhost config (to route all requests to the framework entry script).
 		<br/>
 		<pre>
 	&lt;Directory /var/www/yourapp/www&gt;
@@ -126,10 +126,10 @@
 
 <p>Processors can be attached to fields and can manipulate and/or validate data. The framework comes with some but you can add your own. There is a mechanism for them to work client side (with JavaScript), if the processor has been coded as such</p>
 <p>Processors (/validation rules) can be attached to a subset to fields as well as a subset of scenarios on the entity (if the trait is used on a Domain_object (or infact anything with a scenario attribute)).</p>
-<p>These can be used to validate/correct form fields inline - on the fly (using client, serverside or both.)</p>
+<p>These can be used to validate/correct form fields inline - on the fly (using client, serverside or both).</p>
 
 <h3>\WorkFrame\Html\Form_tools</h3>
-<p>To help you write your HTML. These can be instantiated and entities. They return HTML for common things (like form fields and validation errors.)</p>
+<p>To help you write your HTML. These can be instantiated and entities. They return HTML for common things (like form fields and validation errors).</p>
 <p>They also (like most things) be extended if you want extra functionality.</p>
 
 <h3>\WorkFrame\Libraries\Session</h3>
@@ -146,17 +146,18 @@
 
 <h3>Application class (\App\App), hooks, etc</h3>
 <p>Your app will probably want one of these sitting in it's route. It must have the same classname (and filename) as your application namespace. It must extend \WorkFrame\WorkFrame.</p>
-<p>There are some standard hooks (like pre router, pre action etc) which can be defined in this class. You can also use this class to do anything application wide (like store current user, etc.)</p>
+<p>There are some standard hooks (like pre router, pre action etc) which can be defined in this class. You can also use this class to do anything application wide (like store current user, etc).</p>
 <p></p>
 
 
 <h3>Logging</h3>
-<p>There is a very simple logging mechanism which is basically a single function: <em>log_message($level, $message)</em>. It writes to a logs directory in your App.</p>
+<p>There is a very simple logging mechanism which is basically a single function: <em>log_message($level, $message, $debug_silent=FALSE)</em>. It writes to a logs directory in your App.</p>
+<p>You can use your own customer error levels as well if you like, but there are some predefined constants you may use: APP_LOG_LEVEL_WARNING, APP_LOG_LEVEL_ERROR and APP_LOG_LEVEL_INFO. Unless $debug_silent is passed as TRUE, any errors which aren't APP_LOG_LEVEL_INFO will get printed in the response if the app is in debug mode.</p>
 
 <h3>Conf</h3>
 <p>This is a simple mecahnism to define and retrieve config from files in the Conf directory.</p>
 <p>Simple call conf($conf_filename) to call and return data from the conf with that $conf_filename.</p>
-<p>If you want to use the existing mysql DB support, you must define (1 or more) DB connections in db.php (see example file.)</p>
+<p>If you want to use the existing mysql DB support, you must define (1 or more) DB connections in db.php (see example file).</p>
 <hr/>
 
 
@@ -182,7 +183,7 @@
 	<li>No support for internationalisation</li>
 	<li>No built in benchmarking</li>
 	<li>No testing suite. Infact, the framework itself isn't unit tested.. 
-<br/><small>Unit tests could probably be written for your application components without problem. There is potentially an issue with anything loaded through the WorkFrame Loader ($this->LOAD) since it loads components using some magic (and not using dependency injection.) I think this issue can be worked around by overwriting the loader with your own fake test loader (you can inject it with set_loader, a func which should be available on all components.)</small></li>
+<br/><small>Unit tests could probably be written for your application components without problem. There is potentially an issue with anything loaded through the WorkFrame Loader ($this->LOAD) since it loads components using some magic (and not using dependency injection). I think this issue can be worked around by overwriting the loader with your own fake test loader (you can inject it with set_loader, a func which should be available on all components).</small></li>
 	<li>No caching</li>
 	<li>... it could go on for a while</li>
 </ol>

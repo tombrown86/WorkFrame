@@ -336,8 +336,35 @@ class Form_tools {
 				.'</select>';
 	}
 	
+	/**
+	 * 
+	 * @param array $options  
+	 * @param string $selected_value
+	 * @return string
+	 */
 	static function select_options($options=[], $selected_value=null) {
 		$h = "\n";
+		
+//		$is_assoc = array_keys($options) !== $options;
+//		
+//		if(!$is_assoc) {
+//			// check all keys were ints (not strings)
+//			$all_keys_ints = TRUE;
+//			foreach($options as $k=>$v) {
+//				if(!is_int($k)) {
+//					$all_keys_ints = FALSE;
+//					break;
+//				}
+//			}
+//			if($all_keys_ints) {
+//				$options_assoc = [];
+//				foreach($options as $k=>$v) {
+//					$options_assoc[$v] = $v;
+//				}
+//				$options = $options_assoc;
+//			}
+//		}
+		
 		foreach($options as $k=>$v) {
 			if($k == $selected_value) {
 				$selected_attr = 'selected="selected" ';

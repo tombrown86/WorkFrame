@@ -45,8 +45,13 @@ if(!$_workframe instanceof \WorkFrame\WorkFrame) {
 // Route request (hand over to application code)
 
 try {
-	if (php_sapi_name() == "cli") {
-		// In cli-mode
+	if(defined('WORKFRAME_FORCE_INTERFACE')) {
+		$interface = WORKFRAME_FORCE_INTERFACE == "cli" ? 'cli' : 'web';
+	} else {
+		$interface = php_sapi_name() == "cli" ? 'cli' : 'web';
+	}
+	if ($interface == "cli") {
+                // In cli-mode
 		$_workframe->pre_cli_router_hook();
 		include(WORKFRAME_PATH . '/cli_router.php');
 		$_workframe->post_cli_router_hook();

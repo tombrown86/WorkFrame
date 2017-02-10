@@ -27,7 +27,9 @@ class Domain_object {
 	function from_assoc($data, $respect_current_scenario = TRUE) {
 		//if(!is_array($data)) die(print_r($data) . debug_print_backtrace());
 		foreach ($data as $k => $v) {
-			if (!$respect_current_scenario || !isset($this->scenario) || in_array($k, $this->scenarios[$this->scenario])) {
+			if (is_string($k)
+					&& $k[0] != '_'
+					&& (!$respect_current_scenario || !isset($this->scenario) || in_array($k, $this->scenarios[$this->scenario]))) {
 				$set_method = 'set_' . $k;
 				if (is_callable([$this, $set_method])) { // We want to just ignore vars in data that aren't relevant
 					try {
@@ -51,7 +53,9 @@ class Domain_object {
 	function to_assoc($fields = NULL, $respect_current_scenario = TRUE) {
 		$data = [];
 		foreach ($fields as $k) {
-			if (!$respect_current_scenario || !isset($this->scenario) || in_array($k, $this->scenarios[$this->scenario])) {
+			if (is_string($k)
+					&& $k[0] != '_'
+					&& (!$respect_current_scenario || !isset($this->scenario) || in_array($k, $this->scenarios[$this->scenario]))) {
 				$get_method = 'get_' . $k;
 				if (is_callable([$this, $get_method])) {
 					try {
