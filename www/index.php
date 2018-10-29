@@ -1,2 +1,2 @@
 <?php
-include(__DIR__ . '/../WorkFrame/init.php');
+include('../ExampleApp/init.php');

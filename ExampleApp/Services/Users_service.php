@@ -81,8 +81,8 @@ class Users_service extends \WorkFrame\Service {
 	function new_user() {
 		/* @var $do \ExampleApp\Domain_objects\User */
 		$user = $this->DOMAIN_OBJECT('User', 'New_user');
-		$user->set_type('user');
-		$user->set_sub_type('editor');
+		$user->set_user_type('user');
+		$user->set_user_sub_type('editor');
 		
 		return $user;
 	}

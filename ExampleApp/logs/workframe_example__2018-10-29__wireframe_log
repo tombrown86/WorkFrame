@@ -1,0 +1,119 @@
+2018-10-29 17:16:25 -- ERROR -- WorkFrame\Exceptions\Loader_exception - Caught by `last resort` WorkFrame_exception handler in WorkFrame\WorkFrame
+
+. Exception message: Unable to load domain_object: Current_user. Not found in App or WorkFrame.
+2018-10-29 17:21:45 -- INFO -- Minifying js code for: scripts/min/_workframe_standard__workframe_example_v1.0.min.js with files: Array
+(
+    [0] => /home/tomb/dev/repos/workframe/ExampleApp/../WorkFrame/js/jquery-1.11.3.js
+    [1] => /home/tomb/dev/repos/workframe/ExampleApp/../WorkFrame/js/_workframe_functions.js
+    [2] => /home/tomb/dev/repos/workframe/ExampleApp/../WorkFrame/js/_workframe_processors.js
+)
+
+2018-10-29 17:21:45 -- WF_ERROR -- Couldn't write minified js code to: /home/tomb/dev/repos/workframe/ExampleApp/../www/public//scripts/min/_workframe_standard__workframe_example_v1.0.min.js.. Check perms?
+2018-10-29 17:21:45 -- ERROR -- WorkFrame\Exceptions\Cant_write_minify_file_exception - Caught by `last resort` WorkFrame_exception handler in WorkFrame\WorkFrame
+
+. Exception message: 
+2018-10-29 17:22:04 -- INFO -- Minifying js code for: scripts/min/_workframe_standard__workframe_example_v1.0.min.js with files: Array
+(
+    [0] => /home/tomb/dev/repos/workframe/ExampleApp/../WorkFrame/js/jquery-1.11.3.js
+    [1] => /home/tomb/dev/repos/workframe/ExampleApp/../WorkFrame/js/_workframe_functions.js
+    [2] => /home/tomb/dev/repos/workframe/ExampleApp/../WorkFrame/js/_workframe_processors.js
+)
+
+2018-10-29 17:22:04 -- WF_INFO -- Written minified js code to: /home/tomb/dev/repos/workframe/ExampleApp/../www/public//scripts/min/_workframe_standard__workframe_example_v1.0.min.js
+2018-10-29 17:22:04 -- WF_WARNING -- JS file not found or not readable: /home/tomb/dev/repos/workframe/ExampleApp/../www/public//scripts/bootstrap-dialog.js
+2018-10-29 17:22:04 -- WF_WARNING -- JS file not found or not readable: /home/tomb/dev/repos/workframe/ExampleApp/../www/public//scripts/../jquery-ui/jquery-ui.js
+2018-10-29 17:22:04 -- INFO -- Minifying js code for: scripts/min/site_standard__workframe_example_v1.0.min.js with files: Array
+(
+    [0] => /home/tomb/dev/repos/workframe/ExampleApp/../www/public//scripts/bootstrap.js
+    [2] => /home/tomb/dev/repos/workframe/ExampleApp/../www/public//scripts/main.js
+)
+
+2018-10-29 17:22:04 -- WF_INFO -- Written minified js code to: /home/tomb/dev/repos/workframe/ExampleApp/../www/public//scripts/min/site_standard__workframe_example_v1.0.min.js
+2018-10-29 17:27:36 -- WF_WARNING -- JS file not found or not readable: /home/tomb/dev/repos/workframe/ExampleApp/../www/public//scripts/bootstrap-dialog.js
+2018-10-29 17:27:36 -- WF_WARNING -- JS file not found or not readable: /home/tomb/dev/repos/workframe/ExampleApp/../www/public//scripts/../jquery-ui/jquery-ui.js
+2018-10-29 17:27:36 -- WF_WARNING -- JS file not found or not readable: /home/tomb/dev/repos/workframe/ExampleApp/../www/public//scripts/bootstrap-dialog.js
+2018-10-29 17:27:36 -- WF_WARNING -- JS file not found or not readable: /home/tomb/dev/repos/workframe/ExampleApp/../www/public//scripts/../jquery-ui/jquery-ui.js
+2018-10-29 17:27:40 -- WF_WARNING -- JS file not found or not readable: /home/tomb/dev/repos/workframe/ExampleApp/../www/public//scripts/bootstrap-dialog.js
+2018-10-29 17:27:40 -- WF_WARNING -- JS file not found or not readable: /home/tomb/dev/repos/workframe/ExampleApp/../www/public//scripts/../jquery-ui/jquery-ui.js
+2018-10-29 17:27:41 -- WF_WARNING -- JS file not found or not readable: /home/tomb/dev/repos/workframe/ExampleApp/../www/public//scripts/bootstrap-dialog.js
+2018-10-29 17:27:41 -- WF_WARNING -- JS file not found or not readable: /home/tomb/dev/repos/workframe/ExampleApp/../www/public//scripts/../jquery-ui/jquery-ui.js
+2018-10-29 17:27:41 -- ERROR -- WorkFrame\Exceptions\Loader_exception - Caught by `last resort` WorkFrame_exception handler in WorkFrame\WorkFrame
+
+. Exception message: Unable to load domain_object: Contact_form. Not found in App or WorkFrame.
+2018-10-29 17:28:08 -- WF_WARNING -- JS file not found or not readable: /home/tomb/dev/repos/workframe/ExampleApp/../www/public//scripts/bootstrap-dialog.js
+2018-10-29 17:28:08 -- WF_WARNING -- JS file not found or not readable: /home/tomb/dev/repos/workframe/ExampleApp/../www/public//scripts/../jquery-ui/jquery-ui.js
+2018-10-29 17:28:08 -- ERROR -- WorkFrame\Exceptions\Loader_exception - Caught by `last resort` WorkFrame_exception handler in WorkFrame\WorkFrame
+
+. Exception message: Unable to load domain_object: Contact_form. Not found in App or WorkFrame.
+2018-10-29 17:28:10 -- WF_WARNING -- JS file not found or not readable: /home/tomb/dev/repos/workframe/ExampleApp/../www/public//scripts/bootstrap-dialog.js
+2018-10-29 17:28:10 -- WF_WARNING -- JS file not found or not readable: /home/tomb/dev/repos/workframe/ExampleApp/../www/public//scripts/../jquery-ui/jquery-ui.js
+2018-10-29 17:28:10 -- ERROR -- WorkFrame\Exceptions\Loader_exception - Caught by `last resort` WorkFrame_exception handler in WorkFrame\WorkFrame
+
+. Exception message: Unable to load domain_object: Contact_form. Not found in App or WorkFrame.
+2018-10-29 17:29:13 -- WF_WARNING -- JS file not found or not readable: /home/tomb/dev/repos/workframe/ExampleApp/../www/public//scripts/bootstrap-dialog.js
+2018-10-29 17:29:13 -- WF_WARNING -- JS file not found or not readable: /home/tomb/dev/repos/workframe/ExampleApp/../www/public//scripts/../jquery-ui/jquery-ui.js
+2018-10-29 17:29:20 -- WF_WARNING -- JS file not found or not readable: /home/tomb/dev/repos/workframe/ExampleApp/../www/public//scripts/bootstrap-dialog.js
+2018-10-29 17:29:20 -- WF_WARNING -- JS file not found or not readable: /home/tomb/dev/repos/workframe/ExampleApp/../www/public//scripts/../jquery-ui/jquery-ui.js
+2018-10-29 17:29:57 -- WF_WARNING -- JS file not found or not readable: /home/tomb/dev/repos/workframe/ExampleApp/../www/public//scripts/bootstrap-dialog.js
+2018-10-29 17:29:57 -- WF_WARNING -- JS file not found or not readable: /home/tomb/dev/repos/workframe/ExampleApp/../www/public//scripts/../jquery-ui/jquery-ui.js
+2018-10-29 17:29:59 -- WF_WARNING -- JS file not found or not readable: /home/tomb/dev/repos/workframe/ExampleApp/../www/public//scripts/bootstrap-dialog.js
+2018-10-29 17:29:59 -- WF_WARNING -- JS file not found or not readable: /home/tomb/dev/repos/workframe/ExampleApp/../www/public//scripts/../jquery-ui/jquery-ui.js
+2018-10-29 17:30:00 -- WF_WARNING -- JS file not found or not readable: /home/tomb/dev/repos/workframe/ExampleApp/../www/public//scripts/bootstrap-dialog.js
+2018-10-29 17:30:00 -- WF_WARNING -- JS file not found or not readable: /home/tomb/dev/repos/workframe/ExampleApp/../www/public//scripts/../jquery-ui/jquery-ui.js
+2018-10-29 17:30:00 -- ERROR -- WorkFrame\Exceptions\Loader_exception - Caught by `last resort` WorkFrame_exception handler in WorkFrame\WorkFrame
+
+. Exception message: Unable to load domain_object: Contact_form. Not found in App or WorkFrame.
+2018-10-29 17:30:09 -- WF_WARNING -- JS file not found or not readable: /home/tomb/dev/repos/workframe/ExampleApp/../www/public//scripts/bootstrap-dialog.js
+2018-10-29 17:30:09 -- WF_WARNING -- JS file not found or not readable: /home/tomb/dev/repos/workframe/ExampleApp/../www/public//scripts/../jquery-ui/jquery-ui.js
+2018-10-29 17:30:13 -- WF_WARNING -- JS file not found or not readable: /home/tomb/dev/repos/workframe/ExampleApp/../www/public//scripts/bootstrap-dialog.js
+2018-10-29 17:30:13 -- WF_WARNING -- JS file not found or not readable: /home/tomb/dev/repos/workframe/ExampleApp/../www/public//scripts/../jquery-ui/jquery-ui.js
+2018-10-29 17:32:17 -- WF_WARNING -- JS file not found or not readable: /home/tomb/dev/repos/workframe/ExampleApp/../www/public//scripts/bootstrap-dialog.js
+2018-10-29 17:32:17 -- WF_WARNING -- JS file not found or not readable: /home/tomb/dev/repos/workframe/ExampleApp/../www/public//scripts/../jquery-ui/jquery-ui.js
+2018-10-29 17:32:34 -- WF_WARNING -- JS file not found or not readable: /home/tomb/dev/repos/workframe/ExampleApp/../www/public//scripts/bootstrap-dialog.js
+2018-10-29 17:32:34 -- WF_WARNING -- JS file not found or not readable: /home/tomb/dev/repos/workframe/ExampleApp/../www/public//scripts/../jquery-ui/jquery-ui.js
+2018-10-29 17:32:37 -- WF_WARNING -- JS file not found or not readable: /home/tomb/dev/repos/workframe/ExampleApp/../www/public//scripts/bootstrap-dialog.js
+2018-10-29 17:32:37 -- WF_WARNING -- JS file not found or not readable: /home/tomb/dev/repos/workframe/ExampleApp/../www/public//scripts/../jquery-ui/jquery-ui.js
+2018-10-29 17:32:38 -- WF_WARNING -- JS file not found or not readable: /home/tomb/dev/repos/workframe/ExampleApp/../www/public//scripts/bootstrap-dialog.js
+2018-10-29 17:32:38 -- WF_WARNING -- JS file not found or not readable: /home/tomb/dev/repos/workframe/ExampleApp/../www/public//scripts/../jquery-ui/jquery-ui.js
+2018-10-29 17:32:42 -- WF_WARNING -- JS file not found or not readable: /home/tomb/dev/repos/workframe/ExampleApp/../www/public//scripts/bootstrap-dialog.js
+2018-10-29 17:32:42 -- WF_WARNING -- JS file not found or not readable: /home/tomb/dev/repos/workframe/ExampleApp/../www/public//scripts/../jquery-ui/jquery-ui.js
+2018-10-29 17:32:55 -- WF_WARNING -- JS file not found or not readable: /home/tomb/dev/repos/workframe/ExampleApp/../www/public//scripts/bootstrap-dialog.js
+2018-10-29 17:32:55 -- WF_WARNING -- JS file not found or not readable: /home/tomb/dev/repos/workframe/ExampleApp/../www/public//scripts/../jquery-ui/jquery-ui.js
+2018-10-29 17:33:01 -- WF_WARNING -- JS file not found or not readable: /home/tomb/dev/repos/workframe/ExampleApp/../www/public//scripts/bootstrap-dialog.js
+2018-10-29 17:33:01 -- WF_WARNING -- JS file not found or not readable: /home/tomb/dev/repos/workframe/ExampleApp/../www/public//scripts/../jquery-ui/jquery-ui.js
+2018-10-29 17:33:09 -- WF_WARNING -- JS file not found or not readable: /home/tomb/dev/repos/workframe/ExampleApp/../www/public//scripts/bootstrap-dialog.js
+2018-10-29 17:33:09 -- WF_WARNING -- JS file not found or not readable: /home/tomb/dev/repos/workframe/ExampleApp/../www/public//scripts/../jquery-ui/jquery-ui.js
+2018-10-29 17:33:34 -- WF_WARNING -- JS file not found or not readable: /home/tomb/dev/repos/workframe/ExampleApp/../www/public//scripts/bootstrap-dialog.js
+2018-10-29 17:33:34 -- WF_WARNING -- JS file not found or not readable: /home/tomb/dev/repos/workframe/ExampleApp/../www/public//scripts/../jquery-ui/jquery-ui.js
+2018-10-29 17:33:36 -- WF_WARNING -- JS file not found or not readable: /home/tomb/dev/repos/workframe/ExampleApp/../www/public//scripts/bootstrap-dialog.js
+2018-10-29 17:33:36 -- WF_WARNING -- JS file not found or not readable: /home/tomb/dev/repos/workframe/ExampleApp/../www/public//scripts/../jquery-ui/jquery-ui.js
+2018-10-29 17:35:12 -- WF_WARNING -- JS file not found or not readable: /home/tomb/dev/repos/workframe/ExampleApp/../www/public//scripts/bootstrap-dialog.js
+2018-10-29 17:35:12 -- WF_WARNING -- JS file not found or not readable: /home/tomb/dev/repos/workframe/ExampleApp/../www/public//scripts/../jquery-ui/jquery-ui.js
+2018-10-29 17:36:17 -- WF_WARNING -- JS file not found or not readable: /home/tomb/dev/repos/workframe/ExampleApp/../www/public//scripts/bootstrap-dialog.js
+2018-10-29 17:36:17 -- INFO -- Minifying js code for: scripts/min/site_standard__workframe_example_v1.0.min.js with files: Array
+(
+    [0] => /home/tomb/dev/repos/workframe/ExampleApp/../www/public//scripts/bootstrap.js
+    [2] => /home/tomb/dev/repos/workframe/ExampleApp/../www/public//scripts/main.js
+    [3] => /home/tomb/dev/repos/workframe/ExampleApp/../www/public//scripts/../jquery-ui/jquery-ui.js
+)
+
+2018-10-29 17:36:17 -- WF_INFO -- Written minified js code to: /home/tomb/dev/repos/workframe/ExampleApp/../www/public//scripts/min/site_standard__workframe_example_v1.0.min.js
+2018-10-29 17:37:46 -- WF_ERROR -- Error: Unable to connect to MySQL.  Debugging errno: 1045 Debugging error: Access denied for user 'root'@'localhost' (using password: YES)
+2018-10-29 17:37:46 -- ERROR -- WorkFrame\Exceptions\Database_connection_exception - Caught by `last resort` WorkFrame_exception handler in WorkFrame\WorkFrame
+
+. Exception message: Error: Unable to connect to MySQL.  Debugging errno: 1045 Debugging error: Access denied for user 'root'@'localhost' (using password: YES)
+2018-10-29 17:37:47 -- WF_ERROR -- Error: Unable to connect to MySQL.  Debugging errno: 1045 Debugging error: Access denied for user 'root'@'localhost' (using password: YES)
+2018-10-29 17:37:47 -- ERROR -- WorkFrame\Exceptions\Database_connection_exception - Caught by `last resort` WorkFrame_exception handler in WorkFrame\WorkFrame
+
+. Exception message: Error: Unable to connect to MySQL.  Debugging errno: 1045 Debugging error: Access denied for user 'root'@'localhost' (using password: YES)
+2018-10-29 17:38:09 -- WF_ERROR -- Error: Unable to connect to MySQL.  Debugging errno: 1045 Debugging error: Access denied for user 'root'@'localhost' (using password: YES)
+2018-10-29 17:38:09 -- ERROR -- WorkFrame\Exceptions\Database_connection_exception - Caught by `last resort` WorkFrame_exception handler in WorkFrame\WorkFrame
+
+. Exception message: Error: Unable to connect to MySQL.  Debugging errno: 1045 Debugging error: Access denied for user 'root'@'localhost' (using password: YES)
+2018-10-29 17:38:09 -- WF_ERROR -- Error: Unable to connect to MySQL.  Debugging errno: 1045 Debugging error: Access denied for user 'root'@'localhost' (using password: YES)
+2018-10-29 17:38:09 -- ERROR -- WorkFrame\Exceptions\Database_connection_exception - Caught by `last resort` WorkFrame_exception handler in WorkFrame\WorkFrame
+
+. Exception message: Error: Unable to connect to MySQL.  Debugging errno: 1045 Debugging error: Access denied for user 'root'@'localhost' (using password: YES)
+2018-10-29 17:42:48 -- ERROR -- WorkFrame\Exceptions\Loader_exception - Caught by `last resort` WorkFrame_exception handler in WorkFrame\WorkFrame
+
+. Exception message: Unable to load domain_object: Contact_form. Not found in App or WorkFrame.

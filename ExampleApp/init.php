@@ -19,6 +19,6 @@ define('APP_BUILD', '1.0');
 ////// END WORKFRAME STANDARD CONFIG ///////
 
 
-include(__DIR__.'/../vendor/autoload.php');
+//include(__DIR__.'/../vendor/autoload.php');
 
 include(WORKFRAME_PATH . '/init.php');
