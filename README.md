@@ -66,16 +66,15 @@
 	<dt>Request_handlers <small>(a bit like a controllers)</small></dt>
 	<dd>You write your own by extending <em>\WorkFrame\Request_handler</em></dd>
 	<dd>These purely exist as landing points for HTTP requests</dd>
-	<dd>Requests are mapped to these handlers based on URL segments, with the last being the action name (method name) (E.g. /directoryname/request_handler_name/method_name?get_vars_here</dd>
+	<dd>Requests are mapped to these handlers based on URL segments, with the last being the action name (method name) (E.g. /directoryname/request_handler_name/method_name?get_vars_here)</dd>
 	<dd>If not provided, index is taken as the default values for both method names and Request_handler names</dd>
 	<dd>Note, feel free to override pre_action_hook and post_action_hook, you can probably guess when they get called</dd>
 	<dd>You can perform Exception based rerouting by throwing a <em>\WorkFrame\Exceptions\Request_handler_rewrite_exception</em></dd>
-
-	<br/>
+	<dd><br/></dd>
 	<dt>Model layer</dt>
 	<dd>Handles "business logic" including data manipulation and data storage</dd>
 	<dd>Request_handlers (usually) set these up and invoke procedures which retain data to be passed through to the view layer</dd>
-	<br/>
+	<dd><br/></dd>
 	<dt>View layer <small>(html templates and partials)</small></dt>
 	<dd>Templates hold standard layouts (html documents,) and (may) include HTML from partials</dd>
 </dl>
