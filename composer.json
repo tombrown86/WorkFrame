@@ -1,0 +1,16 @@
+{
+    "name": "tombrown86/workframe",
+    "description": "A framework that works",
+    "type": "framework",
+    "authors": [
+        {
+            "name": "Tom Brown",
+            "email": "tom@tombrown.xyz"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {
+        "php": ">=5.3.0"
+    },
+    "require": {}
+}
