@@ -37,12 +37,23 @@
 	<li>(Assuming you run apache and have a vhost ready,) add the following to your vhost config (to route all requests to the framework entry script).
 		<br/>
 		<pre>
-	&lt;Directory /var/www/yourapp/www&gt;
-	  RewriteEngine on
-	  RewriteBase /var/www/yourapp/www
-	  RewriteCond $1 !^(index\.php|public|robots\.txt)
-	  RewriteRule ^(.*)$ /index.php/$1 [L]
-	&lt;/Directory&gt;</pre>
+&lt;VirtualHost *:80&gt;
+	ServerName local.workframe
+	DirectoryIndex index.php index.html
+	DocumentRoot /var/www/site/www
+	ErrorLog /var/log/apache2/workframe/local.workframe.error.log
+
+	<Directory /var/www/site/www/>
+		Require all granted
+		RewriteEngine on
+		RewriteBase /var/www/site/www
+		# Or If WorkFrame is running in a subdir:
+		# RewriteBase /var/www/site/www/subdir
+		RewriteCond $1 !^(index.php|public/|robots.txt)
+		RewriteRule ^(.*)$ /index.php?$1 [L]
+	</Directory>
+&lt;/VirtualHost&gt;
+	</pre>
 	</li>
 	<li>Update the definitions in entry script (in ./wwww/index.php) which are hopefully self explanatory.</li>
 	<li>Maybe check out the <a href="#basic-features" title="Read about the basic features">features</a></li>
