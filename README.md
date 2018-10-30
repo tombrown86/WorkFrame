@@ -33,7 +33,7 @@
 		<ol>The <em>WorkFrame</em> directory - This is the framework, store it outside your web root</ol>
 	</li>
 	<br/>
-	<li>(Assuming you run apache,) here is a typical vhost config, the Directory bit containers an essential ReWrite (to route all requests to the framework entry script).
+	<li>(Assuming you run apache,) here is a typical vhost config, the Directory bit contains an essential ReWrite (to route all requests to the framework entry script).
 		<br/>
 		<pre>
 &lt;VirtualHost *:80&gt;
