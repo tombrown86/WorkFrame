@@ -54,7 +54,7 @@
 &lt;/VirtualHost&gt;
 	</pre>
 	</li>
-	<li>Update the definitions in entry script for your application (like in ./ExampleApp/init.php) which are hopefully self explanatory.</li>
+	<li>Update the definitions in init script for your application (like in ./ExampleApp/init.php) which are hopefully self explanatory.</li>
 	<li>Maybe check out the <a href="#basic-features" title="Read about the basic features">features</a></li>
 </ol>
 
