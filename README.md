@@ -28,13 +28,12 @@
 <ol>
 	<li><a title="Download this" href="http://tombrown.xyz/downloads/workframe.zip">Download this</a> or <a href="#">pull it from github</a></li>
 	<li>Understand what is included (3 directories)
-		<ol>The <em>ExampleApp</em> directory - This contains the custom application code (which is this site by default)</ol>
-		<ol>The <em>WorkFrame</em> directory - This is the framework</ol>
 		<ol>The <em>www</em> directory - This is your web root (often called htdocs, public_html, etc)</ol>
+		<ol>The <em>ExampleApp</em> directory - This contains the custom application code, store it outside your web root</ol>
+		<ol>The <em>WorkFrame</em> directory - This is the framework, store it outside your web root</ol>
 	</li>
 	<br/>
-	<p>You most likely want to keep your <em>ExampleApp</em> and <em>WorkFrame</em> outside the web root - but it's your server so do as you please.</p>
-	<li>(Assuming you run apache and have a vhost ready,) add the following to your vhost config (to route all requests to the framework entry script).
+	<li>(Assuming you run apache,) here is a typical vhost config, the Directory bit containers an essential ReWrite (to route all requests to the framework entry script).
 		<br/>
 		<pre>
 &lt;VirtualHost *:80&gt;
@@ -55,7 +54,7 @@
 &lt;/VirtualHost&gt;
 	</pre>
 	</li>
-	<li>Update the definitions in entry script (in ./wwww/index.php) which are hopefully self explanatory.</li>
+	<li>Update the definitions in entry script for your application (like in ./ExampleApp/init.php) which are hopefully self explanatory.</li>
 	<li>Maybe check out the <a href="#basic-features" title="Read about the basic features">features</a></li>
 </ol>
 
