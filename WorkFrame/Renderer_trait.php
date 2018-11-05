@@ -62,7 +62,7 @@ trait Renderer_trait {
 
 		if (!$minify) {
 			foreach ($scripts as $script) {
-				if (strpo('/', $script) !== 0) {
+				if (strpos('/', $script) !== 0) {
 					$this->scripts[] = WWW_PUBLIC_PATH . '/scripts/' . $script;
 				} else {// Can't add full file path files without minify
 					throw new Exceptions\Workframe_exception('Cannot add script by full file path unless it is to be minified');

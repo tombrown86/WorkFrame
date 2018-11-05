@@ -28,23 +28,33 @@
 <ol>
 	<li><a title="Download this" href="http://tombrown.xyz/downloads/workframe.zip">Download this</a> or <a href="#">pull it from github</a></li>
 	<li>Understand what is included (3 directories)
-		<ol>The <em>ExampleApp</em> directory - This contains the custom application code (which is this site by default)</ol>
-		<ol>The <em>WorkFrame</em> directory - This is the framework</ol>
 		<ol>The <em>www</em> directory - This is your web root (often called htdocs, public_html, etc)</ol>
+		<ol>The <em>ExampleApp</em> directory - This contains the custom application code, store it outside your web root</ol>
+		<ol>The <em>WorkFrame</em> directory - This is the framework, store it outside your web root</ol>
 	</li>
 	<br/>
-	<p>You most likely want to keep your <em>ExampleApp</em> and <em>WorkFrame</em> outside the web root - but it's your server so do as you please.</p>
-	<li>(Assuming you run apache and have a vhost ready,) add the following to your vhost config (to route all requests to the framework entry script).
+	<li>(Assuming you run apache,) here is a typical vhost config, the Directory bit contains an essential ReWrite (to route all requests to the framework entry script).
 		<br/>
 		<pre>
-	&lt;Directory /var/www/yourapp/www&gt;
-	  RewriteEngine on
-	  RewriteBase /var/www/yourapp/www
-	  RewriteCond $1 !^(index\.php|public|robots\.txt)
-	  RewriteRule ^(.*)$ /index.php/$1 [L]
-	&lt;/Directory&gt;</pre>
+&lt;VirtualHost *:80&gt;
+	ServerName local.workframe
+	DirectoryIndex index.php index.html
+	DocumentRoot /var/www/site/www
+	ErrorLog /var/log/apache2/workframe/local.workframe.error.log
+
+	<Directory /var/www/site/www/>
+		Require all granted
+		RewriteEngine on
+		RewriteBase /var/www/site/www
+		# Or If WorkFrame is running in a subdir:
+		# RewriteBase /var/www/site/www/subdir
+		RewriteCond $1 !^(index.php|public/|robots.txt)
+		RewriteRule ^(.*)$ /index.php?$1 [L]
+	</Directory>
+&lt;/VirtualHost&gt;
+	</pre>
 	</li>
-	<li>Update the definitions in entry script (in ./wwww/index.php) which are hopefully self explanatory.</li>
+	<li>Update the definitions in init script for your application (like in ./ExampleApp/init.php) which are hopefully self explanatory.</li>
 	<li>Maybe check out the <a href="#basic-features" title="Read about the basic features">features</a></li>
 </ol>
 
@@ -56,16 +66,15 @@
 	<dt>Request_handlers <small>(a bit like a controllers)</small></dt>
 	<dd>You write your own by extending <em>\WorkFrame\Request_handler</em></dd>
 	<dd>These purely exist as landing points for HTTP requests</dd>
-	<dd>Requests are mapped to these handlers based on URL segments, with the last being the action name (method name) (E.g. /directoryname/request_handler_name/method_name?get_vars_here</dd>
+	<dd>Requests are mapped to these handlers based on URL segments, with the last being the action name (method name) (E.g. /directoryname/request_handler_name/method_name?get_vars_here)</dd>
 	<dd>If not provided, index is taken as the default values for both method names and Request_handler names</dd>
 	<dd>Note, feel free to override pre_action_hook and post_action_hook, you can probably guess when they get called</dd>
 	<dd>You can perform Exception based rerouting by throwing a <em>\WorkFrame\Exceptions\Request_handler_rewrite_exception</em></dd>
-
-	<br/>
+	<dd><br/></dd>
 	<dt>Model layer</dt>
 	<dd>Handles "business logic" including data manipulation and data storage</dd>
 	<dd>Request_handlers (usually) set these up and invoke procedures which retain data to be passed through to the view layer</dd>
-	<br/>
+	<dd><br/></dd>
 	<dt>View layer <small>(html templates and partials)</small></dt>
 	<dd>Templates hold standard layouts (html documents,) and (may) include HTML from partials</dd>
 </dl>
