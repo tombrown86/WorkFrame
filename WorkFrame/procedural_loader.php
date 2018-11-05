@@ -12,10 +12,10 @@ $WF_INCLUDED_FUNCTIONS = [];
 function functions($functions_file_name) {
 	global $WF_INCLUDED_FUNCTIONS;
 	if(!in_array($functions_file_name, $WF_INCLUDED_FUNCTIONS)) {
-		if(file_exists(APP_PATH . '/Functions/' . $functions_file_name . '.php')) {
-			include(APP_PATH . '/Functions/' . $functions_file_name . '.php');
+		if(file_exists(APP_PATH . '/functions/' . $functions_file_name . '.php')) {
+			include(APP_PATH . '/functions/' . $functions_file_name . '.php');
 		} else {
-			include(WORKFRAME_PATH . '/Functions/' . $functions_file_name . '.php');
+			include(WORKFRAME_PATH . '/functions/' . $functions_file_name . '.php');
 		}
 		$WF_INCLUDED_FUNCTIONS[] = $functions_file_name;
 	}
