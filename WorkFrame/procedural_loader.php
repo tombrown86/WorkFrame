@@ -1,10 +1,10 @@
 <?php
 
 function conf($conf_name) {
-	if(file_exists(APP_PATH . '/Config/' . $conf_name . '.php')) {
-		return include(APP_PATH . '/Config/' . $conf_name . '.php');
+	if(file_exists(APP_PATH . '/config/' . $conf_name . '.php')) {
+		return include(APP_PATH . '/config/' . $conf_name . '.php');
 	} else {
-		return include(WORKFRAME_PATH . '/Config/' . $conf_name . '.php');
+		return include(WORKFRAME_PATH . '/config/' . $conf_name . '.php');
 	}
 }
 
