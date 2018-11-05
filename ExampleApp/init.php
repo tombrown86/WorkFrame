@@ -14,6 +14,7 @@ define('APP_NAME', 'WorkFrame');
 define('APP_CODENAME', 'workframe_example'); // Must be valid part of filename (for log)
 define('APP_NAMESPACE', 'ExampleApp'); // Must match app dirname
 define('APP_PUBLIC_PATH', __DIR__.'/../www/public/');
+define('APP_LOG_PATH', APP_PATH . '/logs/');
 
 define('APP_BUILD', '1.0'); 
 ////// END WORKFRAME STANDARD CONFIG ///////
