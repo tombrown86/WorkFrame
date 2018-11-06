@@ -7,6 +7,8 @@ class Request_handler {
 	use WorkFrame_component_trait;
 	use Renderer_trait;
 
+	private $_use_xss_fitler;
+
 	protected $routes;
 	protected $action;
 
@@ -15,6 +17,8 @@ class Request_handler {
 	}
 
 	function pre_action_hook() {
+		$this->_use_xss_fitler = conf('security')['use_workframe_security_library'] && conf('security')['xss_filter'];
+
 		// Would usually only get utilised if template rendered
 		$workframe_scripts_dir = WORKFRAME_PATH . '/js';
 		
@@ -78,5 +82,62 @@ class Request_handler {
 		$partial = strtolower($partial);
 
 		return $this->render($partial, $template);
+	}
+
+	/**
+	 * Get GET input data.
+	 * Returns entire GET array or specific key value if key is given.
+	 * If security and XSS filter is enabled, the processed version is 
+	 * returned unless get_original param is true.
+	 * 
+	 * @param string key
+	 * @param boolean get_original (uncleaned)
+	 * @return mixed array of value or NULL if not set
+	 */
+	function GET($key=NULL, $get_original=FALSE) {
+		return $this->_get_processed_global('_GET', $key, $get_original);
+	}
+	/**
+	 * Get POST input data.
+	 * Returns entire POST array or specific key value if key is given.
+	 * If security and XSS filter is enabled, the processed version is 
+	 * returned unless get_original param is true.
+	 * 
+	 * @param string key
+	 * @param boolean get_original (uncleaned)
+	 * @return mixed array of value or NULL if not set
+	 */
+	function POST($key=NULL, $get_original=FALSE) {
+		return $this->_get_processed_global('_POST', $key, $get_original);
+	}
+
+	/**
+	 * Get REQUEST input data.
+	 * Returns entire REQUEST array or specific key value if key is given.
+	 * If security and XSS filter is enabled, the processed version is 
+	 * returned unless get_original param is true.
+	 * 
+	 * @param string key
+	 * @param boolean get_original (uncleaned)
+	 * @return mixed array of value or NULL if not set
+	 */
+	function REQUEST($key=NULL, $get_original=FALSE) {
+		return $this->_get_processed_global('_REQUEST', $key, $get_original);
+	}
+
+	private function _get_processed_global($global_arr_name, $key=NULL, $get_original=FALSE) {
+		if($this->_use_xss_fitler) {
+			if($get_original) {
+				$global_arr_name = '_ORIGINAL'.$global_arr_name;
+			} else {
+				$global_arr_name = '_CLEAN'.$global_arr_name;
+			}
+		}
+
+		if(isset($key)) {
+			return isset($GLOBALS[$global_arr_name][$key]) ? $GLOBALS[$global_arr_name][$key] : NULL;
+		} else {
+			return isset($GLOBALS[$global_arr_name]) ? $GLOBALS[$global_arr_name] : NULL;
+		}
 	}
 }

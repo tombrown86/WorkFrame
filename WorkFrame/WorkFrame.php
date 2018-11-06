@@ -21,7 +21,14 @@ class WorkFrame {
 	}
 	
 	
-	function pre_router_hook() {}
+	function pre_router_hook() {
+		$security_conf = conf('security');
+		if($security_conf['use_workframe_security_library']) {
+			$this->LIBRARY('Security', 'Security');
+			$this->Security->set_config($security_conf);
+			$this->Security->pre_router_securtiy_hook();
+		}
+	}
 	function post_router_hook() {}
 	function pre_cli_router_hook() {}
 	function post_cli_router_hook() {}
