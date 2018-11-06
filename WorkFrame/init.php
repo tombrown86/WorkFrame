@@ -13,8 +13,6 @@ if(WORKFRAME_DEBUG) {
 } else {
 	error_reporting(E_ALL);
 	ini_set('display_errors','Off');
-	ini_set('log_errors', 'On');
-	ini_set('error_log', 'error_log__'.APP_CODENAME.'__Workframe__'.date('Y_m_d').'.log');
 }
 
 
