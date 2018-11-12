@@ -47,7 +47,7 @@ class Security {
 	}
 
 	function xss_filter_var($v) {
-		return filter_var($v, FILTER_SANITIZE_STRING);
+		return filter_var_array($v, FILTER_SANITIZE_STRING);
 	}
 
 	function get_conf_value($key) {
