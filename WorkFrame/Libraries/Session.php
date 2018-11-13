@@ -1,6 +1,7 @@
 <?php
 
 // http://larryullman.com/forums/index.php?/topic/3409-ultimate-session-wrapper-class/
+
 namespace WorkFrame\Libraries;
 
 /**
@@ -124,9 +125,13 @@ class Session {
 	 * @return boolean Returns true upon success and false upon failure.
 	 * @throws SessionDisabledException Sessions are disabled.
 	 */
-	public static function start($regenerate_session_id = true, $limit = 0, $path = '/', $domain = null, $secure_cookies_only = null) {
+	public static function start($regenerate_session_id = true, $limit = 0, $path = '/', $domain = null, $secure_cookies_only = null, $mark_flashdata=TRUE) {
 		// this function is extraneous
-		return self::_init($regenerate_session_id, $limit, $path, $domain, $secure_cookies_only);
+		$result = self::_init($regenerate_session_id, $limit, $path, $domain, $secure_cookies_only);
+		if($mark_flashdata) {
+			self::mark_flashdata();
+		}
+		return $result;
 	}
 
 	/**
@@ -265,6 +270,48 @@ class Session {
 		}
 
 		return true;
+	}
+
+	private static function _get_or_create_flashdata_array() {
+		if (!isset($_SESSION['_wf_flashdata'])) {
+			$arr = [
+				'new' => [],
+				'marked' => [],
+			];
+			self::_write_flashdata_array($arr);
+			return $arr;
+		}
+		return unserialize($_SESSION['_wf_flashdata']);
+	}
+
+	private static function _write_flashdata_array($arr) {
+		self::write('_wf_flashdata', serialize($arr));
+	}
+
+	static function write_flashdata($k, $v) {
+		$flashdata = self::_get_or_create_flashdata_array();
+		$flashdata['new'][$k] = $v;
+		self::_write_flashdata_array($flashdata);
+	}
+
+	static function read_flashdata($k) {
+		$data = NULL;
+
+		$flashdata = self::_get_or_create_flashdata_array();
+		if (isset($flashdata['marked'][$k])) {
+			$data = $flashdata['marked'][$k];
+		} elseif (isset($flashdata['new'][$k])) {
+			$data = $flashdata['new'][$k];
+		}
+
+		return $data;
+	}
+
+	static function mark_flashdata() {
+		$flashdata = self::_get_or_create_flashdata_array();
+		$flashdata['marked'] = $flashdata['new'];
+		$flashdata['new'] = [];
+		self::_write_flashdata_array($flashdata);
 	}
 
 }
