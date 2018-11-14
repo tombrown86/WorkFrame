@@ -14,8 +14,8 @@ class Invalid_security_configuration_exception extends \WorkFrame\Exceptions\Wor
 class Security {
 
 	private $conf;
-	private $protected_input_globals = ['_GET', '_POST', '_FILES', '_REQUEST', /*'_SERVER', '_SESSION', '_ENV', 'GLOBALS', 'HTTP_RAW_POST_DATA',
-							'system_folder', 'application_folder', 'BM', 'EXT', 'CFG', 'URI', 'RTR', 'OUT', 'IN'*/];
+//	private $protected_input_globals = ['_GET', '_POST', '_REQUEST', /* '_FILES', '_SERVER', '_SESSION', '_ENV', //'GLOBALS', 'HTTP_RAW_POST_DATA',
+//						'system_folder', 'application_folder', 'BM', 'EXT', 'CFG', 'URI', 'RTR', 'OUT', 'IN'*/];
 	
 	function set_config($conf) {
 		$this->conf = $conf;
@@ -23,7 +23,8 @@ class Security {
 
 	function pre_router_securtiy_hook() {
 		if ($this->get_conf_value('xss_filter')) {
-			foreach ($this->protected_input_globals as $inp_arr_name) {
+		
+			foreach (['_GET', '_POST', '_COOKIES', '_REQUEST'] as $inp_arr_name) {
 				// Declare _ORIGINAL_blah (to store original value)
 				// and _CLEAN_blah globals (to store safe)
 				$ORIGINAL_inp_arr_name = '_ORIGINAL' . $inp_arr_name;
@@ -42,6 +43,12 @@ class Security {
 					}
 				}
 			}
+			
+			// Explicity destory these (as they seem to repopulate (at least _REQUEST does))
+			unset($_GET);
+			unset($_POST);
+			unset($_COOKIES);
+			unset($_REQUEST);
 		}
 	}
 
