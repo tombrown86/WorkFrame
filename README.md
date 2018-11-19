@@ -71,22 +71,23 @@
 	<dd>Note, feel free to override pre_action_hook and post_action_hook, you can probably guess when they get called</dd>
 	<dd>You can perform Exception based rerouting by throwing a <em>\WorkFrame\Exceptions\Request_handler_rewrite_exception</em></dd>
 	<dd><br/></dd>
-	<dt>Model layer</dt>
+	<dt>Model layer (see below)</dt>
 	<dd>Handles "business logic" including data manipulation and data storage</dd>
 	<dd>Request_handlers (usually) set these up and invoke procedures which retain data to be passed through to the view layer</dd>
 	<dd><br/></dd>
-	<dt>View layer <small>(html templates and partials)</small></dt>
-	<dd>Templates hold standard layouts (html documents,) and (may) include HTML from partials</dd>
+	<dt>View layer</dt>
+	<dd>Templates - page templates</dd>
+	<dd>Partials - snippets to be included</dd>
 </dl>
-<p>An application with any degree of complexity will probably benefit from having it's own class structure which do not need to be one of these standard constructs.</p>
+<p>An application with a large degree of complexity may benefit from having it's own class structure which does not strictly conform to this pattern.</p>
 
 <h3>Model layer</h3>
 <p>These consist of 3 classes of thing</p>
 	<dt>Services</dt>
 	<dd>You write your own by extending <em>\WorkFrame\Service</em></dd>
 	<dd>These contain the bulk of the business logic</dd>
-	<dd>They are responsible for (probably all) manipulation Domain_object's and also handle data persistance (through Data_mappers)</dd>
-	<dd>They would usually finish up by holding or returning output related data (presentation data)</dd>
+	<dd>They are responsible for (probably all) manipulation of Domain_object's and also handle data persistance (through Data_mappers)</dd>
+	<dd>They would usually end up returning outcomes or output related data (presentation data) but wouldn't be expected to return HTML. (Instead your Request_handlers would take this outcome info and map them into the view layer.)</dd>
 	<br/>
 	<dt>Domain_objects</dt>
 	<dd>You write your own by extending <em>\WorkFrame\Domain_object</em></dd>
@@ -169,6 +170,10 @@
 <p>If you want to use the existing mysql DB support, you must define (1 or more) DB connections in db.php (see example file).</p>
 <hr/>
 
+<h3>Security</h3>
+<p>A basic Security library has been added. So far all it can do is perform simple XSS filtering. If you enable this filtering (see security.php in conf). If enabled, you'll want to access the cleaned get/post/request variables with $this->GET(...), $this->POST(...) etc in the Request_handlers. With _GET as an example, calling $this->GET() will return the entire cleaned _GET array, passing in a $key as the 1st parameter will return the cleaned item with that key. You can still access the uncleaned original values by passing TRUE as the 2nd parameter. </p> 
+<hr/>
+
 
 <h2>Ideas / future <span id="ideas"></span><a href="#ideas" class="hashlink">&para;</a></h2>
 <p>Here is what I hope to work on (in chronological order)</p>
@@ -176,7 +181,6 @@
 	<li>User type based auth rules / config</li>
 	<li>A built in DB accessor system (for use in your Data_mapper's)</li>
 	<li>Simple RESTful API support</li>
-	<li>Built in XSS filtering</li>
 	<li>A cookie library</li>
 	<li>.. anything else fundamental missing? Please <a title="Email me" href="mailto:tombrown86@gmail.com">let me know</a></li>
 </ol>
