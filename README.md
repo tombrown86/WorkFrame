@@ -26,7 +26,7 @@
 <h2>Quick start <span id="quick-start"></span><a href="#quick-start" class="hashlink">&para;</a></h2>
 <p>Do the following:</p>
 <ol>
-	<li><a title="Download this" href="http://tombrown.xyz/downloads/workframe.zip">Download this</a> or <a href="#">pull it from github</a></li>
+	<li>Pull the github project (https://github.com/tombrown86/WorkFrame/) or include it in your composer.json</li>
 	<li>Understand what is included (3 directories)
 		<ol>The <em>www</em> directory - This is your web root (often called htdocs, public_html, etc)</ol>
 		<ol>The <em>ExampleApp</em> directory - This contains the custom application code, store it outside your web root</ol>
