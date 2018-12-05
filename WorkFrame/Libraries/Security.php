@@ -53,7 +53,7 @@ class Security {
 	}
 
 	function xss_filter_var($v) {
-		return is_array($v) ? filter_var_array($v, FILTER_SANITIZE_STRING) : filter_var($v, FILTER_SANITIZE_STRING);
+		return is_array($v) ? filter_var_array($v, [ 'filter' => FILTER_SANITIZE_STRING, 'flags' => FILTER_FLAG_STRIP_LOW|FILTER_FLAG_STRIP_HIGH|FILTER_FLAG_STRIP_BACKTICK|FILTER_FLAG_NO_ENCODE_QUOTES ]) : filter_var($v, FILTER_SANITIZE_STRING, FILTER_FLAG_STRIP_LOW|FILTER_FLAG_STRIP_HIGH|FILTER_FLAG_STRIP_BACKTICK|FILTER_FLAG_NO_ENCODE_QUOTES);
 	}
 
 	function get_conf_value($key) {
