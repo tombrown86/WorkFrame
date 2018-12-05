@@ -55,7 +55,7 @@ class Security {
 	function xss_filter_var($v) {
 		if( is_array($v) ) {
 			foreach( $v as $kk => $vv ) {
-				$v[$kk] = xss_filter_var($vv);
+				$v[$kk] = $this->xss_filter_var($vv);
 			}
 		}
 		else {
