@@ -159,16 +159,35 @@ class Bootstrap_form_tools extends Form_tools {
 
 	/**
 	 * 
-	 * @param string type (danger, warning, info, success)
-	 * @param string strong_html
-	 * @param string message_html
-	 * @return string html
+	 * @param string $type (danger, warning, info, success)
+	 * @param string $strong_html
+	 * @param string $message_html
+	 * @param array $options an array of teh following keys - set value for each to true to enable the option (dismissible, animate)
+	 * @return string $html
 	 */
-	static function alert($type, $strong_html = '', $message_html = '') {
-		return '
-	    <div class="alert alert-' . $type . '">
-		<strong>' . $strong_html . '</strong> ' . $message_html . '
-	    </div>';
+	static function alert($type, $strong_html = '', $message_html = '', $options = []) {
+		$classes[] = 'alert';
+		$classes[] = 'alert-'.$type;
+		if( isset($options['dismissible']) && $options['dismissible'] === TRUE ) {
+			$classes[] = 'alert-dismissible';
+			if( isset($options['animate']) && $options['animate'] === TRUE ) {
+				$classes[] = 'fade';
+				$classes[] = 'show';
+			}
+		}
+		$classes = static::classes_string($classes);
+
+		$html = '';
+		$html .= '<div class="' . $classes . '">' . "\n";
+		$html .= '<strong>' . $strong_html . '</strong> ' . $message_html . "\n";
+		if( isset($options['dismissible']) && $options['dismissible'] === TRUE ) {
+			$html .= '<button type="button" class="close" data-dismiss="alert" aria-label="Close">' . "\n";
+			$html .= '<span aria-hidden="true">&times;</span>' . "\n";
+			$html .= '</button>' . "\n";
+		}
+		$html .= '</div>' . "\n";
+		
+		return $html;
 	}
 
 }
