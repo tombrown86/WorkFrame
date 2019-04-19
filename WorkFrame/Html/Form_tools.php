@@ -125,7 +125,7 @@ class Form_tools {
 					$html .= '<li>';
 					$html .= htmlspecialchars($error['error_message']);
 					if (!empty($error['error_details'])) {
-						$field_errors_html .= ' <span class="wf_error_details">' . htmlspecialchars($error['error_details']) . '</span>';
+						$html .= ' <span class="wf_error_details">' . htmlspecialchars($error['error_details']) . '</span>';
 					}
 					$html .= '</li>';
 				}
