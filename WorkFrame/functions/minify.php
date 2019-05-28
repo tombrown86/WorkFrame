@@ -72,7 +72,7 @@ function minify($files, $output_name = null, $filetype = 'js', $print_tags = tru
 			$code .= file_get_contents($file) . ($filetype == 'js' ? "\n;\n" : "\n\n");
 		}
 
-		if(@$_GET['dontminify']) {
+		if(isset($_GET['dontminify']) && $_GET['dontminify']) {
 			$code = $filetype == 'js' ? $code : $code;
 		} else {
 			$code = $filetype == 'js' ? JSMin::minify($code) : CSSCompressor::minify($code);
