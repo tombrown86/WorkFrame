@@ -317,7 +317,7 @@ class Form_tools {
 			.' <input' . static::attributes_string($attributes) . '/>';
 	}
 
-	function select_field($field_name = '', $args=[]) {
+	function select_field($field_name='', $args=[], $multiple=FALSE) {
 		$value = $this->_get_value($field_name);
 		$options=[];
 		$height = 'medium';
@@ -330,6 +330,11 @@ class Form_tools {
 		$args['classes'][] = 'wf_input_wrapper_width_' . $width;
 		$args['classes'][] = $this->get_custom_control_field_class();
 		$attributes = $this->_field_attributes($field_name, $args);
+		
+		if($multiple) {
+			$attributes['name'] .= '[]';
+			$attributes['multiple'] = 'multiple';
+		}
 		
 		return '<select' . static::attributes_string($attributes) . '>'
 				. $this->select_options($options, $value)
@@ -493,8 +498,8 @@ class Form_tools {
 		return $this->field_group($field_name, $field_html, $args);
 	}
 
-	function select_field_group($field_name, $args = []) {
-		$field_html = $this->select_field($field_name, $args);
+	function select_field_group($field_name, $args=[], $multiple=FALSE) {
+		$field_html = $this->select_field($field_name, $args, $multiple);
 		return $this->field_group($field_name, $field_html, $args);
 	}
 
