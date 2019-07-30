@@ -366,7 +366,9 @@ class Form_tools {
 //		}
 		
 		foreach($options as $k=>$v) {
-			if($k == $selected_value) {
+			if(is_array($selected_value) && in_array($k, $selected_value)) {
+				$selected_attr = 'selected="selected" ';
+			} elseif($k == $selected_value) {
 				$selected_attr = 'selected="selected" ';
 			} else {
 				$selected_attr = '';
