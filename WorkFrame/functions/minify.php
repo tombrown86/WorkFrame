@@ -52,7 +52,7 @@ function minify($files, $output_name = null, $filetype = 'js', $print_tags = tru
 		}
 	}
 
-	if (!$min_file_exists || @$_GET['minify'] || $dev_environment_and_min_file_out_of_date) {
+	if (!$min_file_exists || (isset($_GET['minify']) && $_GET['minify']) || (isset($GLOBALS['_ORIGINAL_GET']['minify']) && $GLOBALS['_ORIGINAL_GET']['minify']) || $dev_environment_and_min_file_out_of_date) {
 		log_message('info', "Minifying $filetype code for: $public_dir_name/$min_file with files: " . print_r($files, true));
 
 		// get code from all files and minify
@@ -71,8 +71,8 @@ function minify($files, $output_name = null, $filetype = 'js', $print_tags = tru
 		foreach ($files as $k => $file) {
 			$code .= file_get_contents($file) . ($filetype == 'js' ? "\n;\n" : "\n\n");
 		}
-
-		if(isset($_GET['dontminify']) && $_GET['dontminify']) {
+ 
+		if((isset($_GET['dontminify']) && $_GET['dontminify']) || (isset($GLOBALS['_ORIGINAL_GET']['dontminify']) && $GLOBALS['_ORIGINAL_GET']['dontminify'])) {
 			$code = $filetype == 'js' ? $code : $code;
 		} else {
 			$code = $filetype == 'js' ? JSMin::minify($code) : CSSCompressor::minify($code);
