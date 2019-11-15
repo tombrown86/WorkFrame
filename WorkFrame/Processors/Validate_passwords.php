@@ -4,12 +4,12 @@ namespace WorkFrame\Processors;
 
 class Validate_passwords extends Processor {
 	static function server_side($fields, $values) {
-		if (strlen($values[$fields[0]]) < 8 || !preg_match('/[^\w]/i', $values[$fields[0]])) {
+		if (strlen($values[$fields[0]]) < 8 || !preg_match('/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[#\_@£$!%*?&=\(\)\-\]\[])[A-Za-z\d#\_@£$!%*?&=\(\)\-\]\[]{8,}$/', $values[$fields[0]])) {
 			return [
 				'field_name' => $fields[0],
 				'is_error' => TRUE,
 				'error_message' => 'Invalid password',
-				'error_details' => 'Your password must be at least 8 characters long and contain at least one special character (which isn\'t a number or letter)',
+				'error_details' => "For security purposes, your password must be at least 8 characters long and contain at least one of the following characters (and no other characters): an uppercase leter, a lowercase letter, a number, a special character #_@£$!%*?&#)(=-][",
 			];
 		}
 
@@ -35,7 +35,7 @@ class Validate_passwords extends Processor {
 				field_name : "' . $field_name[0] . '",
 				is_error : true,
 				error_message : "Invalid password",
-				error_details : "Your password must be at least 8 characters long and contain at least one special character (which isn\'t a number or letter)"
+				error_details : "For security purposes, your password must be at least 8 characters long and contain at least one of the following characters (and no other characters): an uppercase leter, a lowercase letter, a number, a special character #_@£$!%*?&#)(=-][",
 			};
 		} else if(value != value2) {
 			result = {

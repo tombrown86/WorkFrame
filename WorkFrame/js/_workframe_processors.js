@@ -86,9 +86,6 @@ function _wf_validate_email(email) {
     return re.test(email);
 }
 function _wf_validate_password(pw) {
-    if (pw.length < 8) {
-		return false;
-    }
-    var re = /[^\w]/i;
+    var re = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[#\_@£$!%*?&=\(\)\-\]\[])[A-Za-z\d#\_@£$!%*?&=\(\)\-\]\[]{8,}$/;
     return re.test(pw);
 }
