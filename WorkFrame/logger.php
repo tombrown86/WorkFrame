@@ -16,5 +16,6 @@ function log_message($level, $message, $debug_silent=FALSE) {
 		echo '<hr/><div style="color:red"><strong>'.$level.'</strong> - '.htmlspecialchars($message).'</div><hr/>';
 	}
 	
-	file_put_contents(APP_LOG_PATH.APP_CODENAME.'__'.date('Y-m-d').'__WorkFrame_log', date('Y-m-d H:i:s'). " -- $level -- ".$message . "\n", FILE_APPEND);
+	$app_log_path = rtrim(APP_LOG_PATH, '/\\') . DIRECTORY_SEPARATOR;
+	file_put_contents($app_log_path.APP_CODENAME.'__'.date('Y-m-d').'__WorkFrame_log', date('Y-m-d H:i:s'). " -- $level -- ".$message . "\n", FILE_APPEND);
 }
