@@ -17,16 +17,20 @@ class Request_handler {
 	}
 
 	function pre_action_hook() {
-		$this->_use_xss_fitler = conf('security')['use_workframe_security_library'] && conf('security')['xss_filter'];
+		$security_conf = conf('security');
+		$this->_use_xss_fitler = isset($security_conf['use_workframe_security_library'], $security_conf['xss_filter'])
+									&& $security_conf['use_workframe_security_library']
+									&& $security_conf['xss_filter'];
 
 		// Would usually only get utilised if template rendered
 		$workframe_scripts_dir = WORKFRAME_PATH . '/js';
 		
 		$scripts = [];
 		
-		$use_jquery = conf('javascript')['use_jquery'];
-		$use_workframe_functions = conf('javascript')['use_workframe_functions'];
-		$use_workframe_processors = conf('javascript')['use_workframe_processors'];
+		$javascript_conf = conf('javascript');
+		$use_jquery = isset($javascript_conf['use_jquery']) && $javascript_conf['use_jquery'];
+		$use_workframe_functions = isset($javascript_conf['use_workframe_functions']) && $javascript_conf['use_workframe_functions'];
+		$use_workframe_processors = isset($javascript_conf['use_workframe_processors']) && $javascript_conf['use_workframe_processors'];
 		
 		if($use_workframe_functions) {
 			$scripts[] = $workframe_scripts_dir . '/_workframe_functions.js';

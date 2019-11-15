@@ -1,6 +1,6 @@
 <?php
 
 return [
-	'use_workframe_securtiy_library' => FALSE,
+	'use_workframe_security_library' => FALSE,
 	'xss_filter' => FALSE,
 ];
