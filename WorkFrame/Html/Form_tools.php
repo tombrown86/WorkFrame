@@ -11,6 +11,7 @@ class Form_tools {
 	private $process_onblur = TRUE;
 	private $process_onclick = TRUE;
 	private $process_onsubmit = TRUE;
+	private $name_container_array = NULL;
 	protected $custom_field_error_class = '';
 	protected $custom_field_success_class = '';
 	protected $custom_field_warning_class = '';
@@ -412,9 +413,14 @@ class Form_tools {
 		
 		$this->_check_processable_set(__METHOD__);
 		isset($attributes['id']) || $attributes['id'] = $this->id_for_field($field_name);
-		isset($attributes['name']) || $attributes['name'] = (isset($post_name) ? $post_name : $field_name);
 		isset($attributes['class']) || $attributes['class'] = self::classes_string($classes);
 		
+		if(!isset($attributes['name'])) {
+			$attributes['name'] = isset($post_name) ? $post_name : $field_name;
+			if(isset($this->name_container_array)) {
+				$attributes['name'] = $this->name_container_array . '['.$attributes['name'].']';
+			}
+		}
 
 		if (!isset($attributes['required'])) {
 			if ($required) {
@@ -527,6 +533,10 @@ class Form_tools {
 		return $this->_button('submit', $value, $extra_attributes, $classes);
 	}
 
+	function set_name_container_array($name_container_array) {
+		$this->name_container_array = $name_container_array;
+	}
+	
 	protected function _button($type, $value, $attributes = [], $classes = []) {
 		$classes = static::classes_string($classes) . ' wf_button wf_button_' . $type;
 		$attributes['class'] = $classes;
