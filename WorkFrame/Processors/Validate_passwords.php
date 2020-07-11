@@ -23,9 +23,9 @@ class Validate_passwords extends Processor {
 		return TRUE;
 	}
 
-	static function client_side($form_id, $field_name) {
-		$field_id = \WorkFrame\Html\Form_tools::field_id($form_id, $field_name[0]);
-		$field2_id = \WorkFrame\Html\Form_tools::field_id($form_id, $field_name[1]);
+	static function client_side($form_id, $field_name, $client_side_processor_args, $name_container_array) {
+		$field_id = \WorkFrame\Html\Form_tools::field_id($form_id, $field_name[0], $name_container_array);
+		$field2_id = \WorkFrame\Html\Form_tools::field_id($form_id, $field_name[1], $name_container_array);
 		return '
 		var result = true;
 		var value = $("#' . $field_id . '").val();

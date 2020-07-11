@@ -16,8 +16,8 @@ class Basic {
 		}
 	}
 
-	static function validate_email_client_side($form_id, $field_name) {
-		$field_id = \WorkFrame\Html\Form_tools::form_id($form_id, $field_name);
+	static function validate_email_client_side($form_id, $field_name, $client_side_processor_args, $name_container_array) {
+		$field_id = \WorkFrame\Html\Form_tools::form_id($form_id, $field_name, $name_container_array);
 		return '
 		var result = true;
 		var value = $("#' . $field_id . '").val();
@@ -43,8 +43,8 @@ class Basic {
 		}
 	}
 
-	static function validate_required_client_side($form_id, $field_name) {
-		$field_id = \WorkFrame\Html\Form_tools::form_id($form_id, $field_name);
+	static function validate_required_client_side($form_id, $field_name, $client_side_processor_args, $name_container_array) {
+		$field_id = \WorkFrame\Html\Form_tools::form_id($form_id, $field_name, $name_container_array);
 		return '
                 var result = true;
                 var value = $("#' . $field_id . '").val();
@@ -79,9 +79,9 @@ class Basic {
 		return TRUE;
 	}
 
-	static function validate_passwords_client_side($form_id, $field_name) {
-		$field_id = \WorkFrame\Html\Form_tools::form_id($form_id, $field_name[0]);
-		$field2_id = \WorkFrame\Html\Form_tools::form_id($form_id, $field_name[1]);
+	static function validate_passwords_client_side($form_id, $field_name, $client_side_processor_args, $name_container_array) {
+		$field_id = \WorkFrame\Html\Form_tools::form_id($form_id, $field_name[0], $name_container_array);
+		$field2_id = \WorkFrame\Html\Form_tools::form_id($form_id, $field_name[1], $name_container_array);
 		return '
                 var result = true;
                 var value = $("#' . $field_id . '").val();

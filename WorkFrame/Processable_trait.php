@@ -108,10 +108,10 @@ trait Processable_trait {
 		$this->_is_processed = $is_processed;
 	}
 
-	function get_client_side_processor_code($form_id) {
+	function get_client_side_processor_code($form_id, $name_container_array = NULL) {
 		$this->_prepare_processors();
 
-		$form_tools = new \WorkFrame\Html\Form_tools($form_id, $this);
+		$form_tools = new \WorkFrame\Html\Form_tools($form_id, $this, $name_container_array);
 
 		$funcs_js = $async_funcs_js = [];
 		foreach ($this->processors as $process) {
@@ -122,9 +122,18 @@ trait Processable_trait {
 				foreach ($process['fields'] as $field_names) {
 					$func_body_js = '';
 					if (method_exists($process['processor'], 'client_side')) {
-						$func_body_js = $process['processor']->client_side($form_id, $field_names, isset($process['client_side_processor_args']) ? $process['client_side_processor_args'] : NULL);
+						/*if(isset($name_container_array)) {
+							if(is_array($field_names)) {
+								foreach($field_names as $i=>$field_name) {
+									$field_names[$i] = $name_container_array . '[' . $field_name . ']';
+								}
+							} else {
+								$field_names = $name_container_array . '[' . $field_names . ']';
+							}
+						}*/
+						$func_body_js = $process['processor']->client_side($form_id, $field_names, isset($process['client_side_processor_args']) ? $process['client_side_processor_args'] : NULL, $name_container_array);
 						if (isset($func_body_js)) {
-							$condition_js = $process['processor']->get_pre_conditions_client_side_check($form_id, $field_names);
+							$condition_js = $process['processor']->get_pre_conditions_client_side_check($form_id, $field_names, $name_container_array);
 							$func_body_js = sprintf($condition_js, $func_body_js);
 						}
 					}
@@ -132,7 +141,7 @@ trait Processable_trait {
 					$field_names = array_values((array) $field_names); // Force non array to array containing the item, also ensure it has sequental numeric keys
 					foreach ($field_names as $k => $field_name) {
 						$this_fields_process_func_name = $form_tools->js_process_field_function_name($field_name);
-						$field_id = $form_tools::field_id($form_id, $field_name);
+						$field_id = $form_tools::field_id($form_id, $field_name, $name_container_array);
 						if ($process['processor'] instanceof \WorkFrame\Processors\Async_processor) {
 							// TODO: Handle multiple $field_names as single async call!
 
@@ -209,10 +218,10 @@ trait Processable_trait {
 ';
 			$js .= $func_js['js'] . '
 						if(errors.length) {
-							_wf_show_errors("' . $form_id . '", errors);
+							_wf_show_errors("' . $form_id . '", errors'.(isset($name_container_array) ? ', "'.$name_container_array.'"' : '').');
 						} else {
-							_wf_show_successes("' . $form_id . '", successes);
-							_wf_show_warnings("' . $form_id . '", warnings);
+							_wf_show_successes("' . $form_id . '", successes'.(isset($name_container_array) ? ', "'.$name_container_array.'"' : '').');
+							_wf_show_warnings("' . $form_id . '", warnings'.(isset($name_container_array) ? ', "'.$name_container_array.'"' : '').');
 						}
 					return !!errors.length;
 				}';
@@ -220,7 +229,7 @@ trait Processable_trait {
 
 
 		// Now add a func to validate everything (for onsubmit)
-		$process_form_func_name = $form_tools->js_process_form_function_name($form_id);
+		$process_form_func_name = $form_tools->js_process_form_function_name($form_id, $name_container_array);
 		$js .= 'function ' . $process_form_func_name . '(){
 				var success = true;
 ';
@@ -291,6 +300,7 @@ trait Processable_trait {
 		}
 		return $this->_bootstrap_form_tools;
 	}
+
 
 	function all_fields() {
 		return array_keys(get_object_vars($this));

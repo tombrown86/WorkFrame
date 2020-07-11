@@ -30,17 +30,17 @@ class Processor {
 		}
 		return FALSE;
 	}
-	function get_pre_conditions_client_side_check($form_id, $field_names) {
+	function get_pre_conditions_client_side_check($form_id, $field_names, $name_container_array) {
 		if(count($this->condition_field_names) || $this->allow_empty) {
 			$js = 'if(';
 			$conditions = [];
 			foreach($this->condition_field_names as $condition_field_name) {
-				$field_id = \WorkFrame\Html\Form_tools::field_id($form_id, $condition_field_name);
+				$field_id = \WorkFrame\Html\Form_tools::field_id($form_id, $condition_field_name, $name_container_array);
 				$conditions[] = '!!$("#'.$field_id.'").val()';
 			}
 			if($this->allow_empty) {
 				foreach((array)$field_names as $field_name) {
-					$field_id = \WorkFrame\Html\Form_tools::field_id($form_id, $field_name);
+					$field_id = \WorkFrame\Html\Form_tools::field_id($form_id, $field_name, $name_container_array);
 					$conditions[] = '$("#'.$field_id.'").val().length > 0';
 				}
 			}

@@ -2,8 +2,8 @@ _wf_custom_field_error_class = 'has-error';
 _wf_custom_field_success_class = 'has-success';
 _wf_custom_field_warning_class = 'has-warning';
 
-function _wf_field_id(form_id, field_name) {
-    return form_id + '__' + field_name;
+function _wf_field_id(form_id, field_name, name_container_array) {
+    return (name_container_array?name_container_array+'__':'')+ form_id + '__' + field_name;
 }
 
 function _wf_get_results_by_field(results) {
@@ -30,7 +30,7 @@ function _wf_reset_field_processing_output(field_id) {
 
 //TODO: Populate the main error list UL at top of form ?
 //TODO: Merge the following 2 funcs as they are v similar
-function _wf_show_errors(form_id, errors) {
+function _wf_show_errors(form_id, errors, name_container_array) {
     var errors = _wf_get_results_by_field(errors); // Actually - now this is only ever called for individual fields! so this is pointless. TODO: remove it
 
     for (field_name in errors) {
@@ -45,14 +45,14 @@ function _wf_show_errors(form_id, errors) {
 	    html += '</li>';
 	}
 	html += '</ul>';
-	var field_id = _wf_field_id(form_id, field_name);
+	var field_id = _wf_field_id(form_id, field_name, name_container_array);
 	$("#" + field_id + "__wf_field_error_container").html(html).show();
 	_wf_set_fields_group_state(field_id, 'error')
     }
 }
 
 // TODO This is a clone of the above pretty much, perhaps refactor + merge
-function _wf_show_warnings(form_id, warnings) {
+function _wf_show_warnings(form_id, warnings, name_container_array) {
     var warnings = _wf_get_results_by_field(warnings); // Actually - now this is only ever called for individual fields! so this is pointless. TODO: remove it
 
     $("#" + form_id + " .wf_field_warning_container").html('').hide();
@@ -69,15 +69,15 @@ function _wf_show_warnings(form_id, warnings) {
 	    html += '</li>';
 	}
 	html += '</ul>';
-	var field_id = _wf_field_id(form_id, field_name);
+	var field_id = _wf_field_id(form_id, field_name, name_container_array);
 	_wf_set_fields_group_state(field_id, 'warning');
 	$("#" + field_id + "__wf_field_warnings_container").html(html).show();
     }
 }
 
-function _wf_show_successes(form_id, success_field_ids) {
+function _wf_show_successes(form_id, success_field_ids, name_container_array) {
     for (i in success_field_ids) {
-	_wf_set_fields_group_state(success_field_ids[i], 'success');
+		_wf_set_fields_group_state(success_field_ids[i], 'success');
     }
 }
 

@@ -25,9 +25,10 @@ class Form_tools {
 	protected $custom_large_width_wrapper_class = '';
 	protected $custom_control_field_class = ''; # Is used on wide inputs.. (all except checkboxes and radio)
 
-	function __construct($form_id, $processable = null) {
+	function __construct($form_id, $processable = NULL, $name_container_array = NULL) {
 		$this->form_id = $form_id;
 		$this->processable = $processable;
+		$this->name_container_array = $name_container_array;
 	}
 
 	function set_process_onchange($process_onchange) {
@@ -137,13 +138,13 @@ class Form_tools {
 		return $html;
 	}
 
-	function form_open($attributes = [], $classes = []) {
+	function form_open($attributes = [], $classes = [], $name_container_array = NULL) {
 		isset($attributes['id']) || $attributes['id'] = $this->form_id;
 		isset($attributes['role']) || $attributes['role'] = 'form';
 		isset($attributes['class']) || $attributes['class'] = trim('wf_form ' . static::classes_string($classes));
 
 		if ($this->process_onsubmit) {
-			isset($attributes['onsubmit']) || $attributes['onsubmit'] = 'return ' . $this->js_process_form_function_name() . '("onsubmit");';
+			isset($attributes['onsubmit']) || $attributes['onsubmit'] = 'return ' . $this->js_process_form_function_name($name_container_array) . '("onsubmit");';
 		}
 
 		$attributes = static::attributes_string($attributes);
@@ -157,7 +158,7 @@ class Form_tools {
 
 	function label($field_name, $label, $attributes = [], $classes = []) {
 		isset($attributes['class']) || $attributes['class'] = trim($this->custom_label_class . ' ' . static::classes_string($classes));
-		isset($attributes['for']) || $attributes['for'] = static::field_id($this->form_id, $field_name);
+		isset($attributes['for']) || $attributes['for'] = static::field_id($this->form_id, $field_name, $this->name_container_array);
 		$attributes = static::attributes_string($attributes);
 
 		return '<label' . $attributes . '>' . htmlspecialchars($label) . '</label>';
@@ -180,7 +181,7 @@ class Form_tools {
 			}
 			$field_errors_html .= '</ul>';
 		}
-		return '<div id="' . htmlspecialchars(static::field_id($this->form_id, $field_name)) . '__wf_field_error_container" class="wf_error_container">' . $field_errors_html . '</div>';
+		return '<div id="' . htmlspecialchars(static::field_id($this->form_id, $field_name,$this->name_container_array)) . '__wf_field_error_container" class="wf_error_container">' . $field_errors_html . '</div>';
 	}
 
 	function field_warning_container($field_name) {
@@ -199,7 +200,7 @@ class Form_tools {
 			}
 			$field_warnings_html .= '</ul>';
 		}
-		return '<div id="' . htmlspecialchars(static::field_id($this->form_id, $field_name)) . '__wf_field_warning_container" class="wf_warning_container">' . $field_warnings_html . '</div>';
+		return '<div id="' . htmlspecialchars(static::field_id($this->form_id, $field_name,$this->name_container_array)) . '__wf_field_warning_container" class="wf_warning_container">' . $field_warnings_html . '</div>';
 	}
 
 	function field_group_open($main_field_name, $attributes = [], $classes = []) {
@@ -216,7 +217,7 @@ class Form_tools {
 			}
 		}
 
-		isset($attributes['id']) || $attributes['id'] = static::field_id($this->form_id, $main_field_name) . '__field_group';
+		isset($attributes['id']) || $attributes['id'] = static::field_id($this->form_id, $main_field_name,$this->name_container_array) . '__field_group';
 		isset($attributes['class']) || $attributes['class'] = trim('wf_field_group ' . $this->get_custom_field_group_class() . ' ' . trim($classes));
 		$attributes = static::attributes_string($attributes);
 
@@ -243,12 +244,14 @@ class Form_tools {
 		return $this->custom_field_group_class;
 	}
 
-	function js_process_form_function_name() {
-		return '_wf_process__' . $this->form_id;
+	function js_process_form_function_name($name_container_array) {
+		return '_wf_process__' . (isset($name_container_array) ? $name_container_array . '__' : '') . $this->form_id;
 	}
 
 	function js_process_field_function_name($field_name) {
-		return '_wf_process__' . (static::field_id($this->form_id, $field_name));
+		$id = static::field_id($this->form_id, $field_name,$this->name_container_array);
+		$id = preg_replace('/[^\w_]/i','_',$id);
+		return '_wf_process__' .$id ;
 	}
 //
 //	function js_remote_process_field_function_name($field_name) {
@@ -409,12 +412,11 @@ class Form_tools {
 		$classes = [];
 		$post_name = NULL;
 		extract($args);
-		
-		
+
 		$this->_check_processable_set(__METHOD__);
 		isset($attributes['id']) || $attributes['id'] = $this->id_for_field($field_name);
 		isset($attributes['class']) || $attributes['class'] = self::classes_string($classes);
-		
+
 		if(!isset($attributes['name'])) {
 			$attributes['name'] = isset($post_name) ? $post_name : $field_name;
 			if(isset($this->name_container_array)) {
@@ -546,11 +548,11 @@ class Form_tools {
 	}
 
 	function id_for_field($field_name) {
-		return self :: field_id($this->form_id, $field_name);
+		return self :: field_id($this->form_id, $field_name, $this->name_container_array);
 	}
 
-	static function field_id($form_id, $field_name) {
-		return $form_id . '__' . $field_name;
+	static function field_id($form_id, $field_name, $name_container_array=NULL) {
+		return (isset($name_container_array) ? $name_container_array.'__' : '') . $form_id . '__' . $field_name;
 	}
 
 	static function attributes_string($data) {
