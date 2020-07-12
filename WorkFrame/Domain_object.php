@@ -28,6 +28,7 @@ class Domain_object {
 		//if(!is_array($data)) die(print_r($data) . debug_print_backtrace());
 		foreach ($data as $k => $v) {
 			if (is_string($k)
+					&& !empty($k)
 					&& $k[0] != '_'
 					&& (!$respect_current_scenario || !isset($this->scenario) || in_array($k, $this->scenarios[$this->scenario]))) {
 				$set_method = 'set_' . $k;

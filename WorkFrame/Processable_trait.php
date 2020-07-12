@@ -35,7 +35,7 @@ trait Processable_trait {
 						if (class_exists($class)) {
 							$this->processors[$k]['processor'] = new $class();
 						} else {
-							throw new Unknown_processor_exception('', $processor['processor']);
+							throw new \WorkFrame\Exceptions\Unknown_processor_exception('', $processor['processor']);
 						}
 					}
 				}
@@ -300,7 +300,6 @@ trait Processable_trait {
 		}
 		return $this->_bootstrap_form_tools;
 	}
-
 
 	function all_fields() {
 		return array_keys(get_object_vars($this));

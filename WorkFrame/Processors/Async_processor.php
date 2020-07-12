@@ -4,6 +4,8 @@ namespace WorkFrame\Processors;
 
 class Async_processor extends Processor {
 
+	use \WorkFrame\WorkFrame_component_trait;
+
 	protected $data;
 
 	function get_data() {

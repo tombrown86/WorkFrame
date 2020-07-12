@@ -465,7 +465,9 @@ class Form_tools {
 			$label = $this->processable->get_field_label($main_field_name);
 
 		$html = $this->field_group_open($main_field_name) . "\n";
-		$html .= '	' . $this->label($main_field_name, $label . ($required ? ' *' : '')) . "\n";
+		if($label !== FALSE) {
+			$html .= '	' . $this->label($main_field_name, $label . ($required ? ' *' : '')) . "\n";
+		}
 		$html .= '	' . $this->input_wrapper_open() . "\n";
 		$html .= '		' . $field_html . "\n";
 		$help_text_inline and $html .= '<small class="text-muted">'.$help_text_inline.'</small>';
