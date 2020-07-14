@@ -122,15 +122,6 @@ trait Processable_trait {
 				foreach ($process['fields'] as $field_names) {
 					$func_body_js = '';
 					if (method_exists($process['processor'], 'client_side')) {
-						/*if(isset($name_container_array)) {
-							if(is_array($field_names)) {
-								foreach($field_names as $i=>$field_name) {
-									$field_names[$i] = $name_container_array . '[' . $field_name . ']';
-								}
-							} else {
-								$field_names = $name_container_array . '[' . $field_names . ']';
-							}
-						}*/
 						$func_body_js = $process['processor']->client_side($form_id, $field_names, isset($process['client_side_processor_args']) ? $process['client_side_processor_args'] : NULL, $name_container_array);
 						if (isset($func_body_js)) {
 							$condition_js = $process['processor']->get_pre_conditions_client_side_check($form_id, $field_names, $name_container_array);
@@ -229,7 +220,7 @@ trait Processable_trait {
 
 
 		// Now add a func to validate everything (for onsubmit)
-		$process_form_func_name = $form_tools->js_process_form_function_name($form_id, $name_container_array);
+		$process_form_func_name = $form_tools->js_process_form_function_name();
 		$js .= 'function ' . $process_form_func_name . '(){
 				var success = true;
 ';

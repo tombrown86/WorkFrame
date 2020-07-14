@@ -1,22 +1,23 @@
 <?php
 function h($s) {
-	return htmlspecialchars($s);
+	return htmlspecialchars($s, ENT_QUOTES);
 }
 function script_tags($paths) {
 	$html = '';
-	foreach((array)$paths as $path) {
-		$html .= '<script type="text/javascript" src="'.h($path).'"></script>'."\n";
+	$app_build_get_var_str = defined('APP_BUILD') ? 'app_build='.urlencode(APP_BUILD) : '';
+	foreach((array)$paths as $path) {	
+		$html .= '<script type="text/javascript" src="'.h($path).(empty($app_build_get_var_str) ? '' : (strpos($path, '?')!==FALSE ? '&amp;'.$app_build_get_var_str : '?'.$app_build_get_var_str)).'"></script>'."\n";
 	}
 	return $html;
 }
 function stylesheet_tags($paths) {
 	$html = '';
+	$app_build_get_var_str = defined('APP_BUILD') ? 'app_build='.urlencode(APP_BUILD) : '';
 	foreach((array)$paths as $path) {
-		$html .= '<link rel="stylesheet" href="'.h($path).'"/>'."\n";
+		$html .= '<link rel="stylesheet" href="'.h($path).(empty($app_build_get_var_str) ? '' : (strpos($path, '?')!==FALSE ? '&amp;'.$app_build_get_var_str : '?'.$app_build_get_var_str)).'"/>'."\n";
 	}
 	return $html;
 }
-
 /**
  * Limits $str to max length of $chars.
  * Cuts off after last word and appends $end.

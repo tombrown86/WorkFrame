@@ -1,9 +1,17 @@
 <?php
 
-function hash_data($secret, $data, $mechanism = 'md5') {
+function hash_data($secret, $data, $mechanism = 'hmac_ripemd160') {
 	ksort($data);
-	$s = $secret;
-	if($mechanism == 'md5') {
+	
+	if($mechanism == 'hmac_ripemd160') {
+		$s = '';
+		foreach($data as $k=>$v) {
+			$s .= md5($k) . md5($v);// main purpose of this is to give consistent length to each k+v
+		}	
+		return hash_hmac('ripemd160', $s, $secret);
+	} else if($mechanism == 'md5') {
+		log_message(WF_LOG_LEVEL_INFO, "simple md5 hash method is fairly secure but no longer advised");
+		$s = $secret;
 		foreach($data as $k=>$v) {
 			$s .= md5($k) . md5($v);
 		}
@@ -12,7 +20,7 @@ function hash_data($secret, $data, $mechanism = 'md5') {
 	throw new \WorkFrame\Exceptions\Invalid_hashing_mechanism_exception('Mechanism: '.$mechanism);
 }
 
-function check_hash_data($hash, $secret, $data, $mechanism = 'md5') {
+function check_hash_data($hash, $secret, $data, $mechanism = 'hmac_ripemd160') {
 	return $hash === hash_data($secret, $data, $mechanism);
 }
 

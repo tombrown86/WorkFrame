@@ -90,7 +90,7 @@ class Mysqli_data_mapper {
 		return $row ? array_pop($row) : FALSE;
 	}
 	protected function comma_separated_ints($id_array) {
-		array_walk($id_array, 'intval');
+		$id_array = array_map('intval', $id_array);
 		return implode($id_array, ',');
 	}
 	protected function last_id($connection_identifier=null) {

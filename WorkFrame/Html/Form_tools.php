@@ -138,13 +138,13 @@ class Form_tools {
 		return $html;
 	}
 
-	function form_open($attributes = [], $classes = [], $name_container_array = NULL) {
+	function form_open($attributes = [], $classes = []) {
 		isset($attributes['id']) || $attributes['id'] = $this->form_id;
 		isset($attributes['role']) || $attributes['role'] = 'form';
 		isset($attributes['class']) || $attributes['class'] = trim('wf_form ' . static::classes_string($classes));
 
 		if ($this->process_onsubmit) {
-			isset($attributes['onsubmit']) || $attributes['onsubmit'] = 'return ' . $this->js_process_form_function_name($name_container_array) . '("onsubmit");';
+			isset($attributes['onsubmit']) || $attributes['onsubmit'] = 'return ' . $this->js_process_form_function_name() . '("onsubmit");';
 		}
 
 		$attributes = static::attributes_string($attributes);
@@ -244,8 +244,8 @@ class Form_tools {
 		return $this->custom_field_group_class;
 	}
 
-	function js_process_form_function_name($name_container_array) {
-		return '_wf_process__' . (isset($name_container_array) ? $name_container_array . '__' : '') . $this->form_id;
+	function js_process_form_function_name() {
+		return '_wf_process__' . (isset($this->name_container_array) ? $this->name_container_array . '__' : '') . $this->form_id;
 	}
 
 	function js_process_field_function_name($field_name) {
