@@ -9,7 +9,7 @@ class Validate_passwords extends Processor {
 				'field_name' => $fields[0],
 				'is_error' => TRUE,
 				'error_message' => 'Invalid password',
-				'error_details' => "For security purposes, your password must be at least 8 characters long and contain at least one of the following characters (and no other characters): an uppercase leter, a lowercase letter, a number, a special character #_@£$!%*?&#)(=-][",
+				'error_details' => "For security purposes, your password must be at least 8 characters and contain an uppercase leter, a lowercase letter, a number and a special character #_@£$!%*?&#)(=-][",
 			];
 		}
 
@@ -35,7 +35,7 @@ class Validate_passwords extends Processor {
 				field_name : "' . $field_name[0] . '",
 				is_error : true,
 				error_message : "Invalid password",
-				error_details : "For security purposes, your password must be at least 8 characters long and contain at least one of the following characters (and no other characters): an uppercase leter, a lowercase letter, a number, a special character #_@£$!%*?&#)(=-][",
+				error_details : "For security purposes, your password must be at least 8 characters and contain an uppercase leter, a lowercase letter, a number and a special character #_@£$!%*?&#)(=-][",
 			};
 		} else if(value != value2) {
 			result = {

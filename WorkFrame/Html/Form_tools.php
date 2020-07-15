@@ -276,6 +276,19 @@ class Form_tools {
 		return '</div>';
 	}
 
+	function hidden_field($field_name = '', $args=[]) {
+			$value = $this->_get_value($field_name);
+			$type = 'hidden';
+			extract($args);
+
+			isset($args['classes']) or $args['classes'] = [];
+			$attributes = $this->_field_attributes($field_name, $args);
+			$attributes['type'] = $type;
+			$attributes['value'] = $value;
+
+			return '<input' . static::attributes_string($attributes) . '/>';
+	}
+
 	function input_field($field_name = '', $args=[]) {
 		$value = $this->_get_value($field_name);
 		$placeholder = '';
