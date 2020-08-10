@@ -33,7 +33,7 @@ class Mysqli_data_mapper {
 			if(WORKFRAME_DEBUG) {
 				mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
 			}
-			
+			mysqli_set_charset($link, 'utf8');
 			self::$dbs[$connection_identifier] = $link;
 		}
 
