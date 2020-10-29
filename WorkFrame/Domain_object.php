@@ -26,7 +26,7 @@ class Domain_object {
 
 	function from_assoc($data, $respect_current_scenario = TRUE) {
 		//if(!is_array($data)) die(print_r($data) . debug_print_backtrace());
-		foreach ($data as $k => $v) {
+		foreach ((array)$data as $k => $v) {
 			if (is_string($k)
 					&& !empty($k)
 					&& $k[0] != '_'
