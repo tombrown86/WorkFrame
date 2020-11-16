@@ -179,12 +179,12 @@ class Bootstrap_form_tools extends Form_tools {
 
 		$html = '';
 		$html .= '<div class="' . $classes . '">' . "\n";
-		$html .= '<strong>' . $strong_html . '</strong> ' . $message_html . "\n";
 		if( isset($options['dismissible']) && $options['dismissible'] === TRUE ) {
 			$html .= '<button type="button" class="close" data-dismiss="alert" aria-label="Close">' . "\n";
 			$html .= '<span aria-hidden="true">&times;</span>' . "\n";
 			$html .= '</button>' . "\n";
 		}
+		$html .= '<strong>' . $strong_html . '</strong> ' . $message_html . "\n";
 		$html .= '</div>' . "\n";
 		
 		return $html;
