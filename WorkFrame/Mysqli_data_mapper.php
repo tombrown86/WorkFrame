@@ -91,7 +91,7 @@ class Mysqli_data_mapper {
 	}
 	protected function comma_separated_ints($id_array) {
 		$id_array = array_map('intval', $id_array);
-		return implode($id_array, ',');
+		return implode(',', $id_array);
 	}
 	protected function last_id($connection_identifier=null) {
 		$db = $this->db($connection_identifier);
