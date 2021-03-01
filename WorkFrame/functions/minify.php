@@ -26,7 +26,9 @@ function minify($files, $output_name = null, $filetype = 'js', $print_tags = tru
 	$full_public_path = APP_PUBLIC_PATH . "/" . $public_dir_name . "/";
 	$workframe_js_path = APP_PATH . "/js/";
 
-	$min_file = 'min/' . preg_replace("/[^a-z0-9\._-]*/i", '', $output_name . '__' . APP_CODENAME . '_v' . APP_BUILD) . '.min.' . $filetype;
+	$safe_name = preg_replace("/[^a-z0-9\._-]*/i", '', $output_name . '__' . APP_CODENAME . '_v' . APP_BUILD) . '.min.' . $filetype;
+	$safe_name = ltrim($safe_name, ' .');// files starting with '..' seem to be forbidden (nginx)
+	$min_file = 'min/' . $safe_name;
 	$min_file_exists = file_exists($full_public_path . $min_file);
 
 	$dev_environment_and_min_file_out_of_date = FALSE;
