@@ -19,7 +19,7 @@
 function minify($files, $output_name = null, $filetype = 'js', $print_tags = true) {
 	// sort out params
 	is_array($files) or $files = array($files);
-	$output_name or $output_name = $files[0];
+	$output_name or $output_name = 'wfmin_'.$files[0];
 
 	// sort web and system paths to public dir
 	$public_dir_name = $filetype == 'js' ? 'scripts' : 'stylesheets';
@@ -27,7 +27,6 @@ function minify($files, $output_name = null, $filetype = 'js', $print_tags = tru
 	$workframe_js_path = APP_PATH . "/js/";
 
 	$safe_name = preg_replace("/[^a-z0-9\._-]*/i", '', $output_name . '__' . APP_CODENAME . '_v' . APP_BUILD) . '.min.' . $filetype;
-	$safe_name = ltrim($safe_name, ' .');// files starting with '..' seem to be forbidden (nginx)
 	$min_file = 'min/' . $safe_name;
 	$min_file_exists = file_exists($full_public_path . $min_file);
 
@@ -646,3 +645,4 @@ class CSSCompressor {
 	}
 
 }
+
