@@ -27,7 +27,6 @@ trait Renderer_trait {
 			ob_start();
 			include(APP_PATH . '/html/templates/' . $template);
 			$HTML = ob_get_clean();
-			ob_get_clean();
 		}
 
 		return $HTML;
