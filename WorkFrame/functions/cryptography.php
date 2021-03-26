@@ -38,3 +38,20 @@ function decrypt_openssl($data, $key, $alg = 'AES-256-CBC', $openssl_options = 0
 	$data = substr($data, $iv_size);
 	return openssl_decrypt($data, $alg, $key, $openssl_options, $iv);
 }
+
+/**
+ * It's often useful to strip nulls on data before hashing as quite often
+ * the same array is used to build query strings. (NULL entries are stripped
+ * when building query strings causing breakages when the hash built with
+ * NULL values included doesn't match at the other end.)
+ * @param array an array 
+ * @param array the array without any of it's null entires
+ */
+function strip_nulls($array) {
+	foreach($array as $k=>$v) {
+		if(is_null($v)) {
+			unset($array[$k]);
+		}
+	}
+	return $array;
+}
