@@ -21,10 +21,15 @@ function functions($functions_file_name) {
 	}
 }
 
+$WF_INCLUDED_CONSTANTS = [];
 function constants($constants_file_name) {
-	if(file_exists(APP_PATH . '/constants/' . $constants_file_name . '.php')) {
-		include(APP_PATH . '/constants/' . $constants_file_name . '.php');
-	} else {
-		include(WORKFRAME_PATH . '/constants/' . $constants_file_name . '.php');
+	global $WF_INCLUDED_CONSTANTS;
+	if(!in_array($constants_file_name, $WF_INCLUDED_CONSTANTS)) {
+		if(file_exists(APP_PATH . '/constants/' . $constants_file_name . '.php')) {
+			include(APP_PATH . '/constants/' . $constants_file_name . '.php');
+		} else {
+			include(WORKFRAME_PATH . '/constants/' . $constants_file_name . '.php');
+		}
+		$WF_INCLUDED_CONSTANTS[] = $constants_file_name;
 	}
 }
