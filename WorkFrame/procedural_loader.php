@@ -20,3 +20,11 @@ function functions($functions_file_name) {
 		$WF_INCLUDED_FUNCTIONS[] = $functions_file_name;
 	}
 }
+
+function constants($constants_file_name) {
+	if(file_exists(APP_PATH . '/constants/' . $constants_file_name . '.php')) {
+		include(APP_PATH . '/constants/' . $constants_file_name . '.php');
+	} else {
+		include(WORKFRAME_PATH . '/constants/' . $constants_file_name . '.php');
+	}
+}
