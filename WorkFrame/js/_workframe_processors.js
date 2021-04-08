@@ -86,6 +86,6 @@ function _wf_validate_email(email) {
     return re.test(email);
 }
 function _wf_validate_password(pw) {
-    var re = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[#\_@£$!%*?&=\(\)\-\]\[])[A-Za-z\d#\_@£$!%*?&=\(\)\-\]\[]{8,}$/;
+    var re = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[#\_\.@£$!%*?&=\(\)\-\]\[])[A-Za-z\d#\_\.@£$!%*?&=\(\)\-\]\[]{8,}$/;
     return re.test(pw);
 }
