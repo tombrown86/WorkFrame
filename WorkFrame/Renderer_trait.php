@@ -21,15 +21,18 @@ trait Renderer_trait {
 
 		ob_start();
 		include(APP_PATH . '/html/partials/' . $partial);
-		$HTML = ob_get_clean();
+		$RET_HTML = ob_get_clean();
 
+		
 		if (!is_null($template)) {
+			$HTML = '___HTML_PLACEHOLDER___';
 			ob_start();
 			include(APP_PATH . '/html/templates/' . $template);
-			$HTML = ob_get_clean();
+			$TEMPLATE_HTML = ob_get_clean();
+			$RET_HTML = str_replace('___HTML_PLACEHOLDER___', $RET_HTML, $TEMPLATE_HTML);
 		}
 
-		return $HTML;
+		return $RET_HTML;
 	}
 
 	function add_view_var($k, $v) {

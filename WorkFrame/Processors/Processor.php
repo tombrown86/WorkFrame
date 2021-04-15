@@ -36,7 +36,7 @@ class Processor {
 			$conditions = [];
 			foreach($this->condition_field_names as $condition_field_name) {
 				$field_id = \WorkFrame\Html\Form_tools::field_id($form_id, $condition_field_name, $name_container_array);
-				$conditions[] = '!!$("#'.$field_id.'").val()';
+				$conditions[] = '$("#'.$field_id.':checked, #'.$field_id.':not([type=\'checkbox\'])").val()';
 			}
 			if($this->allow_empty) {
 				foreach((array)$field_names as $field_name) {

@@ -214,7 +214,7 @@ trait Processable_trait {
 							_wf_show_successes("' . $form_id . '", successes'.(isset($name_container_array) ? ', "'.$name_container_array.'"' : '').');
 							_wf_show_warnings("' . $form_id . '", warnings'.(isset($name_container_array) ? ', "'.$name_container_array.'"' : '').');
 						}
-					return !!errors.length;
+					return errors.length == 0;
 				}';
 		}
 
@@ -227,7 +227,7 @@ trait Processable_trait {
 		foreach ($funcs_js as $process_field_func_name => $func_js) {
 			$js .= '
 				var result = ' . $process_field_func_name . '();
-				success = (result==true || result==null || !result.is_error) && success;' . "\n";
+				success = (result==true || result==null || ((typeof result.is_error != "undefined") && !result.is_error)) && success;' . "\n";
 		}
 		$js .= '
 				return success;
