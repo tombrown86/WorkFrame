@@ -9,7 +9,7 @@
 	</ol>
 </div>
 
-<p>..... More will come</p>
+<p>.... More will come</p>
 
 
 <h2>Introduction <span id="introduction"></span><a href="#introduction" class="hashlink">&para;</a></h2>
