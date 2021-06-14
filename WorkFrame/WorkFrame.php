@@ -29,6 +29,7 @@ class WorkFrame {
 			$this->Security->pre_router_securtiy_hook();
 		}
 	}
+
 	function post_router_hook() {}
 	function pre_cli_router_hook() {}
 	function post_cli_router_hook() {}
