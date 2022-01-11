@@ -417,7 +417,7 @@ class Form_tools {
 		return '<textarea' . static::attributes_string($attributes) . '>' . htmlspecialchars($value) . '</textarea>';
 	}
 
-	private function _field_attributes($field_name = '', $args) {
+	private function _field_attributes($field_name = '', $args=[]) {
 		$required = FALSE;
 		$height = 'medium';
 		$width = 'medium';
