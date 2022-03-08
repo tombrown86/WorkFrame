@@ -1,6 +1,6 @@
 <?php
 function h($s) {
-	return htmlspecialchars($s, ENT_QUOTES);
+	return htmlspecialchars($s ?? '', ENT_QUOTES);
 }
 function script_tags($paths) {
 	$html = '';
