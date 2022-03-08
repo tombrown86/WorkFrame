@@ -26,7 +26,6 @@ foreach (@conf('router')['route_rewrites'] as $path => $default_route) {
 
 $routes = array_filter(explode('/', $base_url));
 
-
 // Handle any Async_processor calls natively
 if(isset($routes[0]) && $routes[0] === '_async_processor') {
 	$processor_class = "\\WorkFrame\\Request_handlers\\Async_processor";
@@ -51,25 +50,20 @@ if(isset($routes[0]) && $routes[0] === '_async_processor') {
 	}
 
 	if (class_exists($class) && method_exists($class, $action)) {
-		$request_handler = new $class();
+		$request_handler_class = $class;
 	} else {
-		$class = "\\" . APP_NAMESPACE . "\\Request_handlers\\Error\\Error";
-		$request_handler = new $class();
+		$request_handler_class = "\\" . APP_NAMESPACE . "\\Request_handlers\\Error\\Error";
 		$action = 'error_404';
 		$routes = ['error'];
 		header("HTTP/1.0 404 Not Found");
 	}
-
-
 }
-
-
-
 
 handle_route:
 
-// The request may be rewritten at this point(E.g. for 403)
+// The request may be rewritten at this point (E.g. for 403)
 try {
+	$request_handler = new $request_handler_class();
 	// Prepare request handler for execution
 	if(!$request_handler instanceof WorkFrame\Request_handler) {
 		throw new WorkFrame\Exceptions\Class_is_not_a_request_handler_exception;
@@ -78,14 +72,12 @@ try {
 	$request_handler->set_action($action);
 	$_workframe->set_request_handler($request_handler);
 	$_workframe->pre_action_hook();
-
 	$request_handler->pre_action_hook();
 	$request_handler->$action();
 	$request_handler->post_action_hook();
 	$_workframe->post_action_hook();
 } catch (\WorkFrame\Exceptions\Request_handler_rewrite_exception $e) {
-	$rewrite_request_handler_class = $e->get_rewrite_request_handler_class();
-	$request_handler = new $rewrite_request_handler_class();
+	$request_handler_class = $e->get_rewrite_request_handler_class();
 	$action = $e->get_rewrite_request_handler_action();
 	$routes = $e->get_rewrite_request_routes();
 	goto handle_route;
