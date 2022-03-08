@@ -7,7 +7,7 @@ class WorkFrame_exception extends \Exception {
 		$this->debug_message = $debug_message;
 		parent::__construct($message);
 //		if(WORKFRAME_DEBUG) {
-//			echo '<br/><hr/><strong>WF Exception: '.htmlspecialchars($message).'</strong><br><strong>Debug</strong>: '.$debug_message.'<hr/>';
+//			echo '<br/><hr/><strong>WF Exception: '.htmlspecialchars($message ?? '').'</strong><br><strong>Debug</strong>: '.$debug_message.'<hr/>';
 //		}
 	}
 	function get_debug_message() {
