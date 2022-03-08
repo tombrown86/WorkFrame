@@ -13,7 +13,7 @@ function log_message($level, $message, $debug_silent=FALSE) {
 	if(WORKFRAME_DEBUG 
 		&& !$debug_silent
 		&& !in_array($level, [APP_LOG_LEVEL_INFO, WF_LOG_LEVEL_INFO])) {
-		echo '<hr/><div style="color:red"><strong>'.$level.'</strong> - '.htmlspecialchars($message).'</div><hr/>';
+		echo '<hr/><div style="color:red"><strong>'.$level.'</strong> - '.htmlspecialchars($message ?? '').'</div><hr/>';
 	}
 	
 	$app_log_path = rtrim(APP_LOG_PATH, '/\\') . DIRECTORY_SEPARATOR;
