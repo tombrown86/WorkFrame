@@ -116,16 +116,16 @@ class Form_tools {
 		$errors_by_field = $this->processable->get_errors_by_field();
 
 		if ($this->processable->is_processed() && count($errors_by_field)) {
-			$html = '<ul id="' . htmlspecialchars($this->form_id) . '__wf_errors" class="wf_errors">';
+			$html = '<ul id="' . htmlspecialchars($this->form_id ?? '') . '__wf_errors" class="wf_errors">';
 
 			foreach ($errors_by_field as $field_name => $errors) {
 				$html .= '<li>';
-				$html .= '<span class="wf_error_field_name">' . htmlspecialchars($errors[0]['field_label']) . '</span>';
+				$html .= '<span class="wf_error_field_name">' . htmlspecialchars($errors[0]['field_label'] ?? '') . '</span>';
 				$html .= '<ul class="wf_field_errors">';
 				
 				foreach ($errors as $error) {
 					$html .= '<li>';
-					$html .= htmlspecialchars($error['error_message']);
+					$html .= htmlspecialchars($error['error_message'] ?? '');
 					if (!empty($error['error_details'])) {
 						$html .= ' <span class="wf_error_details">' . htmlspecialchars($error['error_details']) . '</span>';
 					}
@@ -161,7 +161,7 @@ class Form_tools {
 		isset($attributes['for']) || $attributes['for'] = static::field_id($this->form_id, $field_name, $this->name_container_array);
 		$attributes = static::attributes_string($attributes);
 
-		return '<label' . $attributes . '>' . htmlspecialchars($label) . '</label>';
+		return '<label' . $attributes . '>' . htmlspecialchars($label ?? '') . '</label>';
 	}
 
 	// TODO: merge the following functions as they are basically the same
@@ -173,7 +173,7 @@ class Form_tools {
 			$field_errors_html .= '<ul class="wf_field_errors_inline">';
 			foreach ($errors[$field_name] as $error) {
 				$field_errors_html .= '<li>';
-				$field_errors_html .= htmlspecialchars($error['error_message']);
+				$field_errors_html .= htmlspecialchars($error['error_message'] ?? '');
 				if (!empty($error['error_details'])) {
 					$field_errors_html .= ' <span class="wf_error_details">' . htmlspecialchars($error['error_details']) . '</span>';
 				}
@@ -192,7 +192,7 @@ class Form_tools {
 			$field_warnings_html .= '<ul class="wf_field_warnings_inline">';
 			foreach ($warnings[$field_name] as $warning) {
 				$field_warnings_html .= '<li>';
-				$field_warnings_html .= htmlspecialchars($warning['warning_message']);
+				$field_warnings_html .= htmlspecialchars($warning['warning_message'] ?? '');
 				if (!empty($warning['warning_details'])) {
 					$field_warnings_html .= ' <span class="wf_warning_details">' . htmlspecialchars($warning['warning_details']) . '</span>';
 				}
@@ -262,7 +262,7 @@ class Form_tools {
 		isset($attributes['class']) || $attributes['class'] = static::classes_string($classes);
 		$attributes = static::attributes_string($attributes);
 
-		return '<legend' . $attributes . '>' . htmlspecialchars($text) . '</legend>';
+		return '<legend' . $attributes . '>' . htmlspecialchars($text ?? '') . '</legend>';
 	}
 
 	function input_wrapper_open() {
@@ -330,7 +330,7 @@ class Form_tools {
 		if($value == $attributes['value']) {
 			$attributes['checked'] = 'checked';
 		}
-		return '<input type="hidden" name="'.htmlspecialchars($attributes['name']).'" value="0"/>'
+		return '<input type="hidden" name="'.htmlspecialchars($attributes['name'] ?? '').'" value="0"/>'
 			.' <input' . static::attributes_string($attributes) . '/>';
 	}
 
@@ -339,6 +339,7 @@ class Form_tools {
 		$options=[];
 		$height = 'medium';
 		$width = 'medium';
+		$identical_value = FALSE;
 		
 		extract($args);
 		
@@ -354,7 +355,7 @@ class Form_tools {
 		}
 		
 		return '<select' . static::attributes_string($attributes) . '>'
-				. $this->select_options($options, $value)
+				. $this->select_options($options, $value, $identical_value)
 				.'</select>';
 	}
 	
@@ -364,7 +365,7 @@ class Form_tools {
 	 * @param string $selected_value
 	 * @return string
 	 */
-	static function select_options($options=[], $selected_value=null) {
+	static function select_options($options=[], $selected_value=NULL, $identical_value=FALSE) {
 		$h = "\n";
 		
 //		$is_assoc = array_keys($options) !== $options;
@@ -390,12 +391,12 @@ class Form_tools {
 		foreach($options as $k=>$v) {
 			if(is_array($selected_value) && in_array($k, $selected_value)) {
 				$selected_attr = 'selected="selected" ';
-			} elseif($k == $selected_value) {
+			} elseif($identical_value ? ($k === $selected_value) : ($k == $selected_value)) {	
 				$selected_attr = 'selected="selected" ';
 			} else {
 				$selected_attr = '';
 			}
-			$h .= "<option ".$selected_attr."value=\"".  htmlspecialchars($k)."\">".  htmlspecialchars($v)."</option>\n";
+			$h .= "<option ".$selected_attr."value=\"".  htmlspecialchars($k)."\">".  htmlspecialchars($v ?? '')."</option>\n";
 		}
 		return $h;
 	}
@@ -414,7 +415,7 @@ class Form_tools {
 		
 		$attributes = $this->_field_attributes($field_name, $args);
 		isset($attributes['placeholder']) || $attributes['placeholder'] = $placeholder;
-		return '<textarea' . static::attributes_string($attributes) . '>' . htmlspecialchars($value) . '</textarea>';
+		return '<textarea' . static::attributes_string($attributes) . '>' . htmlspecialchars($value ?? '') . '</textarea>';
 	}
 
 	private function _field_attributes($field_name = '', $args=[]) {
@@ -576,7 +577,7 @@ class Form_tools {
 		} else {
 			$attributes = '';
 			foreach ($data as $k => $v) {
-				$attributes .= ' ' . $k . '="' . htmlspecialchars($v) . '"';
+				$attributes .= ' ' . $k . '="' . htmlspecialchars($v ?? '') . '"';
 			}
 			return $attributes;
 		}
