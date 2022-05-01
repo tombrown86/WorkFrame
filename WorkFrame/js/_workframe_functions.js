@@ -34,8 +34,7 @@ function wf_get_cookie(cname) {
         }
     }
     return "";
-} 
-
+}
 function wf_get_cookie(cname) {
     var name = cname + "=";
     var decodedCookie = decodeURIComponent(document.cookie);
