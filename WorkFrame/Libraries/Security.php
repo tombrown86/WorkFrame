@@ -22,29 +22,31 @@ class Security {
 	}
 
 	function pre_router_securtiy_hook() {
-		if ($this->get_conf_value('xss_filter')) {
-		
-			foreach (['_GET', '_POST', '_COOKIES', '_REQUEST'] as $inp_arr_name) {
-				// Declare _ORIGINAL_blah (to store original value)
-				// and _CLEAN_blah globals (to store safe)
-				$ORIGINAL_inp_arr_name = '_ORIGINAL' . $inp_arr_name;
-				$CLEAN_inp_arr_name = '_CLEAN' . $inp_arr_name;
-				global $$ORIGINAL_inp_arr_name;
-				global $$CLEAN_inp_arr_name;
+		foreach (['_GET', '_POST', '_COOKIES', '_REQUEST'] as $inp_arr_name) {
+			// Declare _ORIGINAL_blah (to store original value)
+			// and _CLEAN_blah globals (to store safe)
+			$ORIGINAL_inp_arr_name = '_ORIGINAL' . $inp_arr_name;
+			$CLEAN_inp_arr_name = '_CLEAN' . $inp_arr_name;
+			global $$ORIGINAL_inp_arr_name;
+			global $$CLEAN_inp_arr_name;
 
-				$$ORIGINAL_inp_arr_name = [];
-				$$CLEAN_inp_arr_name = [];
+			$$ORIGINAL_inp_arr_name = [];
+			$$CLEAN_inp_arr_name = [];
 
-				if(isset($GLOBALS[$inp_arr_name])) {
-					foreach ($GLOBALS[$inp_arr_name] as $k => $v) {
-						$GLOBALS[$ORIGINAL_inp_arr_name][$k] = $v;
+			if(isset($GLOBALS[$inp_arr_name])) {
+				foreach ($GLOBALS[$inp_arr_name] as $k => $v) {
+					$GLOBALS[$ORIGINAL_inp_arr_name][$k] = $v;
+					
+					if ($this->get_conf_value('xss_filter')) {
 						$GLOBALS[$CLEAN_inp_arr_name][$k] = $this->xss_filter_var($v);
 						unset($GLOBALS[$inp_arr_name][$k]);
 					}
 				}
 			}
+		}
 			
-			// Explicity destory these (as they seem to repopulate (at least _REQUEST does))
+		if ($this->get_conf_value('xss_filter')) {
+			// Explicity destory these (as they seem to repopulate (at least _REQUEST does)
 			unset($_GET);
 			unset($_POST);
 			unset($_COOKIES);
