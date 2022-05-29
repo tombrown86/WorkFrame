@@ -62,10 +62,10 @@ trait WorkFrame_component_trait {
 		} else {
 			$wf = _workframe();
 			if(!isset($wf->LOADED[$shared_identifier])) {
-                // claim array entry before instantiating class to
-                // avoid potential recursion when component constructors
-                // init each other
-                $wf->LOADED[$shared_identifier] = 'defined';
+				// claim array entry before instantiating class to
+				// avoid potential recursion when component constructors
+				// init each other
+				$wf->LOADED[$shared_identifier] = 'defined';
 				$wf->LOADED[$shared_identifier] = new $class();
 			}
 			return $wf->LOADED[$shared_identifier];
