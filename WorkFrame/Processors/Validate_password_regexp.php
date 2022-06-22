@@ -9,7 +9,7 @@ class Validate_password_regexp extends Processor {
 				'field_name' => $field_name,
 				'is_error' => TRUE,
 				'error_message' => 'Invalid password',
-				'error_details' => "For security purposes, your password must be at least 8 characters and contain an uppercase letter, a lowercase letter, a number and a special character #_.@£$!%*?&#)(=-][",
+				'error_details' => "For security purposes, your password must be at least 8 characters and contain an uppercase letter, a lowercase letter, a number and a special character #_.@£$!%*?&)(=-][",
 			];
 		}
 
@@ -26,7 +26,7 @@ class Validate_password_regexp extends Processor {
 				field_name : "' . $field_name . '",
 				is_error : true,
 				error_message : "Invalid password",
-				error_details : "For security purposes, your password must be at least 8 characters and contain an uppercase letter, a lowercase letter, a number and a special character #_.@£$!%*?&#)(=-][",
+				error_details : "For security purposes, your password must be at least 8 characters and contain an uppercase letter, a lowercase letter, a number and a special character #_.@£$!%*?&)(=-][",
 			};
 		}
 		';
