@@ -25,11 +25,13 @@ trait Magic_get_set_trait {
 
 	function __call($method, $params) {
 		if(strlen($method) > 4) {
+			$bt = debug_backtrace();
+			$caller = array_shift($bt);
 			$prop = substr($method, 4);
 			$get_or_set = substr($method, 0, 4);
 			if(in_array($get_or_set , ['get_', 'set_'])) {
 				if(!property_exists($this, $prop)) {
-					throw new \WorkFrame\Exceptions\No_property_to_get_or_set_exception('Invalid magic get_ or set_ ('.$get_or_set.$prop.') on '. get_class($this), $method);
+					throw new \WorkFrame\Exceptions\No_property_to_get_or_set_exception('Invalid magic get_ or set_ ('.$get_or_set.$prop.') on '.get_class($this).".......".'. Called in '.$caller['file'].' line '.$caller['line'].'.', $method);
 				}
 				if($get_or_set == 'get_') {
 					return $this->$prop;
@@ -41,5 +43,4 @@ trait Magic_get_set_trait {
 		}
 		trigger_error('Call to undefined method '.__CLASS__.'::'.$method.'() (triggered from magic __call)', E_USER_ERROR);
 	}
-
 }
