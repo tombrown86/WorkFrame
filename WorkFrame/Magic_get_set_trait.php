@@ -29,7 +29,7 @@ trait Magic_get_set_trait {
 			$get_or_set = substr($method, 0, 4);
 			if(in_array($get_or_set , ['get_', 'set_'])) {
 				if(!property_exists($this, $prop)) {
-					throw new \WorkFrame\Exceptions\No_property_to_get_or_set_exception('Invalid magic get_ or set_ ('.$get_or_set.$prop.')', $method);
+					throw new \WorkFrame\Exceptions\No_property_to_get_or_set_exception('Invalid magic get_ or set_ ('.$get_or_set.$prop.') on '. get_class($this), $method);
 				}
 				if($get_or_set == 'get_') {
 					return $this->$prop;
