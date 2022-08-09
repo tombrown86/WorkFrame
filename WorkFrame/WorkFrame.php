@@ -29,7 +29,6 @@ class WorkFrame {
 			$this->Security->pre_router_securtiy_hook();
 		}
 	}
-
 	function post_router_hook() {}
 	function pre_cli_router_hook() {}
 	function post_cli_router_hook() {}
@@ -55,6 +54,13 @@ class WorkFrame {
 			print_r(debug_backtrace());
 			echo '</pre>';
 		}
+
+		// Define a global reference to the exception that killed the script.
+		// This here is just case the application has is a shutdown function 
+		// which wants access to it for logging / reporting.
+		global $WORKFRAME_EXCEPTION;
+		$WORKFRAME_EXCEPTION = $ex;
+
 		die;
 	}
 }
