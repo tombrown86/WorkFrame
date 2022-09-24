@@ -5,7 +5,7 @@ namespace WorkFrame\Processors;
 class Validate_email extends Processor {
 
 	static function server_side($field_name, $value) {
-		if (filter_var($value, FILTER_VALIDATE_EMAIL)) {
+		if (filter_var($value ?? '', FILTER_VALIDATE_EMAIL)) {
 			return TRUE;
 		} else {
 			return [

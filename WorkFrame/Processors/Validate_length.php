@@ -10,6 +10,7 @@ class Validate_length extends Processor {
 		$this->max_length = $max_length;
 	}
 	function server_side($field_name, $value) {
+		$value = $value ?? '';
 		if (strlen($value) < $this->min_length) {
 			return [
 				'field_name' => $field_name,

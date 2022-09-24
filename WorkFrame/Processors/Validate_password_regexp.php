@@ -4,7 +4,9 @@ namespace WorkFrame\Processors;
 
 class Validate_password_regexp extends Processor {
 	static function server_side($field_name, $value) {
-		if (strlen($value) < 8 || !preg_match('/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[#\_\.@£$!%*?&=\(\)\-\]\[])[A-Za-z\d#\_\.@£$!%*?&=\(\)\-\]\[]{8,}$/', $value)) {
+		if (!isset($value)
+				|| strlen($value) < 8
+				|| !preg_match('/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[#\_\.@£$!%*?&=\(\)\-\]\[])[A-Za-z\d#\_\.@£$!%*?&=\(\)\-\]\[]{8,}$/', $value)) {
 			return [
 				'field_name' => $field_name,
 				'is_error' => TRUE,

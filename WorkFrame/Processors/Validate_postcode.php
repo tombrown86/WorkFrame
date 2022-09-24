@@ -5,7 +5,9 @@ namespace WorkFrame\Processors;
 class Validate_postcode extends Processor {
 
 	static function server_side($field_name, $value) {
-		if ($value === "N/A" || preg_match('/^([a-zA-Z]){1}([0-9][0-9]|[0-9]|[a-zA-Z][0-9][a-zA-Z]|[a-zA-Z][0-9][0-9]|[a-zA-Z][0-9]){1}([ ])([0-9][a-zA-z][a-zA-z]){1}$/', $value)) {
+		if (isset($value)
+				&& ($value === "N/A"
+						|| preg_match('/^([a-zA-Z]){1}([0-9][0-9]|[0-9]|[a-zA-Z][0-9][a-zA-Z]|[a-zA-Z][0-9][0-9]|[a-zA-Z][0-9]){1}([ ])([0-9][a-zA-z][a-zA-z]){1}$/', $value))) {
 			return ['new_value' => strtoupper($value),'field_name' => $field_name,];
 		} else {
 			return [
