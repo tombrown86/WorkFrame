@@ -141,7 +141,7 @@ trait Processable_trait {
 								if(typeof window["' . $this_fields_process_func_name . '_result"] == "undefined" || window["' . $this_fields_process_func_name . '_result"] == null)  {
 									var timeout_length = 0;
 									if(event_type == "onkeyup") {
-										timeout_length = 500;
+										timeout_length = 1000;
 									}
 									clearTimeout(window["' . $this_fields_process_func_name . '_timer"]);
 									var make_ajax_req = function() {
