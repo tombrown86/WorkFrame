@@ -13,7 +13,7 @@
 
 
 <h2>Introduction <span id="introduction"></span><a href="#introduction" class="hashlink">&para;</a></h2>
-<p>This is a first attempt at a super lightweight PHP7 compatible framework that exists to achieve the very basic standard requirements of a framework with (hopefully) a couple of useful unexpected extras.</p>
+<p>This is a first attempt at a super lightweight PHP7 - PHP8.2 compatible framework that exists to achieve the basic standard requirements of a framework with (hopefully) a couple of useful unexpected extras.</p>
 
 <h2>Motivation <span id="motivation"></span><a href="#motivation" class="hashlink">&para;</a></h2>
 <p>In my experience, frameworks are great for handling the bread and butter basics. However, they can become tiresom to work with when they have overbearing complexity.</p>
