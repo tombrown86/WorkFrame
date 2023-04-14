@@ -61,7 +61,8 @@ class Security {
 			}
 		}
 		else {
-			$v = filter_var($v, FILTER_SANITIZE_STRING, FILTER_FLAG_STRIP_LOW|FILTER_FLAG_STRIP_HIGH|FILTER_FLAG_STRIP_BACKTICK|FILTER_FLAG_NO_ENCODE_QUOTES);
+			$v = preg_replace('/<[^>]*>?/', '', $v); // strip full and partial tags
+			$v = filter_var($v, FILTER_UNSAFE_RAW, FILTER_FLAG_STRIP_LOW|FILTER_FLAG_STRIP_HIGH|FILTER_FLAG_STRIP_BACKTICK);
 		}
 		return $v;
 	}
