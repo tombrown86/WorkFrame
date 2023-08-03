@@ -51,7 +51,7 @@ class WorkFrame {
 		if(WORKFRAME_DEBUG) {
 			echo '<strong>DEBUG INFO:</strong> '.$ex->get_debug_message();
 			echo '<pre>';
-			print_r(debug_backtrace());
+			debug_print_backtrace();
 			echo '</pre>';
 		}
 
