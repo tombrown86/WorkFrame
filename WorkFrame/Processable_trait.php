@@ -148,8 +148,7 @@ trait Processable_trait {
 										$("#' . $field_id . '").addClass("wf_validating_async");
 										$.post(' . json_encode($process['processor']->get_processor_url()) . ' , {processor_name: ' . json_encode($processor_name) . ', value: $("#' . $field_id . '").val(), field_name: ' . json_encode($field_name) . ', form_id: ' . json_encode($form_id) . ', field_id: ' . json_encode($field_id) . ', data: ' . json_encode($process['processor']->get_data()) . '}, function(json) {
 											if(json.result) {
-												// once server returns with response, recall the outer func and pass thru the result using this global var
-												console.log(json)
+												// once server returns with response, re-call the outer func and pass thru the result using this global var
 												if(json.value == $("#' . $field_id . '").val()) {
 													window["' . $this_fields_process_func_name . '_result"] = json.result;
 													' . $this_fields_process_func_name . '();
@@ -157,8 +156,8 @@ trait Processable_trait {
 													// just ignore if value has changed
 												}
 											} else {
-												console.log("Invalid response back from async processor: ");
-												console.log(json);
+												console.log("Invalid response back from async processor..");
+												//console.log(json);
 											}
 										}, "json");
 									};
