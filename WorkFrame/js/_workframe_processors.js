@@ -40,7 +40,7 @@ function _wf_show_errors(form_id, errors, name_container_array) {
 	    error = errors[field_name][i];
 	    html += '<li>' + wf_h(error['error_message']);
 	    if (error["error_details"]) {
-		html += " <span class'wf_error_details'>" + (wf_h(error['error_details'])) + "</span>";
+		html += " <span class='wf_error_details'>" + (wf_h(error['error_details'])) + "</span>";
 	    }
 	    html += '</li>';
 	}
