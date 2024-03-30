@@ -13,14 +13,14 @@
 
 
 <h2>Introduction <span id="introduction"></span><a href="#introduction" class="hashlink">&para;</a></h2>
-<p>This is a first attempt at a super lightweight PHP7 - PHP8.2 compatible framework that exists to achieve the basic standard requirements of a framework with (hopefully) a couple of useful unexpected extras.</p>
+<p>This is a first attempt at a super lightweight PHP7 - PHP8.2 compatible framework that exists to achieve the basic standard requirements of an MVC style framework with (hopefully) a couple of useful unexpected extras.</p>
 
 <h2>Motivation <span id="motivation"></span><a href="#motivation" class="hashlink">&para;</a></h2>
 <p>In my experience, frameworks are great for handling the bread and butter basics. However, they can become tiresom to work with when they have overbearing complexity.</p>
 <p>Then they get upgraded, rewritten, changed beyond recognition which then causes everyone pain!</p>
 <p>My advice is to avoid relying on the framework for detailed application logic.</p>
 <p>Anything more complex is likely to have bespoke requirements that the framework does not attempt to provide.</p>
-<p>I decided I wanted to write a small flexible framework that will be basic enough to upgrade to future versions of PHP with little pain, yet powerful enough to provide the primary features we always required.</p>
+<p>This is a small flexible framework thats basically simple enough to upgrade to future PHP versions, yet powerful enough to provide the primary features we tend to require.</p>
 
 <hr/>
 <h2>Quick start <span id="quick-start"></span><a href="#quick-start" class="hashlink">&para;</a></h2>
