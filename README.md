@@ -33,7 +33,7 @@
 		<ol>The <em>WorkFrame</em> directory - This is the framework, store it outside your web root</ol>
 	</li>
 	<br/>
-	<li>(Assuming you run apache,) here is a typical vhost config, the Directory bit contains an essential ReWrite (to route all requests to the framework entry script).
+	<li>Here is a typical vhost config (for apache), the Directory bit shows the essential ReWrite bit (routing all requests to the framework entry script).
 		<br/>
 		<pre>
 &lt;VirtualHost *:80&gt;
@@ -54,7 +54,7 @@
 &lt;/VirtualHost&gt;
 	</pre>
 	</li>
-	<li>Update the definitions in init script for your application (like in ./ExampleApp/init.php) which are hopefully self explanatory.</li>
+	<li>Update the definitions in init script for your application (like in ./ExampleApp/init.php) that are hopefully self explanatory.</li>
 	<li>Maybe check out the <a href="#basic-features" title="Read about the basic features">features</a></li>
 </ol>
 
@@ -79,7 +79,7 @@
 	<dd>Templates - page templates</dd>
 	<dd>Partials - snippets to be included</dd>
 </dl>
-<p>An application with a large degree of complexity may benefit from having it's own class structure which does not strictly conform to this pattern.</p>
+<p>An application with a large degree of complexity may benefit from having it's own class structure, nonconforming to this pattern.</p>
 
 <h3>Model layer</h3>
 <p>These consist of 3 classes of thing</p>
@@ -110,7 +110,7 @@
 
 
 <h3>Loader / instance sharing</h3>
-<p>Anything which extends or implements any of the core components of WorkFrame (which are most things,) can easily label and share instances. </p>
+<p>Anything extending/implementing any core WorkFrame components (most things) can easily label and share instances. </p>
 <p><strong>For example:</strong></p>
 <ul>
 <li>Use <strong>$this->SERVICE('Service_name', 'service_label')</strong> to instantiate a service, and then reference it anywhere with <strong>$this->service_label</strong></li>
@@ -123,7 +123,7 @@
 
 <h3>The Renderer_trait</h3>
 <p>All your Request_handlers will exhibit this trait automatically.</p>
-<p>Whilst it isn't written in stone, you will most likely invoke templates and partials from classes which have this trait</p>
+<p>Whilst not written in stone, you'll most likely invoke templates and partials from classes that have this trait</p>
 <p>Things using this trait can make use of it's add_script<i>s</i>() and add_stylesheet<i>s</i>() methods to conveniently append JS/stylesheet tags to a template
 	<br/><small>(Note: There is a built in tool to minify such client side code by passing true as the 2nd parameter to <em>add_script(...)</em> based methods)</small>
 </p>
@@ -156,7 +156,7 @@
 
 <h3>Application class (\App\App), hooks, etc</h3>
 <p>Your app will probably want one of these sitting in it's route. It must have the same classname (and filename) as your application namespace. It must extend \WorkFrame\WorkFrame.</p>
-<p>There are some standard hooks (like pre router, pre action etc) which can be defined in this class. You can also use this class to do anything application wide (like store current user, etc).</p>
+<p>There are some standard hooks (like pre router, pre action etc) that can be defined in this class. You can also use this class to do anything application wide (like store current user, etc).</p>
 <p></p>
 
 
@@ -188,7 +188,6 @@
 <hr/>
 
 <h2>Shortfalls <span id="shortfalls"></span><a href="#shortfalls" class="hashlink">&para;</a></h2>
-<p>I'm less likely to work on some features which more complete frameworks can offer</p>
 <ol>
 	<li>Currently, built in DB access is limited to mysqli</li>
 	<li>Some of the front end features rely on the availability of JavaScript</li>
@@ -200,5 +199,5 @@
 	<li>No caching</li>
 	<li>... it could go on for a while</li>
 </ol>
-<p>However, I wrote this framework purely to provide the fundamentals. You can pull in whatever functionality you want.</p>
+<p>This framework provides the fundamentals and can easily be extending with any additional desired functionality :)</p>
 
