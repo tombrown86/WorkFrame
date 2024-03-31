@@ -12,7 +12,7 @@ class Validate_postcode extends Processor {
 		if (!empty($value)
 				&& ($value === "N/A"
 						|| preg_match('/^([A-Z]{1,2}[0-9]{1,2}[A-Z]? [0-9][A-Z]{2}){1}$/i', $value))) {
-			return ['new_value' => strtoupper($value),'field_name' => $field_name,];
+			return ['new_value' => strtoupper($value), 'field_name' => $field_name,];
 		} else {
 			return [
 				'field_name' => $field_name,
