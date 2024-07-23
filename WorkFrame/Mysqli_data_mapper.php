@@ -57,6 +57,7 @@ class Mysqli_data_mapper {
 		}
 	}
 	protected function escape($s, $connection_identifier=null) {
+		if(!isset($s)) return NULL;
 		$db = $this->db($connection_identifier);
 		return mysqli_real_escape_string($db, $s);
 	}
