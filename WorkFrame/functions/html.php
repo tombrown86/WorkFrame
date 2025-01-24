@@ -2,11 +2,11 @@
 function h($s) {
 	return htmlspecialchars($s ?? '', ENT_QUOTES);
 }
-function script_tags($paths) {
+function script_tags($paths, $are_modules = FALSE) {
 	$html = '';
 	$app_build_get_var_str = defined('APP_BUILD') ? 'app_build='.urlencode(APP_BUILD) : '';
 	foreach((array)$paths as $path) {	
-		$html .= '<script type="text/javascript" src="'.h($path).(empty($app_build_get_var_str) ? '' : (strpos($path, '?')!==FALSE ? '&amp;'.$app_build_get_var_str : '?'.$app_build_get_var_str)).'"></script>'."\n";
+		$html .= '<script type="'.($are_modules ? 'module' : 'text/javascript').'" src="'.h($path).(empty($app_build_get_var_str) ? '' : (strpos($path, '?')!==FALSE ? '&amp;'.$app_build_get_var_str : '?'.$app_build_get_var_str)).'"></script>'."\n";
 	}
 	return $html;
 }

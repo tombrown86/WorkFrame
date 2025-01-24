@@ -9,6 +9,7 @@ trait Renderer_trait {
 
 	private $view_vars = [];
 	private $scripts = [];
+	private $module_scripts = [];
 	private $stylesheets = [];
 	protected $page_title;
 
@@ -45,8 +46,8 @@ trait Renderer_trait {
 		}
 	}
 
-	function add_script($script, $minify = TRUE, $minify_filename = null) {
-		$this->add_scripts([$script], $minify, $minify_filename);
+	function add_script($script, $minify = TRUE, $minify_filename = null, $is_module = FALSE) {
+		$this->add_scripts([$script], $minify, $minify_filename, $is_module);
 	}
 
 	/**
@@ -54,36 +55,40 @@ trait Renderer_trait {
 	 * @param array scripts (filename in public/scripts or full path)
 	 * @param bool minify 
 	 * @param string desired minified file name
+	 * @param bool script(s) are modules
 	 */
-	function add_scripts($scripts, $minify = TRUE, $minify_filename = null) {
+	function add_scripts($scripts, $minify = TRUE, $minify_filename = null, $are_modules = FALSE) {
 		/* check not already added? foreach($scripts as $k=>$script) {
 		  if(in_array()) {
 		  unset($scripts[$k]);
 		  }
 		  } */
 
-		if (!$minify) {
+		$attr = $are_modules ? 'module_scripts' : 'scripts';
+		$dir = $are_modules ? 'scripts/modules' : 'scripts';
+		if ($are_modules/*can't minify modules yet*/ || !$minify) {
 			foreach ($scripts as $script) {
 				if (strpos('/', $script) !== 0) {
-					$this->scripts[] = WWW_PUBLIC_PATH . '/scripts/' . $script;
+					$this->$attr[] = WWW_PUBLIC_PATH . '/'.$dir.'/' . $script;
 				} else {// Can't add full file path files without minify
 					throw new Exceptions\Workframe_exception('Cannot add script by full file path unless it is to be minified');
 				}
 			}
-			$this->scripts = array_unique($this->scripts);
+			$this->$attr = array_unique($this->$attr);
 		} else {
 			functions('minify');
-			$this->scripts = array_merge($this->scripts, minify($scripts, $minify_filename, 'js', FALSE));
+			$this->$attr = array_merge($this->$attr, minify($scripts, $minify_filename, 'js', FALSE));
 		}
 	}
 
-	function add_foreign_script($script) {
-		$this->add_foreign_scripts([$script]);
+	function add_foreign_script($script, $is_module = FALSE) {
+		$this->add_foreign_scripts([$script], $is_module);
 	}
 
-	function add_foreign_scripts($scripts) {
+	function add_foreign_scripts($scripts, $are_modules = FALSE) {
+		$attr = $are_modules ? 'module_scripts' : 'scripts';
 		foreach ($scripts as $script) {
-			$this->scripts[] = $script;
+			$this->$attr[] = $script;
 		}
 	}
 
