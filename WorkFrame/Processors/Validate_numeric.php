@@ -2,7 +2,7 @@
 
 namespace WorkFrame\Processors;
 
-class Validate_not_empty extends Processor {
+class Validate_numeric extends Processor {
 
 	static function server_side($field_name, $value) {
 		if (!is_numeric($value)) {
