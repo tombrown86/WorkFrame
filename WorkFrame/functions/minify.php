@@ -47,7 +47,7 @@ function minify($files, $output_name = null, $filetype = 'js', $print_tags = tru
 	// If dev environment and any min files are out of date, reminify
 	if ($min_file_exists && WORKFRAME_ENVIRONMENT == 'DEV') {
 		foreach ($files as $k => $file) {
-			if ($dev_environment_and_min_file_out_of_date = filemtime($path) > filemtime($full_public_path . $min_file)) {
+			if ($dev_environment_and_min_file_out_of_date = filemtime($file) > filemtime($full_public_path . $min_file)) {
 				break;
 			}
 		}
@@ -645,4 +645,3 @@ class CSSCompressor {
 	}
 
 }
-
