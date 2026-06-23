@@ -76,7 +76,7 @@ function minify($files, $output_name = null, $filetype = 'js', $print_tags = tru
 		if((isset($_GET['dontminify']) && $_GET['dontminify']) || (isset($GLOBALS['_ORIGINAL_GET']['dontminify']) && $GLOBALS['_ORIGINAL_GET']['dontminify'])) {
 			$code = $filetype == 'js' ? $code : $code;
 		} else {
-			$code = $filetype == 'js' ? JSMin::minify($code) : CSSCompressor::minify($code);
+			$code = $filetype == 'js' ? JShrink::minify($code) : CSSMinifier::minify($code);
 		}
 
 		if (($f = fopen($full_public_path . $min_file, 'w')) && fwrite($f, trim($code, "\n")) > 0) {
@@ -92,7 +92,8 @@ function minify($files, $output_name = null, $filetype = 'js', $print_tags = tru
 //			array_map('unlink', glob($full_path.'min/'.$output_name.'_v*_min.'.$mode));
 	}
 
-	$files = array(WWW_PUBLIC_PATH . '/scripts/' . $min_file);
+	$web_dir = $filetype == 'js' ? '/scripts/' : '/stylesheets/';
+	$files = array(WWW_PUBLIC_PATH . $web_dir . $min_file);
 
 	if (!$print_tags)
 		return $files;
@@ -116,59 +117,42 @@ function minifySrc($file, $filetype = 'js') {
 }
 
 /**
- * jsmin.php - PHP implementation of Douglas Crockford's JSMin.
+ * JShrink - PHP minifier for JavaScript that supports ES6+ including template literals.
  *
- * This is pretty much a direct port of jsmin.c to PHP with just a few
- * PHP-specific performance tweaks. Also, whereas jsmin.c reads from stdin and
- * outputs to stdout, this library accepts a string as input and returns another
- * string as output.
- *
- * PHP 5 or higher is required.
- *
- * Permission is hereby granted to use this version of the library under the
- * same terms as jsmin.c, which has the following license:
- *
- * --
- * Copyright (c) 2002 Douglas Crockford (www.crockford.com)
- *
- * Permission is hereby granted, free of charge, to any person obtaining a copy of
- * this software and associated documentation files (the "Software"), to deal in
- * the Software without restriction, including without limitation the rights to
- * use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies
- * of the Software, and to permit persons to whom the Software is furnished to do
- * so, subject to the following conditions:
- *
- * The above copyright notice and this permission notice shall be included in all
- * copies or substantial portions of the Software.
- *
- * The Software shall be used for Good, not Evil.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
- * SOFTWARE.
- * --
- *
- * @package JSMin
- * @author Ryan Grove <ryan@wonko.com>
- * @copyright 2002 Douglas Crockford <douglas@crockford.com> (jsmin.c)
- * @copyright 2008 Ryan Grove <ryan@wonko.com> (PHP port)
- * @copyright 2012 Adam Goforth <aag@adamgoforth.com> (Updates)
- * @license http://opensource.org/licenses/mit-license.php MIT License
- * @version 1.1.2 (2012-05-01)
- * @link https://github.com/rgrove/jsmin-php
+ * @package JShrink
+ * @author Robert Hafner <tedivm@tedivm.com>
+ * @license http://opensource.org/licenses/BSD-3-Clause BSD-3-Clause
+ * @link https://github.com/tedious/JShrink
+ * @version 1.7.0
  */
-class JSMin {
+class JShrink {
 
-	const ORD_LF = 10;
-	const ORD_SPACE = 32;
-	const ACTION_KEEP_A = 1;
-	const ACTION_DELETE_A = 2;
-	const ACTION_DELETE_A_B = 3;
+	/**
+	 * Minify Javascript
+	 *
+	 * @param string $js Javascript to be minified
+	 * @param array $options Options for minification
+	 * @return string
+	 */
+	public static function minify($js, $options = array()) {
+		$instance = new static();
+		return $instance->performMinify($js, $options);
+	}
 
+	protected function performMinify($js, $options) {
+		$js = str_replace("\r\n", "\n", $js);
+		$js = str_replace('/**/', '', $js);
+		
+		$flags = array();
+		$flags['cleanup'] = !isset($options['flaggedComments']) || $options['flaggedComments'];
+		
+		$jshrink = new JShrinkParser();
+		return $jshrink->parse($js, $flags);
+	}
+}
+
+class JShrinkParser {
+	
 	protected $a = '';
 	protected $b = '';
 	protected $input = '';
@@ -176,195 +160,27 @@ class JSMin {
 	protected $inputLength = 0;
 	protected $lookAhead = null;
 	protected $output = '';
+	protected $lastCharType = 'other';
 
-	// -- Public Static Methods --------------------------------------------------
-
-	/**
-	 * Minify Javascript
-	 *
-	 * @uses __construct()
-	 * @uses min()
-	 * @param string $js Javascript to be minified
-	 * @return string
-	 */
-	public static function minify($js) {
-		$jsmin = new JSMin($js);
-		return $jsmin->min();
-	}
-
-	// -- Public Instance Methods ------------------------------------------------
-
-	/**
-	 * Constructor
-	 *
-	 * @param string $input Javascript to be minified
-	 */
-	public function __construct($input = '') {
-		$this->input = str_replace("\r\n", "\n", $input);
-		$this->inputLength = strlen($this->input);
-	}
-
-	// -- Protected Instance Methods ---------------------------------------------
-
-	/**
-	 * Action -- do something! What to do is determined by the $command argument.
-	 *
-	 * action treats a string as a single character. Wow!
-	 * action recognizes a regular expression if it is preceded by ( or , or =.
-	 *
-	 * @uses next()
-	 * @uses get()
-	 * @throws JSMinException If parser errors are found:
-	 * - Unterminated string literal
-	 * - Unterminated regular expression set in regex literal
-	 * - Unterminated regular expression literal
-	 * @param int $command One of class constants:
-	 * ACTION_KEEP_A Output A. Copy B to A. Get the next B.
-	 * ACTION_DELETE_A Copy B to A. Get the next B. (Delete A).
-	 * ACTION_DELETE_A_B Get the next B. (Delete B).
-	 */
-	protected function action($command) {
-		switch ($command) {
-			case self::ACTION_KEEP_A:
-				$this->output .= $this->a;
-
-			case self::ACTION_DELETE_A:
-				$this->a = $this->b;
-
-				if ($this->a === "'" || $this->a === '"') {
-					for (;;) {
-						$this->output .= $this->a;
-						$this->a = $this->get();
-
-						if ($this->a === $this->b) {
-							break;
-						}
-
-						if (ord($this->a) <= self::ORD_LF) {
-							throw new JSMinException('Unterminated string literal.');
-						}
-
-						if ($this->a === '\\') {
-							$this->output .= $this->a;
-							$this->a = $this->get();
-						}
-					}
-				}
-
-			case self::ACTION_DELETE_A_B:
-				$this->b = $this->next();
-
-				if ($this->b === '/' && (
-						$this->a === '(' || $this->a === ',' || $this->a === '=' ||
-						$this->a === ':' || $this->a === '[' || $this->a === '!' ||
-						$this->a === '&' || $this->a === '|' || $this->a === '?' ||
-						$this->a === '{' || $this->a === '}' || $this->a === ';' ||
-						$this->a === "\n" )) {
-
-					$this->output .= $this->a . $this->b;
-
-					for (;;) {
-						$this->a = $this->get();
-
-						if ($this->a === '[') {
-							/*
-							  inside a regex [...] set, which MAY contain a '/' itself. Example: mootools Form.Validator near line 460:
-							  return Form.Validator.getValidator('IsEmpty').test(element) || (/^(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]\.?){0,63}[a-z0-9!#$%&'*+/=?^_`{|}~-]@(?:(?:[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?\.)*[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?|\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\])$/i).test(element.get('value'));
-							 */
-							for (;;) {
-								$this->output .= $this->a;
-								$this->a = $this->get();
-
-								if ($this->a === ']') {
-									break;
-								} elseif ($this->a === '\\') {
-									$this->output .= $this->a;
-									$this->a = $this->get();
-								} elseif (ord($this->a) <= self::ORD_LF) {
-									throw new JSMinException('Unterminated regular expression set in regex literal.');
-								}
-							}
-						} elseif ($this->a === '/') {
-							break;
-						} elseif ($this->a === '\\') {
-							$this->output .= $this->a;
-							$this->a = $this->get();
-						} elseif (ord($this->a) <= self::ORD_LF) {
-							throw new JSMinException('Unterminated regular expression literal.');
-						}
-
-						$this->output .= $this->a;
-					}
-
-					$this->b = $this->next();
-				}
-		}
-	}
-
-	/**
-	 * Get next char. Convert ctrl char to space.
-	 *
-	 * @return string|null
-	 */
-	protected function get() {
-		$c = $this->lookAhead;
+	public function parse($js, $flags = array()) {
+		$this->input = $js;
+		$this->inputLength = strlen($js);
+		$this->inputIndex = 0;
+		$this->output = '';
+		$this->a = '';
+		$this->b = '';
 		$this->lookAhead = null;
-
-		if ($c === null) {
-			if ($this->inputIndex < $this->inputLength) {
-				$c = substr($this->input, $this->inputIndex, 1);
-				$this->inputIndex += 1;
-			} else {
-				$c = null;
-			}
-		}
-
-		if ($c === "\r") {
-			return "\n";
-		}
-
-		if ($c === null || $c === "\n" || ord($c) >= self::ORD_SPACE) {
-			return $c;
-		}
-
-		return ' ';
-	}
-
-	/**
-	 * Is $c a letter, digit, underscore, dollar sign, or non-ASCII character.
-	 *
-	 * @return bool
-	 */
-	protected function isAlphaNum($c) {
-		return ord($c) > 126 || $c === '\\' || preg_match('/^[\w\$]$/', $c) === 1;
-	}
-
-	/**
-	 * Perform minification, return result
-	 *
-	 * @uses action()
-	 * @uses isAlphaNum()
-	 * @uses get()
-	 * @uses peek()
-	 * @return string
-	 */
-	protected function min() {
-		if (0 == strncmp($this->peek(), "\xef", 1)) {
-			$this->get();
-			$this->get();
-			$this->get();
-		}
-
+		
 		$this->a = "\n";
-		$this->action(self::ACTION_DELETE_A_B);
+		$this->action(3);
 
-		while ($this->a !== null) {
+		while ($this->a !== false && $this->a !== null) {
 			switch ($this->a) {
 				case ' ':
 					if ($this->isAlphaNum($this->b)) {
-						$this->action(self::ACTION_KEEP_A);
+						$this->action(1);
 					} else {
-						$this->action(self::ACTION_DELETE_A);
+						$this->action(2);
 					}
 					break;
 
@@ -377,18 +193,18 @@ class JSMin {
 						case '-':
 						case '!':
 						case '~':
-							$this->action(self::ACTION_KEEP_A);
+							$this->action(1);
 							break;
 
 						case ' ':
-							$this->action(self::ACTION_DELETE_A_B);
+							$this->action(3);
 							break;
 
 						default:
 							if ($this->isAlphaNum($this->b)) {
-								$this->action(self::ACTION_KEEP_A);
+								$this->action(1);
 							} else {
-								$this->action(self::ACTION_DELETE_A);
+								$this->action(2);
 							}
 					}
 					break;
@@ -397,11 +213,11 @@ class JSMin {
 					switch ($this->b) {
 						case ' ':
 							if ($this->isAlphaNum($this->a)) {
-								$this->action(self::ACTION_KEEP_A);
+								$this->action(1);
 								break;
 							}
 
-							$this->action(self::ACTION_DELETE_A_B);
+							$this->action(3);
 							break;
 
 						case "\n":
@@ -413,20 +229,21 @@ class JSMin {
 								case '-':
 								case '"':
 								case "'":
-									$this->action(self::ACTION_KEEP_A);
+								case '`':
+									$this->action(1);
 									break;
 
 								default:
 									if ($this->isAlphaNum($this->a)) {
-										$this->action(self::ACTION_KEEP_A);
+										$this->action(1);
 									} else {
-										$this->action(self::ACTION_DELETE_A_B);
+										$this->action(3);
 									}
 							}
 							break;
 
 						default:
-							$this->action(self::ACTION_KEEP_A);
+							$this->action(1);
 							break;
 					}
 			}
@@ -435,33 +252,165 @@ class JSMin {
 		return $this->output;
 	}
 
-	/**
-	 * Get the next character, skipping over comments. peek() is used to see
-	 * if a '/' is followed by a '/' or '*'.
-	 *
-	 * @uses get()
-	 * @uses peek()
-	 * @throws JSMinException On unterminated comment.
-	 * @return string
-	 */
+	protected function action($command) {
+		switch ($command) {
+			case 1: // Output A, copy B to A, get next B
+				$this->output .= $this->a;
+				// fall through
+
+			case 2: // Copy B to A, get next B (delete A)
+				$this->a = $this->b;
+
+				// Handle string literals (single and double quotes)
+				if ($this->a === "'" || $this->a === '"') {
+					$quote = $this->a;
+					$this->output .= $this->a;
+					
+					while (true) {
+						$this->a = $this->get();
+						
+						if ($this->a === $quote) {
+							break;
+						}
+						
+						if ($this->a === null || $this->a === "\n") {
+							throw new JShrinkException('Unterminated string literal.');
+						}
+						
+						$this->output .= $this->a;
+						
+						if ($this->a === '\\') {
+							$this->a = $this->get();
+							if ($this->a === null) {
+								throw new JShrinkException('Unterminated string literal.');
+							}
+							$this->output .= $this->a;
+						}
+					}
+				}
+
+				// Handle template literals (backticks)
+				if ($this->a === '`') {
+					$this->output .= $this->a;
+					
+					while (true) {
+						$this->a = $this->get();
+						
+						if ($this->a === '`') {
+							break;
+						}
+						
+						if ($this->a === null) {
+							throw new JShrinkException('Unterminated template literal.');
+						}
+						
+						$this->output .= $this->a;
+						
+						if ($this->a === '\\') {
+							$this->a = $this->get();
+							if ($this->a === null) {
+								throw new JShrinkException('Unterminated template literal.');
+							}
+							$this->output .= $this->a;
+						}
+					}
+				}
+				// fall through
+
+			case 3: // Get next B (delete B)
+				$this->b = $this->next();
+
+				// Handle regex literals
+				if ($this->b === '/' && $this->isRegexStart()) {
+					$this->output .= $this->a . $this->b;
+
+					while (true) {
+						$this->a = $this->get();
+
+						if ($this->a === '/') {
+							break;
+						}
+						
+						if ($this->a === '\\') {
+							$this->output .= $this->a;
+							$this->a = $this->get();
+						} elseif ($this->a === '[') {
+							$this->output .= $this->a;
+							while (true) {
+								$this->a = $this->get();
+								if ($this->a === ']') {
+									break;
+								} elseif ($this->a === '\\') {
+									$this->output .= $this->a;
+									$this->a = $this->get();
+								} elseif ($this->a === null || $this->a === "\n") {
+									throw new JShrinkException('Unterminated regex character class.');
+								}
+								$this->output .= $this->a;
+							}
+						} elseif ($this->a === null || $this->a === "\n") {
+							throw new JShrinkException('Unterminated regex literal.');
+						}
+
+						$this->output .= $this->a;
+					}
+
+					$this->b = $this->next();
+				}
+				break;
+		}
+	}
+
+	protected function isRegexStart() {
+		return in_array($this->a, array('(', ',', '=', ':', '[', '!', '&', '|', '?', '{', '}', ';', "\n", '+', '-', '*', '/', '%', '<', '>'));
+	}
+
+	protected function get() {
+		$c = $this->lookAhead;
+		$this->lookAhead = null;
+
+		if ($c === null) {
+			if ($this->inputIndex < $this->inputLength) {
+				$c = $this->input[$this->inputIndex];
+				$this->inputIndex++;
+			} else {
+				return null;
+			}
+		}
+
+		if ($c === "\r" || $c === "\n") {
+			return "\n";
+		}
+
+		if (ord($c) < 32) {
+			return ' ';
+		}
+
+		return $c;
+	}
+
+	protected function isAlphaNum($c) {
+		return ($c !== null && ($c === '_' || $c === '$' || ctype_alnum($c) || ord($c) > 126));
+	}
+
 	protected function next() {
 		$c = $this->get();
 
 		if ($c === '/') {
 			switch ($this->peek()) {
 				case '/':
-					for (;;) {
+					// Single line comment
+					while (true) {
 						$c = $this->get();
-
-						if (ord($c) <= self::ORD_LF) {
+						if ($c === "\n" || $c === null) {
 							return $c;
 						}
 					}
 
 				case '*':
+					// Multi-line comment
 					$this->get();
-
-					for (;;) {
+					while (true) {
 						switch ($this->get()) {
 							case '*':
 								if ($this->peek() === '/') {
@@ -471,7 +420,7 @@ class JSMin {
 								break;
 
 							case null:
-								throw new JSMinException('Unterminated comment.');
+								throw new JShrinkException('Unterminated comment.');
 						}
 					}
 
@@ -483,43 +432,29 @@ class JSMin {
 		return $c;
 	}
 
-	/**
-	 * Get next char. If is ctrl character, translate to a space or newline.
-	 *
-	 * @uses get()
-	 * @return string|null
-	 */
 	protected function peek() {
 		$this->lookAhead = $this->get();
 		return $this->lookAhead;
 	}
-
 }
 
 // -- Exceptions ---------------------------------------------------------------
-class JSMinException extends Exception {
+class JShrinkException extends Exception {
 	
 }
 
 /**
- * This is a port of the CSS Compressor contained in YUI Compressor
- * The original license is below
+ * Modern CSS Minifier - Updated version without deprecated functions
  *
- * Port by Dave T. Johnson <dave@dtjohnson.net>
- *
- * Usage: $minified = CSSCompressor::minify($source);
- *
- * *****************************************************************
- *
- * YUI Compressor
+ * Based on YUI Compressor CSS minification
  * Author: Julien Lecomte <jlecomte@yahoo-inc.com>
  * Copyright (c) 2007, Yahoo! Inc. All rights reserved.
  * Code licensed under the BSD License:
  *     http://developer.yahoo.net/yui/license.txt
  *
- * This code is a port of Isaac Schlueter's cssmin utility.
+ * Updated to remove deprecated create_function calls
  */
-class CSSCompressor {
+class CSSMinifier {
 
 	public static function minify($source, $linebreakpos = 0) {
 		// Remove all comment blocks...
@@ -564,9 +499,9 @@ class CSSCompressor {
 		// Remove the spaces before the things that should not have spaces before them.
 		// But, be careful not to turn "p :link {...}" into "p:link{...}"
 		// Swap out any pseudo-class colons with the token, and then swap back.
-		$source = preg_replace_callback('~(^|\})(([^\{:])+:)+([^\{]*\{)~', create_function('$matches', '
+		$source = preg_replace_callback('~(^|\})(([^\{:])+:)+([^\{]*\{)~', function($matches) {
 			return str_replace(":", "___PSEUDOCLASSCOLON___", $matches[0]);
-		'), $source);
+		}, $source);
 		$source = preg_replace('~\s+([!{};:>+\(\)\],])~', '$1', $source);
 		$source = str_replace('___PSEUDOCLASSCOLON___', ':', $source);
 
@@ -590,16 +525,16 @@ class CSSCompressor {
 
 		// Shorten colors from rgb(51,102,153) to #336699
 		// This makes it more likely that it'll get further compressed in the next step.
-		$source = preg_replace_callback('~rgb\s*\(\s*([0-9,\s]+)\s*\)~', create_function('$matches', '
-				$colors = explode(",", $matches[1]);
-				$hexcolor = "#";
-				foreach ($colors as $color) {
-					$color = (int)$color;
-					if ($color < 16) $hexcolor .= "0";
-					$hexcolor .= dechex($color);
-				}
-				return $hexcolor;
-		'), $source);
+		$source = preg_replace_callback('~rgb\s*\(\s*([0-9,\s]+)\s*\)~', function($matches) {
+			$colors = explode(",", $matches[1]);
+			$hexcolor = "#";
+			foreach ($colors as $color) {
+				$color = (int)$color;
+				if ($color < 16) $hexcolor .= "0";
+				$hexcolor .= dechex($color);
+			}
+			return $hexcolor;
+		}, $source);
 
 		// Shorten colors from #AABBCC to #ABC. Note that we want to make sure
 		// the color is not preceded by either ", " or =. Indeed, the property
@@ -645,3 +580,5 @@ class CSSCompressor {
 	}
 
 }
+
+

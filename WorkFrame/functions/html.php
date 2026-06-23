@@ -2,11 +2,20 @@
 function h($s) {
 	return htmlspecialchars($s ?? '', ENT_QUOTES);
 }
+// updated to handle both array of scripts and array of scripts by type
 function script_tags($paths, $are_modules = FALSE) {
 	$html = '';
 	$app_build_get_var_str = defined('APP_BUILD') ? 'app_build='.urlencode(APP_BUILD) : '';
-	foreach((array)$paths as $path) {	
-		$html .= '<script type="'.($are_modules ? 'module' : 'text/javascript').'" src="'.h($path).(empty($app_build_get_var_str) ? '' : (strpos($path, '?')!==FALSE ? '&amp;'.$app_build_get_var_str : '?'.$app_build_get_var_str)).'"></script>'."\n";
+	foreach((array)$paths as $type_or_index =>$paths) {	
+		$type = 'text/javascript';
+		if(is_string($type_or_index)
+			&& preg_match('/^[a-z0-9\/]+$/i', $type_or_index)	
+			&& is_array($paths)) {
+			$type = $type_or_index;
+		}
+		foreach(array_filter((array)$paths) as $path) {
+			$html .= '<script type="'.$type.'" src="'.h($path).(empty($app_build_get_var_str) ? '' : (strpos($path, '?')!==FALSE ? '&amp;'.$app_build_get_var_str : '?'.$app_build_get_var_str)).'"></script>'."\n";
+		}
 	}
 	return $html;
 }

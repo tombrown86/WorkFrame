@@ -9,7 +9,7 @@ trait Renderer_trait {
 
 	private $view_vars = [];
 	private $scripts = [];
-	private $module_scripts = [];
+	private $scripts_by_type = [];
 	private $stylesheets = [];
 	protected $page_title;
 
@@ -46,8 +46,8 @@ trait Renderer_trait {
 		}
 	}
 
-	function add_script($script, $minify = TRUE, $minify_filename = null, $is_module = FALSE) {
-		$this->add_scripts([$script], $minify, $minify_filename, $is_module);
+	function add_script($script, $minify = TRUE, $minify_filename = null, $type = 'text/javascript') {
+		$this->add_scripts([$script], $minify, $minify_filename, $type);
 	}
 
 	/**
@@ -55,57 +55,75 @@ trait Renderer_trait {
 	 * @param array scripts (filename in public/scripts or full path)
 	 * @param bool minify 
 	 * @param string desired minified file name
-	 * @param bool script(s) are modules
+	 * @param string script type (e.g. 'text/javascript', 'module')
 	 */
-	function add_scripts($scripts, $minify = TRUE, $minify_filename = null, $are_modules = FALSE) {
-		/* check not already added? foreach($scripts as $k=>$script) {
-		  if(in_array()) {
-		  unset($scripts[$k]);
-		  }
-		  } */
-
-		$attr = $are_modules ? 'module_scripts' : 'scripts';
-		$dir = $are_modules ? 'scripts/modules' : 'scripts';
-		if ($are_modules/*can't minify modules yet*/ || !$minify) {
+	function add_scripts($scripts, $minify = TRUE, $minify_filename = null, $type = 'text/javascript') {
+		if ($type !== 'text/javascript' /*can't minify anything else yet*/ || !$minify) {
 			foreach ($scripts as $script) {
 				if (strpos('/', $script) !== 0) {
-					$this->$attr[] = WWW_PUBLIC_PATH . '/'.$dir.'/' . $script;
+					$this->scripts_by_type[$type][] = WWW_PUBLIC_PATH . '/scripts/' . $script;
 				} else {// Can't add full file path files without minify
 					throw new Exceptions\Workframe_exception('Cannot add script by full file path unless it is to be minified');
 				}
 			}
-			$this->$attr = array_unique($this->$attr);
+			$this->scripts_by_type[$type] = array_unique($this->scripts_by_type[$type]);
+			
+			// Maintain backwards compatibility for text/javascript type
+			if ($type === 'text/javascript') {
+				$this->scripts = $this->scripts_by_type[$type];
+			}
 		} else {
 			functions('minify');
-			$this->$attr = array_merge($this->$attr, minify($scripts, $minify_filename, 'js', FALSE));
+			$minified_scripts = minify($scripts, $minify_filename, 'js', FALSE);
+			$this->scripts_by_type[$type] = array_merge($this->scripts_by_type[$type] ?? [], $minified_scripts);
+			
+			// Maintain backwards compatibility for text/javascript type
+			if ($type === 'text/javascript') {
+				$this->scripts = $this->scripts_by_type[$type];
+			}
 		}
 	}
 
-	function add_foreign_script($script, $is_module = FALSE) {
-		$this->add_foreign_scripts([$script], $is_module);
+	function add_foreign_script($script, $type = 'text/javascript') {
+		$this->add_foreign_scripts([$script], $type);
 	}
 
-	function add_foreign_scripts($scripts, $are_modules = FALSE) {
-		$attr = $are_modules ? 'module_scripts' : 'scripts';
+	function add_foreign_scripts($scripts, $type = 'text/javascript') {
 		foreach ($scripts as $script) {
-			$this->$attr[] = $script;
+			$this->scripts_by_type[$type][] = $script;
+		}
+		
+		// Maintain backwards compatibility for text/javascript type
+		if ($type === 'text/javascript') {
+			$this->scripts = $this->scripts_by_type[$type];
 		}
 	}
 
-	function add_stylesheet($stylesheet) {
-		$this->add_stylesheets([$stylesheet]);
+	function add_stylesheet($stylesheet, $minify = TRUE, $minify_filename = null) {
+		$this->add_stylesheets([$stylesheet], $minify, $minify_filename);
 	}
 
-	function add_stylesheets($stylesheets) {
-//		if(!$minify) {
-		foreach ($stylesheets as $stylesheet) {
-			$this->stylesheets[] = WWW_PUBLIC_PATH . '/stylesheets/' . $stylesheet;
+	/**
+	 * Note: full paths only work with minify
+	 * @param array stylesheets (filename in public/stylesheets or full path)
+	 * @param bool minify 
+	 * @param string desired minified file name
+	 */
+	function add_stylesheets($stylesheets, $minify = TRUE, $minify_filename = null) {
+		if (!$minify) {
+			foreach ($stylesheets as $stylesheet) {
+				if (strpos($stylesheet, '/') !== 0) {
+					$this->stylesheets[] = WWW_PUBLIC_PATH . '/stylesheets/' . $stylesheet;
+				} else { // Can't add full file path files without minify
+					throw new Exceptions\Workframe_exception('Cannot add stylesheet by full file path unless it is to be minified');
+				}
+			}
+			$this->stylesheets = array_unique($this->stylesheets);
+		} else {
+			functions('minify');
+			$minified_styles = minify($stylesheets, $minify_filename, 'css', FALSE);
+			$this->stylesheets = array_unique(array_merge($this->stylesheets, $minified_styles));
 		}
-		$this->stylesheets = array_unique($this->stylesheets);
-//		} else {
-//			functions('minify');
-//			array_merge($this->scripts, minify($files, $minify_filename, 'js', FALSE));
-//		}
 	}
 
 	function add_foreign_stylesheet($stylesheet) {
