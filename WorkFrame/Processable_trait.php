@@ -82,7 +82,9 @@ trait Processable_trait {
 					}
 
 					if (isset($result['new_value'])) {
-						$this->$field_name = $result['new_value'];
+						// Use setter (not direct assign) so User_role_base routes into user_data
+						$set_func_name = 'set_' . $field_name;
+						$this->$set_func_name($result['new_value']);
 					}
 
 					if (isset($result['is_error']) && $result['is_error']) {
