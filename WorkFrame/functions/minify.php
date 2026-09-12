@@ -502,8 +502,12 @@ class CSSMinifier {
 		$source = preg_replace_callback('~(^|\})(([^\{:])+:)+([^\{]*\{)~', function($matches) {
 			return str_replace(":", "___PSEUDOCLASSCOLON___", $matches[0]);
 		}, $source);
-		$source = preg_replace('~\s+([!{};:>+\(\)\],])~', '$1', $source);
+		// Do not strip space before '(': that turns "and (max-width: …)" into
+		// invalid "and(max-width: …)", which browsers treat as @media not all.
+		$source = preg_replace('~\s+([!{};:>+\)\],])~', '$1', $source);
 		$source = str_replace('___PSEUDOCLASSCOLON___', ':', $source);
+		// Any remaining media-query "and("/"or(" (not :not()) need the space back.
+		$source = preg_replace('/(?<!:)\b(and|or|only)\(/i', '$1 (', $source);
 
 		// Remove the spaces after the things that should not have spaces after them.
 		$source = preg_replace('~([!{}:;>+\(\[,])\s+~', '$1', $source);
