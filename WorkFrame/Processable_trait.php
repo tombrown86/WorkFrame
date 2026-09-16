@@ -253,6 +253,27 @@ trait Processable_trait {
 		return FALSE;
 	}
 
+	/**
+	 * Manually attach a field-level validation error (outside of processors).
+	 * Useful for service-layer checks that need to surface through form error UI.
+	 */
+	function add_error($field_name, $error_message, $error_details = NULL) {
+		$error = [
+			'field_name' => $field_name,
+			'is_error' => TRUE,
+			'error_message' => $error_message,
+		];
+		if(method_exists($this, 'get_field_label')) {
+			$error['field_label'] = $this->get_field_label($field_name);
+		} else {
+			$error['field_label'] = $field_name;
+		}
+		if($error_details !== NULL) {
+			$error['error_details'] = $error_details;
+		}
+		$this->errors[] = $error;
+	}
+
 	function get_errors_by_field() {
 		$field_errors = [];
 		foreach ($this->errors as $error) {
