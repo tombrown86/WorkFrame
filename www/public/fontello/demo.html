@@ -1,250 +1,164 @@
 <!DOCTYPE html>
 <html>
-  <head><!--[if lt IE 9]><script language="javascript" type="text/javascript" src="//html5shim.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
-    <meta charset="UTF-8"><style>/*
- * Bootstrap v2.2.1
- *
- * Copyright 2012 Twitter, Inc
- * Licensed under the Apache License v2.0
- * http://www.apache.org/licenses/LICENSE-2.0
- *
- * Designed and built with all the love in the world @twitter by @mdo and @fat.
- */
-.clearfix {
-  *zoom: 1;
-}
-.clearfix:before,
-.clearfix:after {
-  display: table;
-  content: "";
-  line-height: 0;
-}
-.clearfix:after {
-  clear: both;
-}
-html {
-  font-size: 100%;
-  -webkit-text-size-adjust: 100%;
-  -ms-text-size-adjust: 100%;
-}
-a:focus {
-  outline: thin dotted #333;
-  outline: 5px auto -webkit-focus-ring-color;
-  outline-offset: -2px;
-}
-a:hover,
-a:active {
-  outline: 0;
-}
-button,
-input,
-select,
-textarea {
-  margin: 0;
-  font-size: 100%;
-  vertical-align: middle;
-}
-button,
-input {
-  *overflow: visible;
-  line-height: normal;
-}
-button::-moz-focus-inner,
-input::-moz-focus-inner {
-  padding: 0;
-  border: 0;
-}
-body {
-  margin: 0;
-  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-  font-size: 14px;
-  line-height: 20px;
-  color: #333;
-  background-color: #fff;
-}
-a {
-  color: #08c;
-  text-decoration: none;
-}
-a:hover {
-  color: #005580;
-  text-decoration: underline;
-}
-.row {
-  margin-left: -20px;
-  *zoom: 1;
-}
-.row:before,
-.row:after {
-  display: table;
-  content: "";
-  line-height: 0;
-}
-.row:after {
-  clear: both;
-}
-[class*="span"] {
-  float: left;
-  min-height: 1px;
-  margin-left: 20px;
-}
-.container,
-.navbar-static-top .container,
-.navbar-fixed-top .container,
-.navbar-fixed-bottom .container {
-  width: 940px;
-}
-.span12 {
-  width: 940px;
-}
-.span11 {
-  width: 860px;
-}
-.span10 {
-  width: 780px;
-}
-.span9 {
-  width: 700px;
-}
-.span8 {
-  width: 620px;
-}
-.span7 {
-  width: 540px;
-}
-.span6 {
-  width: 460px;
-}
-.span5 {
-  width: 380px;
-}
-.span4 {
-  width: 300px;
-}
-.span3 {
-  width: 220px;
-}
-.span2 {
-  width: 140px;
-}
-.span1 {
-  width: 60px;
-}
-[class*="span"].pull-right,
-.row-fluid [class*="span"].pull-right {
-  float: right;
-}
-.container {
-  margin-right: auto;
-  margin-left: auto;
-  *zoom: 1;
-}
-.container:before,
-.container:after {
-  display: table;
-  content: "";
-  line-height: 0;
-}
-.container:after {
-  clear: both;
-}
-p {
-  margin: 0 0 10px;
-}
-.lead {
-  margin-bottom: 20px;
-  font-size: 21px;
-  font-weight: 200;
-  line-height: 30px;
-}
-small {
-  font-size: 85%;
-}
-h1 {
-  margin: 10px 0;
-  font-family: inherit;
-  font-weight: bold;
-  line-height: 20px;
-  color: inherit;
-  text-rendering: optimizelegibility;
-}
-h1 small {
-  font-weight: normal;
-  line-height: 1;
-  color: #999;
-}
-h1 {
-  line-height: 40px;
-}
-h1 {
-  font-size: 38.5px;
-}
-h1 small {
-  font-size: 24.5px;
-}
-body {
-  margin-top: 90px;
-}
-.header {
-  position: fixed;
-  top: 0;
-  left: 50%;
-  margin-left: -480px;
-  background-color: #fff;
-  border-bottom: 1px solid #ddd;
-  padding-top: 10px;
-  z-index: 10;
-}
-.footer {
-  color: #ddd;
-  font-size: 12px;
-  text-align: center;
-  margin-top: 20px;
-}
-.footer a {
-  color: #ccc;
-  text-decoration: underline;
-}
-.the-icons {
-  font-size: 14px;
-  line-height: 24px;
-}
-.switch {
-  position: absolute;
-  right: 0;
-  bottom: 10px;
-  color: #666;
-}
-.switch input {
-  margin-right: 0.3em;
-}
-.codesOn .i-name {
-  display: none;
-}
-.codesOn .i-code {
-  display: inline;
-}
-.i-code {
-  display: none;
-}
-@font-face {
+  <head>
+  <!--[if lt IE 9]><script language="javascript" type="text/javascript" src="//html5shim.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  <meta charset="UTF-8">
+  <style>
+    html {
+      font-size: 100%;
+      -webkit-text-size-adjust: 100%;
+      -ms-text-size-adjust: 100%;
+    }
+    a:focus {
+      outline: thin dotted #333;
+      outline: 5px auto -webkit-focus-ring-color;
+      outline-offset: -2px;
+    }
+    a:hover,
+    a:active {
+      outline: 0;
+    }
+    input {
+      margin: 0;
+      font-size: 100%;
+      vertical-align: middle;
+      *overflow: visible;
+      line-height: normal;
+    }
+    input::-moz-focus-inner {
+      padding: 0;
+      border: 0;
+    }
+    body {
+      margin: 0;
+      font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+      font-size: 14px;
+      line-height: 20px;
+      color: #333;
+      background-color: #fff;
+    }
+    a {
+      color: #08c;
+      text-decoration: none;
+    }
+    a:hover {
+      color: #005580;
+      text-decoration: underline;
+    }
+    .row {
+      margin-left: -20px;
+      *zoom: 1;
+    }
+    .row:before,
+    .row:after {
+      display: table;
+      content: "";
+      line-height: 0;
+    }
+    .row:after {
+      clear: both;
+    }
+    .span3 {
+      float: left;
+      min-height: 1px;
+      margin-left: 20px;
+      width: 220px;
+    }
+    .container {
+      width: 940px;
+      margin-right: auto;
+      margin-left: auto;
+      *zoom: 1;
+    }
+    .container:before,
+    .container:after {
+      display: table;
+      content: "";
+      line-height: 0;
+    }
+    .container:after {
+      clear: both;
+    }
+    small {
+      font-size: 85%;
+    }
+    h1 {
+      margin: 10px 0;
+      font-family: inherit;
+      font-weight: bold;
+      line-height: 20px;
+      color: inherit;
+      text-rendering: optimizelegibility;
+      line-height: 40px;
+      font-size: 38.5px;
+    }
+    h1 small {
+      font-weight: normal;
+      line-height: 1;
+      color: #999;
+      font-size: 24.5px;
+    }
+
+    body {
+      margin-top: 90px;
+    }
+    .header {
+      position: fixed;
+      top: 0;
+      left: 50%;
+      margin-left: -480px;
+      background-color: #fff;
+      border-bottom: 1px solid #ddd;
+      padding-top: 10px;
+      z-index: 10;
+    }
+    .footer {
+      color: #ddd;
+      font-size: 12px;
+      text-align: center;
+      margin-top: 20px;
+    }
+    .footer a {
+      color: #ccc;
+      text-decoration: underline;
+    }
+    .the-icons {
+      font-size: 14px;
+      line-height: 24px;
+    }
+    .switch {
+      position: absolute;
+      right: 0;
+      bottom: 10px;
+      color: #666;
+    }
+    .switch input {
+      margin-right: 0.3em;
+    }
+    .codesOn .i-name {
+      display: none;
+    }
+    .codesOn .i-code {
+      display: inline;
+    }
+    .i-code {
+      display: none;
+    }
+    @font-face {
       font-family: 'fontello';
-      src: url('./font/fontello.eot?9780609');
-      src: url('./font/fontello.eot?9780609#iefix') format('embedded-opentype'),
-           url('./font/fontello.woff?9780609') format('woff'),
-           url('./font/fontello.ttf?9780609') format('truetype'),
-           url('./font/fontello.svg?9780609#fontello') format('svg');
+      src: url('./font/fontello.eot?41691672');
+      src: url('./font/fontello.eot?41691672#iefix') format('embedded-opentype'),
+           url('./font/fontello.woff?41691672') format('woff'),
+           url('./font/fontello.ttf?41691672') format('truetype'),
+           url('./font/fontello.svg?41691672#fontello') format('svg');
       font-weight: normal;
       font-style: normal;
     }
-     
-     
-    .demo-icon
-    {
+    .demo-icon {
       font-family: "fontello";
       font-style: normal;
       font-weight: normal;
-      speak: none;
+      speak: never;
      
       display: inline-block;
       text-decoration: inherit;
@@ -274,8 +188,8 @@ body {
       /* Uncomment for 3D effect */
       /* text-shadow: 1px 1px 1px rgba(127, 127, 127, 0.3); */
     }
-     </style>
-    <link rel="stylesheet" href="css/animation.css"><!--[if IE 7]><link rel="stylesheet" href="css/fontello-ie7.css"><![endif]-->
+    </style>
+    <link rel="stylesheet" href="css/animation.css"><!--[if IE 7]><link rel="stylesheet" href="css/" + font.fontname + "-ie7.css"><![endif]-->
     <script>
       function toggleCodes(on) {
         var obj = document.getElementById('icons');
@@ -286,26 +200,409 @@ body {
           obj.className = obj.className.replace(' codesOn', '');
         }
       }
-      
     </script>
   </head>
   <body>
     <div class="container header">
-      <h1>
-        fontello
-         <small>font demo</small>
-      </h1>
+      <h1>fontello <small>font demo</small></h1>
       <label class="switch">
         <input type="checkbox" onclick="toggleCodes(this.checked)">show codes
       </label>
     </div>
-    <div id="icons" class="container">
+    <div class="container" id="icons">
       <div class="row">
-        <div title="Code: 0xe800" class="the-icons span3"><i class="demo-icon fontello-user">&#xe800;</i> <span class="i-name">fontello-user</span><span class="i-code">0xe800</span></div>
-        <div title="Code: 0xe801" class="the-icons span3"><i class="demo-icon fontello-key">&#xe801;</i> <span class="i-name">fontello-key</span><span class="i-code">0xe801</span></div>
-        <div title="Code: 0xe802" class="the-icons span3"><i class="demo-icon fontello-calendar">&#xe802;</i> <span class="i-name">fontello-calendar</span><span class="i-code">0xe802</span></div>
+        <div class="span3" title="Code: 0x2e">
+          <i class="demo-icon fontello-ok">&#x2e;</i> <span class="i-name">fontello-ok</span><span class="i-code">0x2e</span>
+        </div>
+        <div class="span3" title="Code: 0x2f">
+          <i class="demo-icon fontello-ok-circle">&#x2f;</i> <span class="i-name">fontello-ok-circle</span><span class="i-code">0x2f</span>
+        </div>
+        <div class="span3" title="Code: 0x31">
+          <i class="demo-icon fontello-link">&#x31;</i> <span class="i-name">fontello-link</span><span class="i-code">0x31</span>
+        </div>
+        <div class="span3" title="Code: 0x33">
+          <i class="demo-icon fontello-share-2">&#x33;</i> <span class="i-name">fontello-share-2</span><span class="i-code">0x33</span>
+        </div>
+      </div>
+      <div class="row">
+        <div class="span3" title="Code: 0x3b">
+          <i class="demo-icon fontello-doc-text">&#x3b;</i> <span class="i-name">fontello-doc-text</span><span class="i-code">0x3b</span>
+        </div>
+        <div class="span3" title="Code: 0x7c">
+          <i class="demo-icon fontello-feather">&#x7c;</i> <span class="i-name">fontello-feather</span><span class="i-code">0x7c</span>
+        </div>
+        <div class="span3" title="Code: 0xe78c">
+          <i class="demo-icon fontello-check">&#xe78c;</i> <span class="i-name">fontello-check</span><span class="i-code">0xe78c</span>
+        </div>
+        <div class="span3" title="Code: 0xe800">
+          <i class="demo-icon fontello-user-1">&#xe800;</i> <span class="i-name">fontello-user-1</span><span class="i-code">0xe800</span>
+        </div>
+      </div>
+      <div class="row">
+        <div class="span3" title="Code: 0xe801">
+          <i class="demo-icon fontello-key">&#xe801;</i> <span class="i-name">fontello-key</span><span class="i-code">0xe801</span>
+        </div>
+        <div class="span3" title="Code: 0xe802">
+          <i class="demo-icon fontello-calendar">&#xe802;</i> <span class="i-name">fontello-calendar</span><span class="i-code">0xe802</span>
+        </div>
+        <div class="span3" title="Code: 0xe803">
+          <i class="demo-icon fontello-download">&#xe803;</i> <span class="i-name">fontello-download</span><span class="i-code">0xe803</span>
+        </div>
+        <div class="span3" title="Code: 0xe804">
+          <i class="demo-icon fontello-list-alt">&#xe804;</i> <span class="i-name">fontello-list-alt</span><span class="i-code">0xe804</span>
+        </div>
+      </div>
+      <div class="row">
+        <div class="span3" title="Code: 0xe805">
+          <i class="demo-icon fontello-sunrise">&#xe805;</i> <span class="i-name">fontello-sunrise</span><span class="i-code">0xe805</span>
+        </div>
+        <div class="span3" title="Code: 0xe806">
+          <i class="demo-icon fontello-sun">&#xe806;</i> <span class="i-name">fontello-sun</span><span class="i-code">0xe806</span>
+        </div>
+        <div class="span3" title="Code: 0xe807">
+          <i class="demo-icon fontello-moon">&#xe807;</i> <span class="i-name">fontello-moon</span><span class="i-code">0xe807</span>
+        </div>
+        <div class="span3" title="Code: 0xe808">
+          <i class="demo-icon fontello-dot-3">&#xe808;</i> <span class="i-name">fontello-dot-3</span><span class="i-code">0xe808</span>
+        </div>
+      </div>
+      <div class="row">
+        <div class="span3" title="Code: 0xe809">
+          <i class="demo-icon fontello-dot-2">&#xe809;</i> <span class="i-name">fontello-dot-2</span><span class="i-code">0xe809</span>
+        </div>
+        <div class="span3" title="Code: 0xe80a">
+          <i class="demo-icon fontello-dot">&#xe80a;</i> <span class="i-name">fontello-dot</span><span class="i-code">0xe80a</span>
+        </div>
+        <div class="span3" title="Code: 0xe80b">
+          <i class="demo-icon fontello-wrench">&#xe80b;</i> <span class="i-name">fontello-wrench</span><span class="i-code">0xe80b</span>
+        </div>
+        <div class="span3" title="Code: 0xe80c">
+          <i class="demo-icon fontello-edit">&#xe80c;</i> <span class="i-name">fontello-edit</span><span class="i-code">0xe80c</span>
+        </div>
+      </div>
+      <div class="row">
+        <div class="span3" title="Code: 0xe80d">
+          <i class="demo-icon fontello-clock">&#xe80d;</i> <span class="i-name">fontello-clock</span><span class="i-code">0xe80d</span>
+        </div>
+        <div class="span3" title="Code: 0xe80e">
+          <i class="demo-icon fontello-left-open">&#xe80e;</i> <span class="i-name">fontello-left-open</span><span class="i-code">0xe80e</span>
+        </div>
+        <div class="span3" title="Code: 0xe80f">
+          <i class="demo-icon fontello-up-big">&#xe80f;</i> <span class="i-name">fontello-up-big</span><span class="i-code">0xe80f</span>
+        </div>
+        <div class="span3" title="Code: 0xe810">
+          <i class="demo-icon fontello-googleplay">&#xe810;</i> <span class="i-name">fontello-googleplay</span><span class="i-code">0xe810</span>
+        </div>
+      </div>
+      <div class="row">
+        <div class="span3" title="Code: 0xe811">
+          <i class="demo-icon fontello-eye-off">&#xe811;</i> <span class="i-name">fontello-eye-off</span><span class="i-code">0xe811</span>
+        </div>
+        <div class="span3" title="Code: 0xe812">
+          <i class="demo-icon fontello-eye">&#xe812;</i> <span class="i-name">fontello-eye</span><span class="i-code">0xe812</span>
+        </div>
+        <div class="span3" title="Code: 0xe813">
+          <i class="demo-icon fontello-help-1">&#xe813;</i> <span class="i-name">fontello-help-1</span><span class="i-code">0xe813</span>
+        </div>
+        <div class="span3" title="Code: 0xe814">
+          <i class="demo-icon fontello-info-circled">&#xe814;</i> <span class="i-name">fontello-info-circled</span><span class="i-code">0xe814</span>
+        </div>
+      </div>
+      <div class="row">
+        <div class="span3" title="Code: 0xe815">
+          <i class="demo-icon fontello-chat">&#xe815;</i> <span class="i-name">fontello-chat</span><span class="i-code">0xe815</span>
+        </div>
+        <div class="span3" title="Code: 0xe816">
+          <i class="demo-icon fontello-trash">&#xe816;</i> <span class="i-name">fontello-trash</span><span class="i-code">0xe816</span>
+        </div>
+        <div class="span3" title="Code: 0xe817">
+          <i class="demo-icon fontello-pencil">&#xe817;</i> <span class="i-name">fontello-pencil</span><span class="i-code">0xe817</span>
+        </div>
+        <div class="span3" title="Code: 0xe818">
+          <i class="demo-icon fontello-doc-add">&#xe818;</i> <span class="i-name">fontello-doc-add</span><span class="i-code">0xe818</span>
+        </div>
+      </div>
+      <div class="row">
+        <div class="span3" title="Code: 0xe819">
+          <i class="demo-icon fontello-help-circled">&#xe819;</i> <span class="i-name">fontello-help-circled</span><span class="i-code">0xe819</span>
+        </div>
+        <div class="span3" title="Code: 0xe81a">
+          <i class="demo-icon fontello-attention">&#xe81a;</i> <span class="i-name">fontello-attention</span><span class="i-code">0xe81a</span>
+        </div>
+        <div class="span3" title="Code: 0xe81b">
+          <i class="demo-icon fontello-bell">&#xe81b;</i> <span class="i-name">fontello-bell</span><span class="i-code">0xe81b</span>
+        </div>
+        <div class="span3" title="Code: 0xe81c">
+          <i class="demo-icon fontello-cancel">&#xe81c;</i> <span class="i-name">fontello-cancel</span><span class="i-code">0xe81c</span>
+        </div>
+      </div>
+      <div class="row">
+        <div class="span3" title="Code: 0xe81d">
+          <i class="demo-icon fontello-award">&#xe81d;</i> <span class="i-name">fontello-award</span><span class="i-code">0xe81d</span>
+        </div>
+        <div class="span3" title="Code: 0xe81e">
+          <i class="demo-icon fontello-doc-text-1">&#xe81e;</i> <span class="i-name">fontello-doc-text-1</span><span class="i-code">0xe81e</span>
+        </div>
+        <div class="span3" title="Code: 0xe81f">
+          <i class="demo-icon fontello-down-circle">&#xe81f;</i> <span class="i-name">fontello-down-circle</span><span class="i-code">0xe81f</span>
+        </div>
+        <div class="span3" title="Code: 0xe820">
+          <i class="demo-icon fontello-users">&#xe820;</i> <span class="i-name">fontello-users</span><span class="i-code">0xe820</span>
+        </div>
+      </div>
+      <div class="row">
+        <div class="span3" title="Code: 0xe821">
+          <i class="demo-icon fontello-campsite">&#xe821;</i> <span class="i-name">fontello-campsite</span><span class="i-code">0xe821</span>
+        </div>
+        <div class="span3" title="Code: 0xe822">
+          <i class="demo-icon fontello-temperatire">&#xe822;</i> <span class="i-name">fontello-temperatire</span><span class="i-code">0xe822</span>
+        </div>
+        <div class="span3" title="Code: 0xe823">
+          <i class="demo-icon fontello-arrows-cw">&#xe823;</i> <span class="i-name">fontello-arrows-cw</span><span class="i-code">0xe823</span>
+        </div>
+        <div class="span3" title="Code: 0xe824">
+          <i class="demo-icon fontello-left-bold">&#xe824;</i> <span class="i-name">fontello-left-bold</span><span class="i-code">0xe824</span>
+        </div>
+      </div>
+      <div class="row">
+        <div class="span3" title="Code: 0xe825">
+          <i class="demo-icon fontello-right-bold">&#xe825;</i> <span class="i-name">fontello-right-bold</span><span class="i-code">0xe825</span>
+        </div>
+        <div class="span3" title="Code: 0xe826">
+          <i class="demo-icon fontello-chart-line">&#xe826;</i> <span class="i-name">fontello-chart-line</span><span class="i-code">0xe826</span>
+        </div>
+        <div class="span3" title="Code: 0xe827">
+          <i class="demo-icon fontello-cog-alt">&#xe827;</i> <span class="i-name">fontello-cog-alt</span><span class="i-code">0xe827</span>
+        </div>
+        <div class="span3" title="Code: 0xe828">
+          <i class="demo-icon fontello-location">&#xe828;</i> <span class="i-name">fontello-location</span><span class="i-code">0xe828</span>
+        </div>
+      </div>
+      <div class="row">
+        <div class="span3" title="Code: 0xe829">
+          <i class="demo-icon fontello-floppy">&#xe829;</i> <span class="i-name">fontello-floppy</span><span class="i-code">0xe829</span>
+        </div>
+        <div class="span3" title="Code: 0xe82a">
+          <i class="demo-icon fontello-doc-text-2">&#xe82a;</i> <span class="i-name">fontello-doc-text-2</span><span class="i-code">0xe82a</span>
+        </div>
+        <div class="span3" title="Code: 0xe82b">
+          <i class="demo-icon fontello-right-circle">&#xe82b;</i> <span class="i-name">fontello-right-circle</span><span class="i-code">0xe82b</span>
+        </div>
+        <div class="span3" title="Code: 0xe82c">
+          <i class="demo-icon fontello-calendar-1">&#xe82c;</i> <span class="i-name">fontello-calendar-1</span><span class="i-code">0xe82c</span>
+        </div>
+      </div>
+      <div class="row">
+        <div class="span3" title="Code: 0xe82d">
+          <i class="demo-icon fontello-split">&#xe82d;</i> <span class="i-name">fontello-split</span><span class="i-code">0xe82d</span>
+        </div>
+        <div class="span3" title="Code: 0xe82e">
+          <i class="demo-icon fontello-bullhorn">&#xe82e;</i> <span class="i-name">fontello-bullhorn</span><span class="i-code">0xe82e</span>
+        </div>
+        <div class="span3" title="Code: 0xe82f">
+          <i class="demo-icon fontello-folder-add">&#xe82f;</i> <span class="i-name">fontello-folder-add</span><span class="i-code">0xe82f</span>
+        </div>
+        <div class="span3" title="Code: 0xe830">
+          <i class="demo-icon fontello-star-empty">&#xe830;</i> <span class="i-name">fontello-star-empty</span><span class="i-code">0xe830</span>
+        </div>
+      </div>
+      <div class="row">
+        <div class="span3" title="Code: 0xe831">
+          <i class="demo-icon fontello-menu-outline">&#xe831;</i> <span class="i-name">fontello-menu-outline</span><span class="i-code">0xe831</span>
+        </div>
+        <div class="span3" title="Code: 0xe832">
+          <i class="demo-icon fontello-minus-outline">&#xe832;</i> <span class="i-name">fontello-minus-outline</span><span class="i-code">0xe832</span>
+        </div>
+        <div class="span3" title="Code: 0xe833">
+          <i class="demo-icon fontello-group">&#xe833;</i> <span class="i-name">fontello-group</span><span class="i-code">0xe833</span>
+        </div>
+        <div class="span3" title="Code: 0xe834">
+          <i class="demo-icon fontello-doc-new">&#xe834;</i> <span class="i-name">fontello-doc-new</span><span class="i-code">0xe834</span>
+        </div>
+      </div>
+      <div class="row">
+        <div class="span3" title="Code: 0xe835">
+          <i class="demo-icon fontello-article">&#xe835;</i> <span class="i-name">fontello-article</span><span class="i-code">0xe835</span>
+        </div>
+        <div class="span3" title="Code: 0xe836">
+          <i class="demo-icon fontello-chart-bar">&#xe836;</i> <span class="i-name">fontello-chart-bar</span><span class="i-code">0xe836</span>
+        </div>
+        <div class="span3" title="Code: 0xe837">
+          <i class="demo-icon fontello-plus">&#xe837;</i> <span class="i-name">fontello-plus</span><span class="i-code">0xe837</span>
+        </div>
+        <div class="span3" title="Code: 0xe838">
+          <i class="demo-icon fontello-mail">&#xe838;</i> <span class="i-name">fontello-mail</span><span class="i-code">0xe838</span>
+        </div>
+      </div>
+      <div class="row">
+        <div class="span3" title="Code: 0xe839">
+          <i class="demo-icon fontello-target">&#xe839;</i> <span class="i-name">fontello-target</span><span class="i-code">0xe839</span>
+        </div>
+        <div class="span3" title="Code: 0xe83a">
+          <i class="demo-icon fontello-book-1">&#xe83a;</i> <span class="i-name">fontello-book-1</span><span class="i-code">0xe83a</span>
+        </div>
+        <div class="span3" title="Code: 0xe83b">
+          <i class="demo-icon fontello-archive">&#xe83b;</i> <span class="i-name">fontello-archive</span><span class="i-code">0xe83b</span>
+        </div>
+        <div class="span3" title="Code: 0xe83c">
+          <i class="demo-icon fontello-undo">&#xe83c;</i> <span class="i-name">fontello-undo</span><span class="i-code">0xe83c</span>
+        </div>
+      </div>
+      <div class="row">
+        <div class="span3" title="Code: 0xe83d">
+          <i class="demo-icon fontello-plus-squared">&#xe83d;</i> <span class="i-name">fontello-plus-squared</span><span class="i-code">0xe83d</span>
+        </div>
+        <div class="span3" title="Code: 0xe83e">
+          <i class="demo-icon fontello-cw">&#xe83e;</i> <span class="i-name">fontello-cw</span><span class="i-code">0xe83e</span>
+        </div>
+        <div class="span3" title="Code: 0xe83f">
+          <i class="demo-icon fontello-export">&#xe83f;</i> <span class="i-name">fontello-export</span><span class="i-code">0xe83f</span>
+        </div>
+        <div class="span3" title="Code: 0xe840">
+          <i class="demo-icon fontello-eq">&#xe840;</i> <span class="i-name">fontello-eq</span><span class="i-code">0xe840</span>
+        </div>
+      </div>
+      <div class="row">
+        <div class="span3" title="Code: 0xe841">
+          <i class="demo-icon fontello-user-add">&#xe841;</i> <span class="i-name">fontello-user-add</span><span class="i-code">0xe841</span>
+        </div>
+        <div class="span3" title="Code: 0xe842">
+          <i class="demo-icon fontello-users-1">&#xe842;</i> <span class="i-name">fontello-users-1</span><span class="i-code">0xe842</span>
+        </div>
+        <div class="span3" title="Code: 0xe843">
+          <i class="demo-icon fontello-calendar-alt">&#xe843;</i> <span class="i-name">fontello-calendar-alt</span><span class="i-code">0xe843</span>
+        </div>
+        <div class="span3" title="Code: 0xe844">
+          <i class="demo-icon fontello-home">&#xe844;</i> <span class="i-name">fontello-home</span><span class="i-code">0xe844</span>
+        </div>
+      </div>
+      <div class="row">
+        <div class="span3" title="Code: 0xe845">
+          <i class="demo-icon fontello-calendar-alt-1">&#xe845;</i> <span class="i-name">fontello-calendar-alt-1</span><span class="i-code">0xe845</span>
+        </div>
+        <div class="span3" title="Code: 0xe846">
+          <i class="demo-icon fontello-star-circled">&#xe846;</i> <span class="i-name">fontello-star-circled</span><span class="i-code">0xe846</span>
+        </div>
+        <div class="span3" title="Code: 0xe847">
+          <i class="demo-icon fontello-clock-alt">&#xe847;</i> <span class="i-name">fontello-clock-alt</span><span class="i-code">0xe847</span>
+        </div>
+        <div class="span3" title="Code: 0xe848">
+          <i class="demo-icon fontello-flow-line">&#xe848;</i> <span class="i-name">fontello-flow-line</span><span class="i-code">0xe848</span>
+        </div>
+      </div>
+      <div class="row">
+        <div class="span3" title="Code: 0xf068">
+          <i class="demo-icon fontello-folder-open">&#xf068;</i> <span class="i-name">fontello-folder-open</span><span class="i-code">0xf068</span>
+        </div>
+        <div class="span3" title="Code: 0xf075">
+          <i class="demo-icon fontello-lock-open-alt">&#xf075;</i> <span class="i-name">fontello-lock-open-alt</span><span class="i-code">0xf075</span>
+        </div>
+        <div class="span3" title="Code: 0xf08e">
+          <i class="demo-icon fontello-link-ext">&#xf08e;</i> <span class="i-name">fontello-link-ext</span><span class="i-code">0xf08e</span>
+        </div>
+        <div class="span3" title="Code: 0xf0c5">
+          <i class="demo-icon fontello-docs">&#xf0c5;</i> <span class="i-name">fontello-docs</span><span class="i-code">0xf0c5</span>
+        </div>
+      </div>
+      <div class="row">
+        <div class="span3" title="Code: 0xf0c9">
+          <i class="demo-icon fontello-menu">&#xf0c9;</i> <span class="i-name">fontello-menu</span><span class="i-code">0xf0c9</span>
+        </div>
+        <div class="span3" title="Code: 0xf0ec">
+          <i class="demo-icon fontello-exchange">&#xf0ec;</i> <span class="i-name">fontello-exchange</span><span class="i-code">0xf0ec</span>
+        </div>
+        <div class="span3" title="Code: 0xf0f0">
+          <i class="demo-icon fontello-user-md">&#xf0f0;</i> <span class="i-name">fontello-user-md</span><span class="i-code">0xf0f0</span>
+        </div>
+        <div class="span3" title="Code: 0xf110">
+          <i class="demo-icon fontello-spinner">&#xf110;</i> <span class="i-name">fontello-spinner</span><span class="i-code">0xf110</span>
+        </div>
+      </div>
+      <div class="row">
+        <div class="span3" title="Code: 0xf127">
+          <i class="demo-icon fontello-unlink">&#xf127;</i> <span class="i-name">fontello-unlink</span><span class="i-code">0xf127</span>
+        </div>
+        <div class="span3" title="Code: 0xf128">
+          <i class="demo-icon fontello-help">&#xf128;</i> <span class="i-name">fontello-help</span><span class="i-code">0xf128</span>
+        </div>
+        <div class="span3" title="Code: 0xf154">
+          <i class="demo-icon fontello-pound">&#xf154;</i> <span class="i-name">fontello-pound</span><span class="i-code">0xf154</span>
+        </div>
+        <div class="span3" title="Code: 0xf19d">
+          <i class="demo-icon fontello-graduation-cap">&#xf19d;</i> <span class="i-name">fontello-graduation-cap</span><span class="i-code">0xf19d</span>
+        </div>
+      </div>
+      <div class="row">
+        <div class="span3" title="Code: 0xf1b2">
+          <i class="demo-icon fontello-cube">&#xf1b2;</i> <span class="i-name">fontello-cube</span><span class="i-code">0xf1b2</span>
+        </div>
+        <div class="span3" title="Code: 0xf1de">
+          <i class="demo-icon fontello-sliders">&#xf1de;</i> <span class="i-name">fontello-sliders</span><span class="i-code">0xf1de</span>
+        </div>
+        <div class="span3" title="Code: 0xf1e1">
+          <i class="demo-icon fontello-share-squared">&#xf1e1;</i> <span class="i-name">fontello-share-squared</span><span class="i-code">0xf1e1</span>
+        </div>
+        <div class="span3" title="Code: 0xf1ec">
+          <i class="demo-icon fontello-calc">&#xf1ec;</i> <span class="i-name">fontello-calc</span><span class="i-code">0xf1ec</span>
+        </div>
+      </div>
+      <div class="row">
+        <div class="span3" title="Code: 0xf21d">
+          <i class="demo-icon fontello-street-view">&#xf21d;</i> <span class="i-name">fontello-street-view</span><span class="i-code">0xf21d</span>
+        </div>
+        <div class="span3" title="Code: 0xf236">
+          <i class="demo-icon fontello-bed">&#xf236;</i> <span class="i-name">fontello-bed</span><span class="i-code">0xf236</span>
+        </div>
+        <div class="span3" title="Code: 0xf247">
+          <i class="demo-icon fontello-object-group">&#xf247;</i> <span class="i-name">fontello-object-group</span><span class="i-code">0xf247</span>
+        </div>
+        <div class="span3" title="Code: 0xf248">
+          <i class="demo-icon fontello-object-ungroup">&#xf248;</i> <span class="i-name">fontello-object-ungroup</span><span class="i-code">0xf248</span>
+        </div>
+      </div>
+      <div class="row">
+        <div class="span3" title="Code: 0xf249">
+          <i class="demo-icon fontello-sticky-note">&#xf249;</i> <span class="i-name">fontello-sticky-note</span><span class="i-code">0xf249</span>
+        </div>
+        <div class="span3" title="Code: 0xf24a">
+          <i class="demo-icon fontello-sticky-note-o">&#xf24a;</i> <span class="i-name">fontello-sticky-note-o</span><span class="i-code">0xf24a</span>
+        </div>
+        <div class="span3" title="Code: 0xf24d">
+          <i class="demo-icon fontello-clone">&#xf24d;</i> <span class="i-name">fontello-clone</span><span class="i-code">0xf24d</span>
+        </div>
+        <div class="span3" title="Code: 0xf273">
+          <i class="demo-icon fontello-calendar-times-o">&#xf273;</i> <span class="i-name">fontello-calendar-times-o</span><span class="i-code">0xf273</span>
+        </div>
+      </div>
+      <div class="row">
+        <div class="span3" title="Code: 0xf274">
+          <i class="demo-icon fontello-calendar-check-o">&#xf274;</i> <span class="i-name">fontello-calendar-check-o</span><span class="i-code">0xf274</span>
+        </div>
+        <div class="span3" title="Code: 0xf278">
+          <i class="demo-icon fontello-map-o">&#xf278;</i> <span class="i-name">fontello-map-o</span><span class="i-code">0xf278</span>
+        </div>
+        <div class="span3" title="Code: 0xf2d0">
+          <i class="demo-icon fontello-window-maximize">&#xf2d0;</i> <span class="i-name">fontello-window-maximize</span><span class="i-code">0xf2d0</span>
+        </div>
+        <div class="span3" title="Code: 0xf2d3">
+          <i class="demo-icon fontello-window-close">&#xf2d3;</i> <span class="i-name">fontello-window-close</span><span class="i-code">0xf2d3</span>
+        </div>
+      </div>
+      <div class="row">
+        <div class="span3" title="Code: 0xf4ac">
+          <i class="demo-icon fontello-comment">&#xf4ac;</i> <span class="i-name">fontello-comment</span><span class="i-code">0xf4ac</span>
+        </div>
+        <div class="span3" title="Code: 0xf4c5">
+          <i class="demo-icon fontello-calendar-2">&#xf4c5;</i> <span class="i-name">fontello-calendar-2</span><span class="i-code">0xf4c5</span>
+        </div>
+        <div class="span3" title="Code: 0xf50d">
+          <i class="demo-icon fontello-search">&#xf50d;</i> <span class="i-name">fontello-search</span><span class="i-code">0xf50d</span>
+        </div>
+        <div class="span3" title="Code: 0xf510">
+          <i class="demo-icon fontello-lock-alt">&#xf510;</i> <span class="i-name">fontello-lock-alt</span><span class="i-code">0xf510</span>
+        </div>
       </div>
     </div>
-    <div class="container footer">Generated by <a href="http://fontello.com">fontello.com</a></div>
+    <div class="container footer">Generated by <a href="https://fontello.com">fontello.com</a></div>
   </body>
 </html>
