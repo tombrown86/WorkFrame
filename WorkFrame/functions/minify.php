@@ -69,8 +69,13 @@ function minify($files, $output_name = null, $filetype = 'js', $print_tags = tru
 //			}
 		// OR DO THEM ALL IN ONE GO:
 		$code = '';
+		$output_path = $full_public_path . $min_file;
 		foreach ($files as $k => $file) {
-			$code .= file_get_contents($file) . ($filetype == 'js' ? "\n;\n" : "\n\n");
+			$file_code = file_get_contents($file);
+			if ($filetype == 'css') {
+				$file_code = rewrite_css_relative_urls($file_code, $file, $output_path);
+			}
+			$code .= $file_code . ($filetype == 'js' ? "\n;\n" : "\n\n");
 		}
  
 		if((isset($_GET['dontminify']) && $_GET['dontminify']) || (isset($GLOBALS['_ORIGINAL_GET']['dontminify']) && $GLOBALS['_ORIGINAL_GET']['dontminify'])) {
@@ -102,6 +107,58 @@ function minify($files, $output_name = null, $filetype = 'js', $print_tags = tru
 		echo $filetype == 'js' ? '
 	<script type="text/javascript" src="' . $http_public_path . htmlspecialchars($file) . '"></script>' : '
 	<link rel="stylesheet" href="' . $http_public_path . htmlspecialchars($file) . '" type="text/css" />';
+}
+
+/**
+ * Bundled CSS is written under stylesheets/min, so url() paths that were
+ * relative to the original stylesheet would otherwise miss fonts and images.
+ */
+function rewrite_css_relative_urls($css, $source_file, $output_file) {
+	$source_dir = dirname($source_file);
+	$output_dir = dirname($output_file);
+
+	return preg_replace_callback(
+		'/url\(\s*([\'"]?)(?!data:|https?:|\/\/)([^\'")]+)\1\s*\)/i',
+		function ($match) use ($source_dir, $output_dir) {
+			$quote = $match[1];
+			$url = $match[2];
+			if (isset($url[0]) && $url[0] === '/') {
+				return $match[0];
+			}
+
+			$hash = '';
+			$hash_pos = strpos($url, '#');
+			if ($hash_pos !== false) {
+				$hash = substr($url, $hash_pos);
+				$url = substr($url, 0, $hash_pos);
+			}
+			$query = '';
+			$query_pos = strpos($url, '?');
+			if ($query_pos !== false) {
+				$query = substr($url, $query_pos);
+				$url = substr($url, 0, $query_pos);
+			}
+
+			$absolute = realpath($source_dir . '/' . $url);
+			if ($absolute === false) {
+				return $match[0];
+			}
+
+			$relative = relative_path_from_dir($output_dir, $absolute);
+			return 'url(' . $quote . $relative . $query . $hash . $quote . ')';
+		},
+		$css
+	);
+}
+
+function relative_path_from_dir($from_dir, $to_file) {
+	$from = explode('/', str_replace('\\', '/', realpath($from_dir)));
+	$to = explode('/', str_replace('\\', '/', $to_file));
+	while (count($from) && count($to) && $from[0] === $to[0]) {
+		array_shift($from);
+		array_shift($to);
+	}
+	return str_repeat('../', count($from)) . implode('/', $to);
 }
 
 /**
