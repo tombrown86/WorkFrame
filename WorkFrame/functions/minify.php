@@ -54,7 +54,14 @@ function minify($files, $output_name = null, $filetype = 'js', $print_tags = tru
 	}
 
 	if (!$min_file_exists || (isset($_GET['minify']) && $_GET['minify']) || (isset($GLOBALS['_ORIGINAL_GET']['minify']) && $GLOBALS['_ORIGINAL_GET']['minify']) || $dev_environment_and_min_file_out_of_date) {
-		log_message('info', "Minifying $filetype code for: $public_dir_name/$min_file with files: " . print_r($files, true));
+		$debug_silent = FALSE;
+		if(function_exists('_workframe')) {
+			$handler = _workframe()->request_handler;
+			if($handler && method_exists($handler, 'get_action') && strpos((string) $handler->get_action(), 'async_') === 0) {
+				$debug_silent = TRUE;
+			}
+		}
+		log_message('info', "Minifying $filetype code for: $public_dir_name/$min_file with files: " . print_r($files, true), $debug_silent);
 
 		// get code from all files and minify
 		// MINIFY FILES INDIVIDUALLY >
