@@ -10,9 +10,10 @@ define('APP_LOG_LEVEL_INFO', 'APP_INFO');
 function log_message($level, $message, $debug_silent=FALSE) {
 	$level = strtoupper($level);
 
+	# Bare 'info' becomes INFO; treat like APP_INFO/WF_INFO (log file only, no HTML echo).
 	if(WORKFRAME_DEBUG 
 		&& !$debug_silent
-		&& !in_array($level, [APP_LOG_LEVEL_INFO, WF_LOG_LEVEL_INFO])) {
+		&& !in_array($level, [APP_LOG_LEVEL_INFO, WF_LOG_LEVEL_INFO, 'INFO'])) {
 		echo '<hr/><div style="color:red"><strong>'.$level.'</strong> - '.htmlspecialchars($message ?? '').'</div><hr/>';
 	}
 	
